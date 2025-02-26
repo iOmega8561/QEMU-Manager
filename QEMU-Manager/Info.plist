@@ -21,7 +21,7 @@
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.xs-labs.qemu-vm</string>
+				<string>com.giusepperocco.qemu-vm</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<true/>
@@ -66,7 +66,7 @@
 			<key>UTTypeIcons</key>
 			<dict/>
 			<key>UTTypeIdentifier</key>
-			<string>com.xs-labs.qemu-vm</string>
+			<string>com.giusepperocco.qemu-vm</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
