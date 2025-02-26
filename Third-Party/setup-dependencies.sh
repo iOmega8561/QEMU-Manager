@@ -254,7 +254,7 @@ fi
 rm -fr spice-src
 
 # QEMU
-if [ ! -d "qemu" ]; then
+if [ ! -d "QEMU" ]; then
 
     if [ ! -d "qemu-src" ]; then
         wget https://download.qemu.org/qemu-9.2.2.tar.xz -O qemu-src.tar.xz
@@ -264,7 +264,7 @@ if [ ! -d "qemu" ]; then
 
     cd qemu-src
     
-    ./configure --prefix="$SCRIPTPATH/qemu" \
+    ./configure --prefix="$SCRIPTPATH/QEMU" \
         --target-list=aarch64-softmmu,arm-softmmu,i386-softmmu,m68k-softmmu,ppc-softmmu,ppc64-softmmu,riscv32-softmmu,riscv64-softmmu,x86_64-softmmu \
         --enable-hvf \
         --enable-spice \
@@ -294,9 +294,9 @@ if [ ! -d "qemu" ]; then
                          -lc++ -lc++abi \
                          -Bdynamic -lc -lSystem"
 
-    mkdir "$SCRIPTPATH/qemu"
+    mkdir "$SCRIPTPATH/QEMU"
 
     make -j$(sysctl -n hw.logicalcpu) && make install && cd ..
 fi
 
-#rm -fr qemu-src
+rm -fr qemu-src
