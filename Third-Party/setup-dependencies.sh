@@ -264,7 +264,9 @@ if [ ! -d "QEMU" ]; then
 
     cd qemu-src
     
-    ./configure --prefix="$SCRIPTPATH/QEMU" \
+    ./configure \
+        --prefix="$SCRIPTPATH/QEMU" \
+        --datadir="./share" \
         --target-list=aarch64-softmmu,arm-softmmu,i386-softmmu,m68k-softmmu,ppc-softmmu,ppc64-softmmu,riscv32-softmmu,riscv64-softmmu,x86_64-softmmu \
         --enable-hvf \
         --enable-spice \

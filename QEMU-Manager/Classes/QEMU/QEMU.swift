@@ -43,7 +43,10 @@ public class QEMU
             
             if let resources = Bundle.main.resourceURL
             {
-                self.url = resources.appendingPathComponent("QEMU").appendingPathComponent("bin").appendingPathComponent( tool )
+                self.url = resources
+                    .appendingPathComponent("QEMU")
+                    .appendingPathComponent("bin")
+                    .appendingPathComponent( tool )
             }
             
         }

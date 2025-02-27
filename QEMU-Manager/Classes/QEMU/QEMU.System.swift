@@ -91,13 +91,51 @@ extension QEMU.System
                     arguments.append( $0.url.path )
             }
         }
+                
+        arguments.append("-audiodev")
+        arguments.append("coreaudio,id=snd0")
+        
+        arguments.append("-nic")
+        arguments.append("user")
         
         arguments.append("-device")
-        arguments.append("ramfb")
+        arguments.append("qemu-xhci,id=xhci")
+        
+        arguments.append("-device")
+        arguments.append("usb-tablet")
+        
+        arguments.append("-device")
+        arguments.append("usb-kbd")
+                
+        arguments.append("-device")
+        arguments.append("intel-hda")
+        
+        arguments.append("-device")
+        arguments.append("hda-duplex,audiodev=snd0")
+        
+        if vm.config.architecture == .aarch64 {
+            arguments.append("-device")
+            arguments.append("ramfb")
+            
+            let edk2firmware = Bundle.main.resourceURL?
+                .appendingPathComponent("QEMU")
+                .appendingPathComponent("share")
+                .appendingPathComponent("qemu")
+                .appendingPathComponent("edk2-\(vm.config.architecture.description)-code.fd")
+                .absoluteURL.path(percentEncoded: false)
+                    
+            if let edk2firmware, FileManager.default.fileExists(atPath: edk2firmware) {
+                arguments.append("-bios")
+                arguments.append(edk2firmware)
+            }
+            
+            arguments.append("-accel")
+            arguments.append("hvf")
+        }
         
         arguments.append("-display")
         arguments.append("cocoa")
-        
+                
         arguments.append( contentsOf: vm.config.arguments )
         
         let _ = try QEMU.System( architecture: vm.config.architecture ).execute( arguments: arguments )
