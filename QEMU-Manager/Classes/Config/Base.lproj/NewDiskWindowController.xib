@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,12 +18,12 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="950"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="358"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2yP-hk-h1A">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2yP-hk-h1A">
                         <rect key="frame" x="18" y="312" width="94" height="26"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="New Disk" id="xp0-Oy-Zbh">
                             <font key="font" textStyle="title1" name=".SFNS-Regular"/>
@@ -48,7 +48,7 @@
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Urv-T5-Di1">
                         <rect key="frame" x="0.0" y="61" width="480" height="242"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-AW-h51">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-AW-h51">
                                 <rect key="frame" x="18" y="206" width="41" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Label:" id="Ntp-lL-paM">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -56,7 +56,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cYW-5D-LE4">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cYW-5D-LE4">
                                 <rect key="frame" x="20" y="177" width="440" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="eh7-Wy-iyg">
                                     <font key="font" metaFont="system"/>
@@ -67,7 +67,7 @@
                                     <binding destination="-2" name="value" keyPath="self.label" id="lae-Yy-NqL"/>
                                 </connections>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IfJ-gD-R9J">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IfJ-gD-R9J">
                                 <rect key="frame" x="18" y="141" width="34" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Size:" id="NlM-vI-xV3">
                                     <font key="font" metaFont="system"/>
@@ -84,7 +84,7 @@
                                     <binding destination="-2" name="value" keyPath="self.size" previousBinding="ecP-aS-tFR" id="u6F-Hg-dcC"/>
                                 </connections>
                             </slider>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nkn-ex-Tmw">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nkn-ex-Tmw">
                                 <rect key="frame" x="20" y="84" width="440" height="21"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="DS3-h5-Vp9">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="42" id="ztR-bQ-Kco" customClass="SizeFormatter"/>
@@ -96,7 +96,7 @@
                                     <binding destination="-2" name="value" keyPath="self.size" id="sWn-vC-vnA"/>
                                 </connections>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qUA-Tj-23m">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qUA-Tj-23m">
                                 <rect key="frame" x="18" y="48" width="51" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Format:" id="iXw-TM-K5O">
                                     <font key="font" metaFont="system"/>
@@ -108,7 +108,7 @@
                                 <rect key="frame" x="17" y="16" width="89" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="QCOW2" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="m8m-vH-kGa" id="ygk-5b-IOX">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
+                                    <font key="font" metaFont="message"/>
                                     <menu key="menu" id="e1a-EJ-Olb">
                                         <items>
                                             <menuItem title="QCOW2" state="on" id="m8m-vH-kGa"/>

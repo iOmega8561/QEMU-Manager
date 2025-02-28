@@ -26,7 +26,6 @@ public class SharedFolderAccessoryViewController: NSViewController
         switch self.selectedIndex
         {
             case 1:  return .floppy
-            case 2:  return .smb
             default: return .fat
         }
     }

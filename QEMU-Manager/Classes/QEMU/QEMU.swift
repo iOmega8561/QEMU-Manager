@@ -51,6 +51,7 @@ public class QEMU
             
         }
         
+        @discardableResult
         public func execute( arguments: [ String ] ) throws -> ( out: String, err: String )?
         {
             guard let path = self.url?.path else

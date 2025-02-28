@@ -20,23 +20,31 @@ cd $SCRIPTPATH
 # PKG PATHS
 OPUS_PKG="$SCRIPTPATH/opus/lib/pkgconfig"
 PIXMAN_PKG="$SCRIPTPATH/pixman/lib/pkgconfig"
-LIBJPEG_PKG="$SCRIPTPATH/libjpeg/lib/pkgconfig"
-OPENSSL_PKG="$SCRIPTPATH/openssl/lib/pkgconfig"
 GLIB_PKG="$SCRIPTPATH/glib/lib/pkgconfig"
 LIBSLIRP_PKG="$SCRIPTPATH/libslirp/lib/pkgconfig"
-SPICE_PROTO_PKG="$SCRIPTPATH/spice-protocol/share/pkgconfig"
-SPICE_PKG="$SCRIPTPATH/spice/lib/pkgconfig"
 
 export PKG_CONFIG_PATH="$OPUS_PKG:\
 $PIXMAN_PKG:\
-$LIBJPEG_PKG:\
-$OPENSSL_PKG:\
 $GLIB_PKG:\
-$LIBSLIRP_PKG:\
-$SPICE_PROTO_PKG:\
-$SPICE_PKG"
+$LIBSLIRP_PKG"
 
-# LIBPNG
+# QEMU SETTINGS
+
+QEMU_UPSTREAM="https://download.qemu.org/qemu-9.2.2.tar.xz"
+
+QEMU_UTM="$(curl -sL "https://api.github.com/repos/utmapp/qemu/releases/latest" | jq -r '.assets[] | select(.name | endswith(".tar.xz")) | .browser_download_url')"
+
+QEMU_TARGETS="aarch64-softmmu,\
+arm-softmmu,\
+i386-softmmu,\
+m68k-softmmu,\
+ppc-softmmu,\
+ppc64-softmmu,\
+riscv32-softmmu,\
+riscv64-softmmu,\
+x86_64-softmmu"
+
+# PCRE2
 if [ ! -d "pcre2" ]; then
 
     if [ ! -d "pcre2-src" ]; then
@@ -58,7 +66,7 @@ if [ ! -d "pcre2" ]; then
     make && make install && make clean && cd ../..
 fi
 
-rm -fr libpng-src
+rm -fr pcre2-src
 
 # GLIB
 if [ ! -d "glib" ]; then
@@ -86,26 +94,6 @@ fi
 
 rm -fr glib-src
 
-# OPENSSL
-if [ ! -d "openssl" ]; then
-
-    if [ ! -d "openssl-src" ]; then
-        git clone https://github.com/openssl/openssl.git openssl-src
-    fi
-
-    cd openssl-src
-
-    ./Configure \
-      no-shared \
-      --prefix=$SCRIPTPATH/openssl
-    
-    mkdir "$SCRIPTPATH/openssl"
-    
-    make && make install && make clean && cd ..
-fi
-
-rm -fr openssl-src
-
 # ZLIB
 if [ ! -d "zlib" ]; then
 
@@ -125,28 +113,6 @@ if [ ! -d "zlib" ]; then
 fi
 
 rm -fr zlib-src
-
-# LIBJPEG-TURBO
-if [ ! -d "libjpeg" ]; then
-
-    if [ ! -d "libjpeg-src" ]; then
-        git clone https://github.com/libjpeg-turbo/libjpeg-turbo.git libjpeg-src
-    fi
-    
-    cd libjpeg-src && mkdir build
-    
-    cd build && cmake .. \
-        -DCMAKE_INSTALL_PREFIX="$SCRIPTPATH/libjpeg" \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DENABLE_SHARED=OFF \
-        -DENABLE_STATIC=ON
-    
-    mkdir "$SCRIPTPATH/libjpeg"
-    
-    make && make install && make clean && cd ../..
-fi
-
-rm -fr libjpeg-src
 
 # PIXMAN
 if [ ! -d "pixman" ]; then
@@ -208,56 +174,11 @@ fi
 
 rm -fr libslirp-src
 
-# SPICE-PROTO
-if [ ! -d "spice-protocol" ]; then
-
-    if [ ! -d "spice-protocol-src" ]; then
-        git clone https://gitlab.freedesktop.org/spice/spice-protocol.git spice-protocol-src
-    fi
-
-    cd spice-protocol-src
-    
-    meson setup build \
-        --default-library=static \
-        --prefix="$SCRIPTPATH/spice-protocol"
-    
-    mkdir "$SCRIPTPATH/spice-protocol"
-    
-    ninja -C build && ninja -C build install && cd ..
-fi
-
-rm -fr spice-protocol-src
-
-# SPICE
-if [ ! -d "spice" ]; then
-
-    if [ ! -d "spice-src" ]; then
-        git clone --recurse-submodules https://gitlab.freedesktop.org/spice/spice.git spice-src
-    fi
-
-    cd spice-src
-    
-    ./autogen.sh --prefix="$SCRIPTPATH/spice" \
-        --enable-static \
-        --disable-shared \
-        --disable-tests \
-        CFLAGS="-I$SCRIPTPATH/libjpeg/include" \
-        LDFLAGS="-L$SCRIPTPATH/libjpeg/lib -ljpeg" \
-        CPPFLAGS="-I$SCRIPTPATH/libjpeg/include"
-
-    mkdir "$SCRIPTPATH/spice"
-
-    PATH="$SCRIPTPATH/glib/bin:$PATH" \
-    make -j$(sysctl -n hw.logicalcpu) && make install && cd ..
-fi
-
-rm -fr spice-src
-
 # QEMU
 if [ ! -d "QEMU" ]; then
 
     if [ ! -d "qemu-src" ]; then
-        wget https://download.qemu.org/qemu-9.2.2.tar.xz -O qemu-src.tar.xz
+        wget "$QEMU_UTM" -O qemu-src.tar.xz
         tar xvJf qemu-src.tar.xz && rm qemu-src.tar.xz
         mv qemu* qemu-src
     fi
@@ -267,32 +188,25 @@ if [ ! -d "QEMU" ]; then
     ./configure \
         --prefix="$SCRIPTPATH/QEMU" \
         --datadir="./share" \
-        --target-list=aarch64-softmmu,arm-softmmu,i386-softmmu,m68k-softmmu,ppc-softmmu,ppc64-softmmu,riscv32-softmmu,riscv64-softmmu,x86_64-softmmu \
+        --target-list="$QEMU_TARGETS" \
         --enable-hvf \
-        --enable-spice \
         --enable-coreaudio \
         --enable-cocoa \
         --enable-slirp \
         --disable-sdl \
+        --disable-spice \
         --disable-vnc \
         --disable-debug-info \
         --disable-strip \
-        --extra-cflags="-I$SCRIPTPATH/spice/include \
-                        -I$SCRIPTPATH/spice-protocol/include \
-                        -I$SCRIPTPATH/pixman/include \
+        --extra-cflags="-I$SCRIPTPATH/pixman/include \
                         -I$SCRIPTPATH/opus/include \
-                        -I$SCRIPTPATH/openssl/include \
                         -I$SCRIPTPATH/glib/include \
-                        -I$SCRIPTPATH/libjpeg/include \
                         -I$SCRIPTPATH/libslirp/include" \
-        --extra-ldflags="-L$SCRIPTPATH/spice/lib \
-                         -L$SCRIPTPATH/pixman/lib \
+        --extra-ldflags="-L$SCRIPTPATH/pixman/lib \
                          -L$SCRIPTPATH/opus/lib \
-                         -L$SCRIPTPATH/openssl/lib \
                          -L$SCRIPTPATH/glib/lib \
-                         -L$SCRIPTPATH/libjpeg/lib \
                          -L$SCRIPTPATH/libslirp/lib \
-                         -Bstatic -lglib-2.0 -lssl -lcrypto -lspice-server -lpixman-1 -lopus -ljpeg -lslirp \
+                         -Bstatic -lglib-2.0 -lpixman-1 -lopus -lslirp \
                          -lc++ -lc++abi \
                          -Bdynamic -lc -lSystem"
 

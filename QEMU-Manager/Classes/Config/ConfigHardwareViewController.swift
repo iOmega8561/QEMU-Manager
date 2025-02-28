@@ -1,6 +1,5 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
- * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,6 +41,7 @@ public class ConfigHardwareViewController: ConfigViewController
             
             self.updateMachines()
             self.updateCPUs()
+            self.updateVGAs()
         }
     }
     
@@ -71,6 +71,21 @@ public class ConfigHardwareViewController: ConfigViewController
             else
             {
                 self.vm.config.cpu = nil
+            }
+        }
+    }
+    
+    @objc private dynamic var vga: VGA?
+    {
+        didSet
+        {
+            if let vga = self.vga, vga.sorting != -1
+            {
+                self.vm.config.vga = vga.name
+            }
+            else
+            {
+                self.vm.config.vga = nil
             }
         }
     }
@@ -118,6 +133,7 @@ public class ConfigHardwareViewController: ConfigViewController
         
         self.updateMachines()
         self.updateCPUs()
+        self.updateVGAs()
         
         for i in self.minCores ..< self.maxCores
         {
@@ -173,5 +189,30 @@ public class ConfigHardwareViewController: ConfigViewController
         self.cpus.add( contentsOf: cpus )
         
         self.cpu = cpus.first { $0.name == vm.config.cpu } ?? unknown
+    }
+    
+    private func updateVGAs()
+    {
+        if let existing = self.vgas.content as? [ VGA ]
+        {
+            existing.forEach { self.vgas.removeObject( $0 ) }
+        }
+        
+        let unknown = VGA( name: "Default", title: "Unspecified VGA", sorting: -1 )
+        
+        self.vgas.addObject( unknown )
+        
+        guard let arch = Config.Architecture( rawValue: self.architecture ),
+              let vgas = VGA.all[ arch ]
+        else
+        {
+            self.vga = unknown
+            
+            return
+        }
+        
+        self.vgas.add( contentsOf: vgas )
+        
+        self.vga = vgas.first { $0.name == vm.config.vga } ?? unknown
     }
 }

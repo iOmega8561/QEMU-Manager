@@ -17,31 +17,23 @@
 
 import Foundation
 
-@objc( SharedFolderKindToString ) public class SharedFolderKindToString: ValueTransformer
+public class VGA: InfoValue
 {
-    public override class func transformedValueClass() -> AnyClass
+    public static var all: [ Config.Architecture : [ VGA ] ] =
     {
-        NSString.self
-    }
-    
-    public override class func allowsReverseTransformation() -> Bool
-    {
-        false
-    }
-    
-    public override func transformedValue( _ value: Any? ) -> Any?
-    {
-        guard let n    = ( value as? NSNumber )?.intValue,
-              let kind = SharedFolder.Kind( rawValue: n )
-        else
+        () -> [ Config.Architecture : [ VGA ] ] in
+        
+        let archs: [ Config.Architecture ]           = [ .aarch64, .arm, .i386, .x86_64, .ppc, .ppc64, .riscv32, .riscv64, .m68k ]
+        var all:   [ Config.Architecture : [ VGA ] ] = [:]
+        
+        archs.forEach
         {
-            return "--"
+            all[ $0 ] = QEMU.System.vga( for: $0 ).map
+            {
+                VGA( name: $0.0, title: $0.1, sorting: 0 )
+            }
         }
         
-        switch kind
-        {
-            case .fat:    return "FAT"
-            case .floppy: return "FLOPPY"
-        }
-    }
+        return all
+    }()
 }

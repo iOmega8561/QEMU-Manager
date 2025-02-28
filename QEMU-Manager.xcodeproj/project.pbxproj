@@ -34,7 +34,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		E32E067B2D6FBBCA00C28A25 /* QEMU */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = QEMU; sourceTree = "<group>"; };
 		E32E07582D6FC40D00C28A25 /* Classes */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Classes; sourceTree = "<group>"; };
 		E32E07CD2D6FC42900C28A25 /* UI */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UI; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -93,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				E32E067C2D6FC38000C28A25 /* setup-dependencies.sh */,
-				E32E067B2D6FBBCA00C28A25 /* QEMU */,
 			);
 			path = "Third-Party";
 			sourceTree = "<group>";
@@ -172,7 +170,6 @@
 /* Begin PBXShellScriptBuildPhase section */
 		E32E05CB2D6FB0AA00C28A25 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);
@@ -183,10 +180,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/${PRODUCT_NAME}.app/Contents/Resources/QEMU",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\nDEST_FOLDER=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/\"\n\n# Ensure destination exists\nmkdir -p \"$DEST_FOLDER\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$DEST_FOLDER\"\n";
+			shellScript = "SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\n\n# Ensure destination exists\nmkdir -p \"$DEST_FOLDER\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$SCRIPT_OUTPUT_FILE_0\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -292,10 +290,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Third-Party/QEMU/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.giusepperocco.QEMU-Manager";
@@ -321,10 +316,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Third-Party/QEMU/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.giusepperocco.QEMU-Manager";

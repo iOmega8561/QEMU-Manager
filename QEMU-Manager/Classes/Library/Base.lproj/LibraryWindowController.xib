@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,7 +18,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="400" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="950"/>
             <value key="minSize" type="size" width="400" height="400"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ" customClass="DropView" customModule="QEMU_Manager" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
@@ -27,7 +27,7 @@
                     <visualEffectView blendingMode="behindWindow" material="sidebar" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="iuF-6k-Png">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zje-1p-fBi">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zje-1p-fBi">
                                 <rect key="frame" x="106" y="359" width="188" height="21"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Virtual Machines Library" id="W9k-xG-Sx8">
                                     <font key="font" textStyle="title2" name=".SFNS-Regular"/>
@@ -44,7 +44,7 @@
                                             <binding destination="-2" name="animate" keyPath="self.loading" id="77O-Vt-tFW"/>
                                         </connections>
                                     </progressIndicator>
-                                    <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xEL-9x-UXP">
+                                    <textField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xEL-9x-UXP">
                                         <rect key="frame" x="121" y="124" width="158" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Initializing - Please wait..." id="J09-rM-Mh2">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -104,17 +104,17 @@ DQ
                                     <constraint firstItem="bKT-k8-ry3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QWP-6v-gC8" secondAttribute="leading" constant="20" symbolic="YES" id="fIk-yQ-CbT"/>
                                 </constraints>
                                 <connections>
+                                    <binding destination="-2" name="hidden" keyPath="self.empty" id="pVc-51-reO">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
                                     <binding destination="-2" name="hidden2" keyPath="self.loading" previousBinding="pVc-51-reO" id="nRe-eJ-Lbl">
                                         <dictionary key="options">
                                             <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                             <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                             <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                             <integer key="NSNullPlaceholder" value="-1"/>
-                                        </dictionary>
-                                    </binding>
-                                    <binding destination="-2" name="hidden" keyPath="self.empty" id="pVc-51-reO">
-                                        <dictionary key="options">
-                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
                                     </binding>
                                 </connections>
@@ -165,7 +165,7 @@ DQ
                                                                                 <binding destination="hvX-zT-ATA" name="value" keyPath="objectValue.icon" id="kFl-hm-Sq9"/>
                                                                             </connections>
                                                                         </imageView>
-                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="VGs-7L-mzJ">
+                                                                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="VGs-7L-mzJ">
                                                                             <rect key="frame" x="71" y="36" width="148" height="26"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="hVs-Eg-zPY">
                                                                                 <font key="font" textStyle="title1" name=".SFNS-Regular"/>
@@ -251,7 +251,7 @@ DQ
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Jh1-ob-542">
                                         <rect key="frame" x="20" y="48" width="360" height="5"/>
                                     </box>
-                                    <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chS-7t-aCY">
+                                    <searchField wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chS-7t-aCY">
                                         <rect key="frame" x="20" y="20" width="360" height="22"/>
                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="E6w-nY-LJa">
                                             <font key="font" metaFont="system"/>
@@ -284,6 +284,7 @@ DQ
                                     <constraint firstItem="Jh1-ob-542" firstAttribute="leading" secondItem="CTt-Mb-v7i" secondAttribute="leading" constant="20" symbolic="YES" id="x5D-ce-Rg4"/>
                                 </constraints>
                                 <connections>
+                                    <binding destination="-2" name="hidden" keyPath="self.empty" id="ofb-hq-zV8"/>
                                     <binding destination="-2" name="hidden2" keyPath="self.loading" previousBinding="ofb-hq-zV8" id="y6V-4r-ERB">
                                         <dictionary key="options">
                                             <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -292,7 +293,6 @@ DQ
                                             <integer key="NSNullPlaceholder" value="-1"/>
                                         </dictionary>
                                     </binding>
-                                    <binding destination="-2" name="hidden" keyPath="self.empty" id="ofb-hq-zV8"/>
                                 </connections>
                             </customView>
                         </subviews>
@@ -363,7 +363,7 @@ DQ
     </objects>
     <resources>
         <image name="Generic" width="512" height="512"/>
-        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
         <image name="NSStatusAvailable" width="16" height="16"/>
     </resources>
 </document>

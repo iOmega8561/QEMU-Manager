@@ -30,6 +30,10 @@ public class Config: NSObject, Codable
         case riscv64
         case riscv32
         case m68k
+        
+        var isARM: Bool {
+            self == .aarch64 || self == .arm
+        }
     }
     
     @objc public private( set ) dynamic var version:       UInt64           = 0

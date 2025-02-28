@@ -166,6 +166,32 @@
                                 <binding destination="-2" name="value" keyPath="self.vm.config.memory" id="AkX-lc-iTP"/>
                             </connections>
                         </textField>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gzy-FV-cnX">
+                            <rect key="frame" x="18" y="48" width="35" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="VGA:" id="GuD-zr-N0y">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MyM-S1-yf7">
+                            <rect key="frame" x="17" y="16" width="78" height="25"/>
+                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="wtM-6i-kDD" id="TTN-Pb-YAd">
+                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="message"/>
+                                <menu key="menu" id="bPq-Oc-JZW">
+                                    <items>
+                                        <menuItem title="Item 1" state="on" id="wtM-6i-kDD"/>
+                                        <menuItem title="Item 2" id="EvK-2K-bMc"/>
+                                        <menuItem title="Item 3" id="kxE-nL-lG6"/>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
+                            <connections>
+                                <binding destination="DzG-gg-vI7" name="content" keyPath="arrangedObjects" id="V1e-N5-j5H"/>
+                                <binding destination="-2" name="selectedObject" keyPath="self.vga" previousBinding="V1e-N5-j5H" id="SMv-qD-0UR"/>
+                            </connections>
+                        </popUpButton>
                     </subviews>
                     <constraints>
                         <constraint firstItem="oNf-w8-XsR" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="0GU-aY-XJN"/>
@@ -175,6 +201,7 @@
                         <constraint firstItem="CiO-TM-tvg" firstAttribute="top" secondItem="we0-QJ-s8u" secondAttribute="bottom" constant="8" symbolic="YES" id="5XG-fR-shI"/>
                         <constraint firstItem="CiO-TM-tvg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="63B-R8-6dz"/>
                         <constraint firstItem="tB1-uK-Y8T" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="8ge-ms-ESG"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gzy-FV-cnX" secondAttribute="trailing" constant="20" symbolic="YES" id="CsZ-zE-vYZ"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="we0-QJ-s8u" secondAttribute="trailing" constant="20" symbolic="YES" id="D67-30-yB5"/>
                         <constraint firstItem="tB1-uK-Y8T" firstAttribute="top" secondItem="n4e-BU-Fob" secondAttribute="bottom" constant="20" id="DOu-lc-Pra"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="n4e-BU-Fob" secondAttribute="trailing" constant="20" symbolic="YES" id="Ddq-Kt-8NQ"/>
@@ -193,14 +220,20 @@
                         <constraint firstAttribute="trailing" secondItem="bGb-OA-GIz" secondAttribute="trailing" constant="20" symbolic="YES" id="WVN-uy-dIz"/>
                         <constraint firstItem="QB1-pu-A82" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="ZVi-EK-dEq"/>
                         <constraint firstItem="9VN-tI-6fN" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="40" id="ZaP-7C-4jL"/>
+                        <constraint firstItem="MyM-S1-yf7" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="bmY-s7-6hL"/>
                         <constraint firstAttribute="trailing" secondItem="tal-xy-AXL" secondAttribute="trailing" constant="20" symbolic="YES" id="brs-3U-I72"/>
                         <constraint firstItem="oNf-w8-XsR" firstAttribute="top" secondItem="fCE-MV-HqO" secondAttribute="bottom" constant="8" symbolic="YES" id="dnZ-St-sLV"/>
+                        <constraint firstItem="gzy-FV-cnX" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="eOi-r6-P1T"/>
                         <constraint firstItem="bGb-OA-GIz" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="fCm-xr-IeE"/>
+                        <constraint firstItem="MyM-S1-yf7" firstAttribute="top" secondItem="gzy-FV-cnX" secondAttribute="bottom" constant="8" symbolic="YES" id="lOK-hX-aEJ"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9VN-tI-6fN" secondAttribute="trailing" constant="20" symbolic="YES" id="lwr-qU-zo3"/>
                         <constraint firstItem="fCE-MV-HqO" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="mbl-Ik-6uh"/>
                         <constraint firstItem="tal-xy-AXL" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="oBN-B6-d61"/>
+                        <constraint firstAttribute="bottom" secondItem="MyM-S1-yf7" secondAttribute="bottom" constant="20" id="oP2-mj-62z"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fCE-MV-HqO" secondAttribute="trailing" constant="20" symbolic="YES" id="tJI-Lc-Ywa"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MyM-S1-yf7" secondAttribute="trailing" constant="20" symbolic="YES" id="tcv-Kz-ugg"/>
                         <constraint firstItem="we0-QJ-s8u" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="uDi-hZ-wEG"/>
+                        <constraint firstItem="gzy-FV-cnX" firstAttribute="top" secondItem="bGb-OA-GIz" secondAttribute="bottom" constant="20" id="vc4-59-Sgb"/>
                         <constraint firstItem="wUJ-4Z-j7h" firstAttribute="top" secondItem="CiO-TM-tvg" secondAttribute="bottom" constant="20" id="wLi-TU-6Zo"/>
                     </constraints>
                 </customView>

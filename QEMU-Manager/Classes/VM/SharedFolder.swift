@@ -23,7 +23,6 @@ public class SharedFolder: NSObject, Codable
     {
         case fat
         case floppy
-        case smb
     }
     
     public enum CodingKeys: String, CodingKey
@@ -82,7 +81,6 @@ extension SharedFolder.Kind: CustomStringConvertible
         {
             case "fat":    self.init( rawValue: SharedFolder.Kind.fat.rawValue )
             case "floppy": self.init( rawValue: SharedFolder.Kind.floppy.rawValue )
-            case "smb":    self.init( rawValue: SharedFolder.Kind.smb.rawValue )
             default:       return nil
         }
     }
@@ -93,7 +91,6 @@ extension SharedFolder.Kind: CustomStringConvertible
         {
             case .fat:    return "fat"
             case .floppy: return "floppy"
-            case .smb:    return "smb"
         }
     }
 }

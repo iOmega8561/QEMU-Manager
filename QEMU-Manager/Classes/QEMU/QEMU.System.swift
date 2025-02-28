@@ -52,10 +52,24 @@ extension QEMU.System
         
         var boot = vm.config.boot
         
+        if vm.config.architecture.isARM {
+            
+            arguments.append("-device")
+            arguments.append("qemu-xhci,id=xhci0")
+        }
+        
         if let cd = vm.config.cdImage, FileManager.default.fileExists( atPath: cd.path )
         {
+            let cdromParam = vm.config.architecture.isARM ? ",if=none,id=cd0":""
+            
             arguments.append( "-drive" )
-            arguments.append( "file=\( cd.path ),media=cdrom" )
+            arguments.append("file=\(cd.path),media=cdrom\(cdromParam)")
+            
+            if vm.config.architecture.isARM {
+                
+                arguments.append( "-device" )
+                arguments.append( "usb-storage,drive=cd0" )
+            }
         }
         else if boot == "d"
         {
@@ -64,81 +78,80 @@ extension QEMU.System
         
         arguments.append( "-boot" )
         arguments.append( boot )
+        
+        var diskCount: Int = 0
+        
+        vm.disks.forEach {
             
-        vm.disks.forEach
-        {
-            arguments.append( "-drive" )
-            arguments.append( "file=\( $0.url.path ),format=\( $0.disk.format ),media=disk" )
+            let diskParam = vm.config.architecture.isARM ? ",if=none,id=disk\(diskCount)" : ""
+            
+            arguments.append("-drive")
+            arguments.append("file=\($0.url.path),format=\( $0.disk.format ),media=disk\(diskParam)")
+            
+            if vm.config.architecture.isARM {
+                
+                arguments.append("-device")
+                arguments.append("nvme,drive=disk\(diskCount),id=nvme\(diskCount),serial=\($0.url.lastPathComponent)")
+            }
+            
+            diskCount += 1
         }
         
-        vm.config.sharedFolders.forEach
-        {
-            switch $0.kind
-            {
-                case .fat:
-                    
-                    arguments.append( "-drive" )
-                    arguments.append( "file=fat:rw:\( $0.url.path ),format=raw,media=disk" )
-                    
-                case .floppy:
-                    
-                    arguments.append( "-drive" )
-                    arguments.append( "file=fat:floppy:rw:\( $0.url.path ),format=raw,media=disk" )
-                    
-                case .smb:
+        vm.config.sharedFolders.forEach {
+            
+            switch $0.kind {
+            case .fat:
                 
-                    arguments.append( "-smb" )
-                    arguments.append( $0.url.path )
+                arguments.append( "-drive" )
+                arguments.append( "file=fat:rw:\( $0.url.path ),format=raw,media=disk" )
+                
+            case .floppy:
+                
+                arguments.append( "-drive" )
+                arguments.append( "file=fat:floppy:rw:\( $0.url.path ),format=raw,media=disk" )
             }
         }
-                
-        arguments.append("-audiodev")
-        arguments.append("coreaudio,id=snd0")
         
-        arguments.append("-nic")
-        arguments.append("user")
-        
-        arguments.append("-device")
-        arguments.append("qemu-xhci,id=xhci")
-        
-        arguments.append("-device")
-        arguments.append("usb-tablet")
-        
-        arguments.append("-device")
-        arguments.append("usb-kbd")
-                
-        arguments.append("-device")
-        arguments.append("intel-hda")
-        
-        arguments.append("-device")
-        arguments.append("hda-duplex,audiodev=snd0")
-        
-        if vm.config.architecture == .aarch64 {
+        if vm.config.architecture != .m68k {
             arguments.append("-device")
-            arguments.append("ramfb")
+            arguments.append("ac97")
             
-            let edk2firmware = Bundle.main.resourceURL?
-                .appendingPathComponent("QEMU")
-                .appendingPathComponent("share")
-                .appendingPathComponent("qemu")
-                .appendingPathComponent("edk2-\(vm.config.architecture.description)-code.fd")
-                .absoluteURL.path(percentEncoded: false)
-                    
-            if let edk2firmware, FileManager.default.fileExists(atPath: edk2firmware) {
-                arguments.append("-bios")
-                arguments.append(edk2firmware)
-            }
+            arguments.append("-audio")
+            arguments.append("driver=coreaudio")
             
-            arguments.append("-accel")
-            arguments.append("hvf")
+            arguments.append("-nic")
+            arguments.append("user")
         }
+        
+        if let vga = vm.config.vga {
+            arguments.append("-vga")
+            arguments.append(vga)
+        }
+        
+        if vm.config.architecture.isARM {
+            
+            arguments.append("-device")
+            arguments.append(vm.config.architecture == .arm ? "ramfb" : "virtio-ramfb")
+            
+            arguments.append("-device")
+            arguments.append("usb-tablet")
+            
+            arguments.append("-device")
+            arguments.append("usb-kbd")
+            
+            arguments.append("-bios")
+            arguments.append("edk2-\(vm.config.architecture.description)-code.fd")
+        }
+        
+        arguments.append("-accel")
+        arguments.append(vm.config.architecture == .aarch64 ? "hvf" : "tcg")
         
         arguments.append("-display")
         arguments.append("cocoa")
                 
         arguments.append( contentsOf: vm.config.arguments )
         
-        let _ = try QEMU.System( architecture: vm.config.architecture ).execute( arguments: arguments )
+        try QEMU.System(architecture: vm.config.architecture).execute( arguments: arguments )
     }
     
     public static func machines( for architecture: Config.Architecture ) -> [ ( String, String ) ]
@@ -149,6 +162,11 @@ extension QEMU.System
     public static func cpus( for architecture: Config.Architecture ) -> [ ( String, String ) ]
     {
         return QEMU.System.help( for: architecture, command: "cpu", skipLines: [ "Available CPUs:" ], skipPrefixes: [ "x86", "PowerPC" ] )
+    }
+    
+    public static func vga( for architecture: Config.Architecture ) -> [ ( String, String ) ]
+    {
+        return QEMU.System.help( for: architecture, command: "vga", skipLines: [], skipPrefixes: [] )
     }
     
     private static func help( for architecture: Config.Architecture, command: String, skipLines: [ String ], skipPrefixes: [ String ] ) -> [ ( String, String ) ]
