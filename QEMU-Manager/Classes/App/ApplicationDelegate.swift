@@ -23,6 +23,10 @@ import Cocoa
     public let aboutWindowController   = AboutWindowController()
     public let libraryWindowController = LibraryWindowController()
         
+    public func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+        return true
+    }
+    
     public func applicationDidFinishLaunching( _ notification: Notification )
     {
         self.showLibraryWindow( nil )

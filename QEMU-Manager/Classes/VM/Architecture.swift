@@ -28,13 +28,25 @@ import Foundation
     case ppc
     case riscv64
     case riscv32
+    case sparc64
+    case sparc
+    case mips64
+    case mips
+    case mips64el
+    case mipsel
     case m68k
     
     var isARM: Bool { self == .aarch64 || self == .arm }
     
     var isX86: Bool { self == .x86_64 || self == .i386 }
     
+    var isPPC: Bool { self == .ppc64 || self == .ppc }
+    
+    var isRISC: Bool { self == .riscv64 || self == .riscv32 }
+    
     var supportsUEFI: Bool { self.isARM || self.isX86 }
+    
+    var supportsPCI: Bool { self.isARM || self.isX86 || self.isPPC || self.isRISC }
     
     var edkFirmwarePath: String? {
         

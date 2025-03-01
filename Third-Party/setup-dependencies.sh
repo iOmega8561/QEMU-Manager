@@ -17,6 +17,11 @@ SCRIPTPATH=`dirname $SCRIPT`
 
 cd $SCRIPTPATH
 
+# DEPLOYMENT TARGET
+export MACOSX_DEPLOYMENT_TARGET=11.3
+export CFLAGS="-mmacosx-version-min=11.3"
+export LDFLAGS="-mmacosx-version-min=11.3"
+
 # PKG PATHS
 OPUS_PKG="$SCRIPTPATH/opus/lib/pkgconfig"
 PIXMAN_PKG="$SCRIPTPATH/pixman/lib/pkgconfig"
@@ -42,7 +47,13 @@ ppc-softmmu,\
 ppc64-softmmu,\
 riscv32-softmmu,\
 riscv64-softmmu,\
-x86_64-softmmu"
+x86_64-softmmu,\
+mips-softmmu,\
+mips64-softmmu,\
+mipsel-softmmu,\
+mips64el-softmmu,\
+sparc-softmmu,\
+sparc64-softmmu"
 
 # PCRE2
 if [ ! -d "pcre2" ]; then
@@ -178,7 +189,7 @@ rm -fr libslirp-src
 if [ ! -d "QEMU" ]; then
 
     if [ ! -d "qemu-src" ]; then
-        wget "$QEMU_UTM" -O qemu-src.tar.xz
+        wget "$QEMU_UPSTREAM" -O qemu-src.tar.xz
         tar xvJf qemu-src.tar.xz && rm qemu-src.tar.xz
         mv qemu* qemu-src
     fi
@@ -193,6 +204,7 @@ if [ ! -d "QEMU" ]; then
         --enable-coreaudio \
         --enable-cocoa \
         --enable-slirp \
+        --enable-lto \
         --disable-sdl \
         --disable-spice \
         --disable-vnc \
@@ -201,16 +213,14 @@ if [ ! -d "QEMU" ]; then
         --extra-cflags="-I$SCRIPTPATH/pixman/include \
                         -I$SCRIPTPATH/opus/include \
                         -I$SCRIPTPATH/glib/include \
-                        -I$SCRIPTPATH/libslirp/include \
-                        -mmacosx-version-min=11.3" \
+                        -I$SCRIPTPATH/libslirp/include" \
         --extra-ldflags="-L$SCRIPTPATH/pixman/lib \
                          -L$SCRIPTPATH/opus/lib \
                          -L$SCRIPTPATH/glib/lib \
                          -L$SCRIPTPATH/libslirp/lib \
                          -Bstatic -lglib-2.0 -lpixman-1 -lopus -lslirp \
                          -lc++ -lc++abi \
-                         -Bdynamic -lc -lSystem \
-                         -mmacosx-version-min=11.3"
+                         -Bdynamic -lc -lSystem"
 
     mkdir "$SCRIPTPATH/QEMU"
 

@@ -46,7 +46,7 @@ extension QEMU.System {
         
         self.help(
             command: "cpu",
-            skipLines: ["Available CPUs:"],
+            skipLines: ["Available CPU", "CPU feature flags", "Numerical features"],
             skipPrefixes: ["x86", "PowerPC"]
         )
     }
@@ -125,7 +125,7 @@ extension QEMU.System {
             arguments.append("file=fat\($0.kind == .floppy ? ":floppy" : ""):rw:\($0.url.path),format=raw,media=disk")
         }
         
-        if vm.config.architecture != .m68k {
+        if vm.config.architecture.supportsPCI {
             arguments.append("-device")
             arguments.append("ac97")
             
@@ -144,7 +144,7 @@ extension QEMU.System {
         if vm.config.architecture.isARM {
             
             arguments.append("-device")
-            arguments.append(vm.config.architecture == .arm ? "ramfb" : "virtio-ramfb")
+            arguments.append("ramfb")
             
             arguments.append("-device")
             arguments.append("usb-tablet")
@@ -193,7 +193,9 @@ extension QEMU.System {
 
             var line = rawLine.trimmingCharacters(in: .whitespaces)
             
-            if skipLines.contains(line) { continue }
+            if skipLines.contains(where: { line.contains($0) }) {
+                continue
+            }
             
             if line.isEmpty {
                 if values.isEmpty { continue }; break
