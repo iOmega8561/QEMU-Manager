@@ -153,20 +153,12 @@ extension QEMU.System {
             arguments.append("usb-kbd")
         }
         
-        if vm.config.enableUEFI && vm.config.architecture.supportsUEFI {
+        if (vm.config.enableUEFI && vm.config.architecture.supportsUEFI),
+           let firmware = vm.config.architecture.edkFirmwarePath,
+           FileManager.default.fileExists(atPath: firmware) {
             
-            let firmware = Bundle.main.resourceURL?
-                .appendingPathComponent("QEMU")
-                .appendingPathComponent("share")
-                .appendingPathComponent("qemu")
-                .appendingPathComponent("edk2-\(vm.config.architecture.description)-code.fd")
-                .absoluteURL
-                .path(percentEncoded: false)
-            
-            if let firmware {
-                arguments.append("-drive")
-                arguments.append("if=pflash,format=raw,readonly=on,file=\(firmware)")
-            }
+            arguments.append("-drive")
+            arguments.append("if=pflash,format=raw,readonly=on,file=\(firmware)")
         }
         
         arguments.append("-accel")
@@ -174,6 +166,9 @@ extension QEMU.System {
         
         arguments.append("-display")
         arguments.append("cocoa")
+        
+        arguments.append("-name")
+        arguments.append(vm.config.title)
                 
         arguments.append( contentsOf: vm.config.arguments )
         

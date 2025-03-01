@@ -19,7 +19,7 @@ import Foundation
 
 public class VGA: InfoValue
 {
-    public static var all: [ Config.Architecture : [ VGA ] ] =
+    static var all: [ Config.Architecture : [ VGA ] ] =
     {
         () -> [ Config.Architecture : [ VGA ] ] in
         

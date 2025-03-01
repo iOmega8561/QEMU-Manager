@@ -19,7 +19,7 @@ import Foundation
 
 public class Machine: InfoValue
 {
-    public static var all: [ Config.Architecture : [ Machine ] ] =
+    static var all: [ Config.Architecture : [ Machine ] ] =
     {
         () -> [ Config.Architecture : [ Machine ] ] in
         

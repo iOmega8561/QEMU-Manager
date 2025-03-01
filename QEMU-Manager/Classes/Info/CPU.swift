@@ -19,7 +19,7 @@ import Foundation
 
 public class CPU: InfoValue
 {
-    public static var all: [ Config.Architecture : [ CPU ] ] =
+    static var all: [ Config.Architecture : [ CPU ] ] =
     {
         () -> [ Config.Architecture : [ CPU ] ] in
         

@@ -17,36 +17,11 @@
 
 import Foundation
 
-public class Config: NSObject, Codable
-{
-    @objc public enum Architecture: Int
-    {
-        case aarch64
-        case arm
-        case x86_64
-        case i386
-        case ppc64
-        case ppc
-        case riscv64
-        case riscv32
-        case m68k
-        
-        var isARM: Bool {
-            self == .aarch64 || self == .arm
-        }
-        
-        var isX86: Bool {
-            self == .x86_64 || self == .i386
-        }
-        
-        var supportsUEFI: Bool {
-            self.isARM || self.isX86
-        }
-    }
+public class Config: NSObject, Codable {
     
     @objc public private( set ) dynamic var version:       UInt64           = 0
     @objc public private( set ) dynamic var uuid:          UUID             = UUID()
-    @objc public                dynamic var architecture:  Architecture     = .aarch64
+    @objc                       dynamic var architecture:  Architecture     = .aarch64
     @objc public                dynamic var machine:       String?          = nil
     @objc public                dynamic var cpu:           String?          = nil
     @objc public                dynamic var vga:           String?          = nil
@@ -157,41 +132,5 @@ public class Config: NSObject, Codable
     public func removeSharedFolder( _ folder: SharedFolder )
     {
         self.sharedFolders.removeAll { $0.uuid == folder.uuid }
-    }
-}
-
-extension Config.Architecture: CustomStringConvertible
-{
-    public init?( string: String )
-    {
-        switch string
-        {
-            case "aarch64": self.init( rawValue: Config.Architecture.aarch64.rawValue )
-            case "arm":     self.init( rawValue: Config.Architecture.arm.rawValue )
-            case "i386":    self.init( rawValue: Config.Architecture.i386.rawValue )
-            case "m68k":    self.init( rawValue: Config.Architecture.m68k.rawValue )
-            case "ppc":     self.init( rawValue: Config.Architecture.ppc.rawValue )
-            case "ppc64":   self.init( rawValue: Config.Architecture.ppc64.rawValue )
-            case "riscv32": self.init( rawValue: Config.Architecture.riscv32.rawValue )
-            case "riscv64": self.init( rawValue: Config.Architecture.riscv64.rawValue )
-            case "x86_64":  self.init( rawValue: Config.Architecture.x86_64.rawValue )
-            default:        return nil
-        }
-    }
-    
-    public var description: String
-    {
-        switch self
-        {
-            case .aarch64: return "aarch64"
-            case .arm:     return "arm"
-            case .i386:    return "i386"
-            case .m68k:    return "m68k"
-            case .ppc:     return "ppc"
-            case .ppc64:   return "ppc64"
-            case .riscv32: return "riscv32"
-            case .riscv64: return "riscv64"
-            case .x86_64:  return "x86_64"
-        }
     }
 }
