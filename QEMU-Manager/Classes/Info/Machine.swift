@@ -28,7 +28,7 @@ public class Machine: InfoValue
         
         archs.forEach
         {
-            all[ $0 ] = QEMU.System.machines( for: $0 ).map
+            all[ $0 ] = QEMU.System(arch: $0).machines().map
             {
                 Machine( name: $0.0, title: $0.1, sorting: 0 )
             }

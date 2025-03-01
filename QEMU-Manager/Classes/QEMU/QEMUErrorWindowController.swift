@@ -19,16 +19,29 @@ import Cocoa
 
 public class QEMUErrorWindowController: NSWindowController
 {
-    @objc public private( set ) dynamic var error:       QEMU.Executable.LaunchFailure
+                 private( set ) dynamic var error:       QEMU.QEMUError
     @objc public private( set ) dynamic var statusText:  String
     @objc public private( set ) dynamic var details:     String
     @objc public private( set ) dynamic var detailsFont: NSFont?
     
-    public init( error: QEMU.Executable.LaunchFailure )
-    {
+    init(error: QEMU.QEMUError) {
+        
         self.error       = error
-        self.statusText  = "Process exited with code \( self.error.status )"
-        self.details     = self.error.message
+        
+        switch error {
+        case .launchFailure(let status, let message):
+            self.statusText  = "Process exited with code \(status)"
+            self.details     = message
+            
+        case .executableDirectoryNotAvailable:
+            self.statusText  = "The executable location is not accessible"
+            self.details     = ""
+            
+        case .executableNotAvailable(let executableName):
+            self.statusText  = "The executable \(executableName) is not available"
+            self.details     = ""
+        }
+        
         self.detailsFont = NSFont.userFixedPitchFont( ofSize: NSFont.systemFontSize )
         
         if self.details.count == 0

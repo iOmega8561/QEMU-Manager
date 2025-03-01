@@ -18,88 +18,75 @@
 
 import Foundation
 
-public class QEMU
-{
-    public class Executable
-    {
-        @objc public class LaunchFailure: NSObject, Swift.Error
-        {
-            @objc public private( set ) dynamic var status:  Int
-            @objc public private( set ) dynamic var message: String
-            
-            init( status: Int, message: String )
-            {
-                self.status  = status
-                self.message = message
-            }
+struct QEMU {
+    
+    enum QEMUError: Swift.Error {
+        case launchFailure(status: Int, message: String)
+        case executableDirectoryNotAvailable
+        case executableNotAvailable(executableName: String)
+    }
+
+    let executableName: String
+    
+    private var executableDirectoryURL: URL? {
+        Bundle.main.resourceURL?
+            .appendingPathComponent("QEMU")
+            .appendingPathComponent("bin")
+    }
+    
+    private var executableURL:  URL? {
+        executableDirectoryURL?.appendingPathComponent(executableName)
+    }
+    
+    private func checkExecutableAvailability() throws {
+        
+        guard executableDirectoryURL != nil else {
+            throw QEMUError.executableDirectoryNotAvailable
         }
         
-        public private( set ) var name: String
-        public private( set ) var url:  URL?
-        
-        public init( tool: String )
-        {
-            self.name = tool
+        guard let executableURL,
+              FileManager.default.fileExists(
+                atPath: executableURL.absoluteURL.path(percentEncoded: false)
+        ) else {
             
-            if let resources = Bundle.main.resourceURL
-            {
-                self.url = resources
-                    .appendingPathComponent("QEMU")
-                    .appendingPathComponent("bin")
-                    .appendingPathComponent( tool )
-            }
-            
-        }
-        
-        @discardableResult
-        public func execute( arguments: [ String ] ) throws -> ( out: String, err: String )?
-        {
-            guard let path = self.url?.path else
-            {
-                throw Error( title: "\( self.name ) not available", message: "The QEMU tool \( self.name ) was not found." )
-            }
-            
-            let out                = Pipe()
-            let err                = Pipe()
-            let process            = Process()
-            process.launchPath     = path
-            process.arguments      = arguments
-            process.standardOutput = out
-            process.standardError  = err
-            
-            try ObjC.catchException
-            {
-                process.launch()
-                process.waitUntilExit()
-            }
-            
-            let dataOut = try? out.fileHandleForReading.readToEnd()
-            let dataErr = try? err.fileHandleForReading.readToEnd()
-            let strOut  = String( data: dataOut ?? Data(), encoding: .utf8 ) ?? ""
-            let strErr  = String( data: dataErr ?? Data(), encoding: .utf8 ) ?? ""
-            
-            if process.terminationStatus != 0
-            {
-                throw LaunchFailure( status: Int( process.terminationStatus ), message: strErr )
-            }
-            
-            return ( out: strOut, err: strErr )
+            throw QEMUError.executableNotAvailable(
+                executableName: executableName
+            )
         }
     }
     
-    public class Img: Executable
-    {
-        public init()
-        {
-            super.init( tool: "qemu-img" )
+    @discardableResult
+    func execute(arguments: [String]) throws -> (out: String, err: String)? {
+        
+        try checkExecutableAvailability()
+        
+        let out                     = Pipe()
+        let err                     = Pipe()
+        let process                 = Process()
+        process.executableURL       = executableURL
+        process.currentDirectoryURL = executableDirectoryURL
+        process.arguments           = arguments
+        process.standardOutput      = out
+        process.standardError       = err
+        
+        try ObjC.catchException {
+            process.launch()
+            process.waitUntilExit()
         }
-    }
-    
-    public class System: Executable
-    {
-        public init( architecture: Config.Architecture )
-        {
-            super.init( tool: "qemu-system-\( architecture.description )" )
+        
+        let dataOut = try? out.fileHandleForReading.readToEnd()
+        let dataErr = try? err.fileHandleForReading.readToEnd()
+        let strOut  = String( data: dataOut ?? Data(), encoding: .utf8 ) ?? ""
+        let strErr  = String( data: dataErr ?? Data(), encoding: .utf8 ) ?? ""
+        
+        if process.terminationStatus != 0 {
+            
+            throw QEMUError.launchFailure(
+                status: Int( process.terminationStatus ),
+                message: strErr
+            )
         }
+        
+        return (out: strOut, err: strErr)
     }
 }

@@ -192,6 +192,17 @@
                                 <binding destination="-2" name="selectedObject" keyPath="self.vga" previousBinding="V1e-N5-j5H" id="SMv-qD-0UR"/>
                             </connections>
                         </popUpButton>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wt2-I2-czd">
+                            <rect key="frame" x="381" y="21" width="99" height="18"/>
+                            <buttonCell key="cell" type="check" title="Enable UEFI" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="do0-ee-AXx">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.canToggleUEFI" id="8UZ-bN-G0A"/>
+                                <binding destination="-2" name="value" keyPath="self.enableUEFI" id="IVF-vI-K9P"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="oNf-w8-XsR" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="0GU-aY-XJN"/>
@@ -201,6 +212,7 @@
                         <constraint firstItem="CiO-TM-tvg" firstAttribute="top" secondItem="we0-QJ-s8u" secondAttribute="bottom" constant="8" symbolic="YES" id="5XG-fR-shI"/>
                         <constraint firstItem="CiO-TM-tvg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="63B-R8-6dz"/>
                         <constraint firstItem="tB1-uK-Y8T" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="8ge-ms-ESG"/>
+                        <constraint firstItem="Wt2-I2-czd" firstAttribute="centerY" secondItem="CiO-TM-tvg" secondAttribute="centerY" constant="221" id="CKp-mS-YrZ"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gzy-FV-cnX" secondAttribute="trailing" constant="20" symbolic="YES" id="CsZ-zE-vYZ"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="we0-QJ-s8u" secondAttribute="trailing" constant="20" symbolic="YES" id="D67-30-yB5"/>
                         <constraint firstItem="tB1-uK-Y8T" firstAttribute="top" secondItem="n4e-BU-Fob" secondAttribute="bottom" constant="20" id="DOu-lc-Pra"/>
@@ -222,6 +234,7 @@
                         <constraint firstItem="9VN-tI-6fN" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="40" id="ZaP-7C-4jL"/>
                         <constraint firstItem="MyM-S1-yf7" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="bmY-s7-6hL"/>
                         <constraint firstAttribute="trailing" secondItem="tal-xy-AXL" secondAttribute="trailing" constant="20" symbolic="YES" id="brs-3U-I72"/>
+                        <constraint firstItem="Wt2-I2-czd" firstAttribute="centerX" secondItem="tal-xy-AXL" secondAttribute="centerX" constant="181.5" id="clA-IC-Nou"/>
                         <constraint firstItem="oNf-w8-XsR" firstAttribute="top" secondItem="fCE-MV-HqO" secondAttribute="bottom" constant="8" symbolic="YES" id="dnZ-St-sLV"/>
                         <constraint firstItem="gzy-FV-cnX" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="eOi-r6-P1T"/>
                         <constraint firstItem="bGb-OA-GIz" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="fCm-xr-IeE"/>
@@ -246,5 +259,6 @@
             </constraints>
             <point key="canvasLocation" x="-179" y="512"/>
         </customView>
+        <userDefaultsController representsSharedInstance="YES" id="HfV-Tp-Ile"/>
     </objects>
 </document>

@@ -17,41 +17,46 @@
 
 import Foundation
 
-extension QEMU.Img
-{
-    static func create( url: URL, size: UInt64, format: String ) throws
-    {
-        let args =
-        [
-            "create",
-            "-f",
-            format,
-            url.path,
-            "\( size )"
-        ]
-        
-        let _ = try QEMU.Img().execute( arguments: args )
-    }
+extension QEMU {
     
-    static func info( url: URL ) throws -> [ String ]
-    {
-        let res = try QEMU.Img().execute( arguments: [ "info", url.path ] )
+    struct Img {
         
-        return res?.out.components( separatedBy: .newlines ).map { $0.trimmingCharacters( in: .whitespaces ) } ?? []
-    }
-    
-    static func size( url: URL ) throws -> String?
-    {
-        let info = try QEMU.Img.info( url: url )
+        private let qemu: QEMU
         
-        for line in info
-        {
-            if line.hasPrefix( "virtual size:" )
-            {
-                return String( line.suffix( from: line.index( line.startIndex, offsetBy: 13 ) ) ).trimmingCharacters( in: .whitespaces )
-            }
+        func create( url: URL, size: UInt64, format: String ) throws {
+            try qemu.execute(
+                arguments: ["create", "-f", format,
+                            url.path(percentEncoded: false), "\(size)"]
+            )
         }
         
-        return nil
+        func info( url: URL ) throws -> [String] {
+            
+            let res = try qemu.execute(
+                arguments: ["info", url.path(percentEncoded: false)]
+            )
+            
+            return res?.out.components(
+                separatedBy: .newlines
+            ).map { $0.trimmingCharacters(in: .whitespaces) } ?? []
+        }
+        
+        func size( url: URL ) throws -> String? {
+            
+            let info = try self.info(url: url)
+            
+            for line in info {
+                
+                if line.hasPrefix("virtual size:") {
+                    
+                    return .init(line.suffix(
+                        from: line.index(line.startIndex, offsetBy: 13)
+                    )).trimmingCharacters( in: .whitespaces )
+                }
+                
+            }; return nil
+        }
+        
+        init() { self.qemu = QEMU(executableName: "qemu-img") }
     }
 }

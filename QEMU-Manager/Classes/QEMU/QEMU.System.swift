@@ -18,37 +18,60 @@
 
 import Foundation
 
-extension QEMU.System
-{
-    public static func start( vm: VirtualMachine ) throws
-    {
-        var arguments: [ String ] = []
+extension QEMU {
+    
+    struct System {
+        
+        private let architecture: Config.Architecture
+        
+        private let qemu: QEMU
+        
+        init(arch: Config.Architecture) {
+            self.architecture = arch
+            self.qemu = QEMU(executableName: "qemu-system-\(arch.description)")
+        }
+    }
+}
+
+extension QEMU.System {
+
+    func vga() -> [(String, String)] { self.help(command: "vga") }
+    
+    func machines() -> [(String, String)] {
+        
+        self.help(command: "machine", skipLines: ["Supported machines are:"])
+    }
+    
+    func cpus() -> [(String, String)] {
+        
+        self.help(
+            command: "cpu",
+            skipLines: ["Available CPUs:"],
+            skipPrefixes: ["x86", "PowerPC"]
+        )
+    }
+    
+    func start(vm: VirtualMachine) throws {
+        
+        var arguments: [String] = []
         
         arguments.append( "-m" )
-        arguments.append( SizeFormatter().string( from: NSNumber( value: vm.config.memory ), style: .qemu ) )
+        arguments.append(SizeFormatter().string(from: NSNumber(value: vm.config.memory), style: .qemu))
         
-        if let machine = vm.config.machine, machine.count > 0
-        {
-            arguments.append( "-M" )
-            arguments.append( machine )
+        if let machine = vm.config.machine, machine.count > 0 {
+            
+            arguments.append("-M")
+            arguments.append(machine)
         }
         
-        if let cpu = vm.config.cpu, cpu.count > 0
-        {
+        if let cpu = vm.config.cpu, cpu.count > 0 {
+            
             arguments.append( "-cpu" )
             arguments.append( cpu )
         }
         
-        if vm.config.cores > 0
-        {
-            arguments.append( "-smp" )
-            arguments.append( "\( vm.config.cores )" )
-        }
-        else
-        {
-            arguments.append( "-smp" )
-            arguments.append( "1" )
-        }
+        arguments.append( "-smp" )
+        arguments.append(vm.config.cores > 0 ? "\(vm.config.cores)" : "1")
         
         var boot = vm.config.boot
         
@@ -58,8 +81,9 @@ extension QEMU.System
             arguments.append("qemu-xhci,id=xhci0")
         }
         
-        if let cd = vm.config.cdImage, FileManager.default.fileExists( atPath: cd.path )
-        {
+        if let cd = vm.config.cdImage,
+           FileManager.default.fileExists(atPath: cd.path(percentEncoded: false)) {
+            
             let cdromParam = vm.config.architecture.isARM ? ",if=none,id=cd0":""
             
             arguments.append( "-drive" )
@@ -70,11 +94,8 @@ extension QEMU.System
                 arguments.append( "-device" )
                 arguments.append( "usb-storage,drive=cd0" )
             }
-        }
-        else if boot == "d"
-        {
-            boot = "c"
-        }
+            
+        } else if boot == "d" { boot = "c" }
         
         arguments.append( "-boot" )
         arguments.append( boot )
@@ -99,17 +120,9 @@ extension QEMU.System
         
         vm.config.sharedFolders.forEach {
             
-            switch $0.kind {
-            case .fat:
-                
-                arguments.append( "-drive" )
-                arguments.append( "file=fat:rw:\( $0.url.path ),format=raw,media=disk" )
-                
-            case .floppy:
-                
-                arguments.append( "-drive" )
-                arguments.append( "file=fat:floppy:rw:\( $0.url.path ),format=raw,media=disk" )
-            }
+            arguments.append("-drive")
+            
+            arguments.append("file=fat\($0.kind == .floppy ? ":floppy" : ""):rw:\($0.url.path),format=raw,media=disk")
         }
         
         if vm.config.architecture != .m68k {
@@ -138,9 +151,22 @@ extension QEMU.System
             
             arguments.append("-device")
             arguments.append("usb-kbd")
+        }
+        
+        if vm.config.enableUEFI && vm.config.architecture.supportsUEFI {
             
-            arguments.append("-bios")
-            arguments.append("edk2-\(vm.config.architecture.description)-code.fd")
+            let firmware = Bundle.main.resourceURL?
+                .appendingPathComponent("QEMU")
+                .appendingPathComponent("share")
+                .appendingPathComponent("qemu")
+                .appendingPathComponent("edk2-\(vm.config.architecture.description)-code.fd")
+                .absoluteURL
+                .path(percentEncoded: false)
+            
+            if let firmware {
+                arguments.append("-drive")
+                arguments.append("if=pflash,format=raw,readonly=on,file=\(firmware)")
+            }
         }
         
         arguments.append("-accel")
@@ -151,98 +177,52 @@ extension QEMU.System
                 
         arguments.append( contentsOf: vm.config.arguments )
         
-        try QEMU.System(architecture: vm.config.architecture).execute( arguments: arguments )
+        try qemu.execute(arguments: arguments)
     }
     
-    public static func machines( for architecture: Config.Architecture ) -> [ ( String, String ) ]
-    {
-        return QEMU.System.help( for: architecture, command: "machine", skipLines: [ "Supported machines are:" ], skipPrefixes: [] )
-    }
-    
-    public static func cpus( for architecture: Config.Architecture ) -> [ ( String, String ) ]
-    {
-        return QEMU.System.help( for: architecture, command: "cpu", skipLines: [ "Available CPUs:" ], skipPrefixes: [ "x86", "PowerPC" ] )
-    }
-    
-    public static func vga( for architecture: Config.Architecture ) -> [ ( String, String ) ]
-    {
-        return QEMU.System.help( for: architecture, command: "vga", skipLines: [], skipPrefixes: [] )
-    }
-    
-    private static func help( for architecture: Config.Architecture, command: String, skipLines: [ String ], skipPrefixes: [ String ] ) -> [ ( String, String ) ]
-    {
-        do
-        {
-            let res = try QEMU.System( architecture: architecture ).execute( arguments: [ "-\( command )", "help" ] )
+    func help(
+        command: String,
+        skipLines: [String] = [],
+        skipPrefixes: [String] = []
+        
+    ) -> [(String, String)] {
+
+        let result = try? qemu.execute(arguments: ["-\(command)", "help"])
+
+        guard let result  else { return [] }
+        
+        let lines = result.out.components(separatedBy: .newlines)
+        var values: [(String, String)] = []
+        
+        for rawLine in lines {
+
+            var line = rawLine.trimmingCharacters(in: .whitespaces)
             
-            guard let lines = res?.out.components( separatedBy: .newlines ) else
-            {
-                return []
+            if skipLines.contains(line) { continue }
+            
+            if line.isEmpty {
+                if values.isEmpty { continue }; break
             }
             
-            var values: [ ( String, String ) ] = []
-            
-            for var line in lines
-            {
-                line = line.trimmingCharacters( in: .whitespaces )
-                
-                if skipLines.contains( line )
-                {
-                    continue
-                }
-                
-                if line.count == 0
-                {
-                    if values.isEmpty
-                    {
-                        continue
-                    }
-                    else
-                    {
-                        break
-                    }
-                }
-                
-                skipPrefixes.forEach
-                {
-                    if line.hasPrefix( "\( $0 ) " )
-                    {
-                        line = String( line.dropFirst( $0.count + 1 ) )
-                    }
-                }
-                
-                do
-                {
-                    let regex = try NSRegularExpression( pattern: #"([^\s]+)\s+(.*)"#, options: [] )
-                    
-                    guard let match = regex.matches( in: line, options: [], range: NSRange( location: 0, length: line.count ) ).first else
-                    {
-                        values.append( ( line, line ) )
-                        
-                        continue
-                    }
-                    
-                    if match.numberOfRanges != 3
-                    {
-                        break;
-                    }
-                    
-                    let s1 = ( line as NSString ).substring( with: match.range( at: 1 ) )
-                    let s2 = ( line as NSString ).substring( with: match.range( at: 2 ) )
-                    
-                    values.append( ( s1, s2 ) )
-                }
-                catch
-                {
-                    break
-                }
+            for prefix in skipPrefixes where line.hasPrefix(prefix + " ") {
+                line.removeFirst(prefix.count + 1)
             }
             
-            return values
+            let parts = line.split(
+                separator: " ",
+                maxSplits: 1,
+                omittingEmptySubsequences: false
+            )
+            
+            if parts.count == 2 {
+                
+                let key   = String(parts[0])
+                let value = String(parts[1]).trimmingCharacters(in: .whitespaces)
+                values.append((key, value))
+                
+            } else { values.append((line, line)) }
         }
-        catch
-        {
-            return []
-        }
+        
+        return values
     }
 }

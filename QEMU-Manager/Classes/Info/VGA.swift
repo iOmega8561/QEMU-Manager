@@ -28,7 +28,7 @@ public class VGA: InfoValue
         
         archs.forEach
         {
-            all[ $0 ] = QEMU.System.vga( for: $0 ).map
+            all[ $0 ] = QEMU.System(arch: $0).vga().map
             {
                 VGA( name: $0.0, title: $0.1, sorting: 0 )
             }

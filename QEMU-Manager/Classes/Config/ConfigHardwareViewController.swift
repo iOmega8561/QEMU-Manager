@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +38,7 @@ public class ConfigHardwareViewController: ConfigViewController
             if let arch = Config.Architecture( rawValue: self.architecture )
             {
                 self.vm.config.architecture = arch
+                self.enableUEFI = self.enableUEFI && canToggleUEFI
             }
             
             self.updateMachines()
@@ -88,6 +90,16 @@ public class ConfigHardwareViewController: ConfigViewController
                 self.vm.config.vga = nil
             }
         }
+    }
+    
+    @objc dynamic var enableUEFI: Bool = false {
+        didSet {
+            vm.config.enableUEFI = enableUEFI
+        }
+    }
+    
+    @objc dynamic var canToggleUEFI: Bool {
+        Config.Architecture(rawValue: self.architecture)?.supportsUEFI ?? false
     }
     
     public init( vm: VirtualMachine, sorting: Int )

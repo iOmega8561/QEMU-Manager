@@ -28,7 +28,7 @@ public class CPU: InfoValue
         
         archs.forEach
         {
-            all[ $0 ] = QEMU.System.cpus( for: $0 ).map
+            all[ $0 ] = QEMU.System(arch: $0).cpus().map
             {
                 CPU( name: $0.0, title: $0.1, sorting: 0 )
             }

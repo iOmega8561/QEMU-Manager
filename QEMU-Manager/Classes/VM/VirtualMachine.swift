@@ -149,24 +149,24 @@ public class VirtualMachine: NSObject
             {
                 do
                 {
-                    try QEMU.System.start( vm: self )
+                    try QEMU.System(arch: self.config.architecture).start(vm: self)
                     
                     DispatchQueue.main.async
                     {
                         self.running = false
                     }
                 }
-                catch let error as QEMU.Executable.LaunchFailure
+                catch let error as QEMU.QEMUError
                 {
                     DispatchQueue.main.async
                     {
                         self.errorWindowController?.window?.close()
                         
-                        self.errorWindowController = QEMUErrorWindowController( error: error )
+                        self.errorWindowController = QEMUErrorWindowController(error: error)
                         self.running               = false
                         
                         self.errorWindowController?.window?.center()
-                        self.errorWindowController?.window?.makeKeyAndOrderFront( nil )
+                        self.errorWindowController?.window?.makeKeyAndOrderFront(nil)
                     }
                 }
                 catch let error

@@ -113,7 +113,7 @@ public class NewDiskWindowController: NSWindowController
             
             do
             {
-                try QEMU.Img.create( url: URL( fileURLWithPath: path ), size: self.size, format: disk.format )
+                try QEMU.Img().create( url: URL( fileURLWithPath: path ), size: self.size, format: disk.format )
                 self.vm.config.addDisk( disk )
                 try self.vm.save()
                 

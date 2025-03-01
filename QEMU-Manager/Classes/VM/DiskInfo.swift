@@ -42,7 +42,7 @@ public class DiskInfo: NSObject
         
         do
         {
-            guard let size   = try QEMU.Img.size( url: self.url ),
+            guard let size   = try QEMU.Img().size(url: self.url),
                   let number = SizeFormatter().number( from: size )
             else
             {

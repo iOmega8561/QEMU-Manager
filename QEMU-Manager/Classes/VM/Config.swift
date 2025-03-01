@@ -34,6 +34,14 @@ public class Config: NSObject, Codable
         var isARM: Bool {
             self == .aarch64 || self == .arm
         }
+        
+        var isX86: Bool {
+            self == .x86_64 || self == .i386
+        }
+        
+        var supportsUEFI: Bool {
+            self.isARM || self.isX86
+        }
     }
     
     @objc public private( set ) dynamic var version:       UInt64           = 0
@@ -44,6 +52,7 @@ public class Config: NSObject, Codable
     @objc public                dynamic var vga:           String?          = nil
     @objc public                dynamic var cores:         UInt64           = 1
     @objc public                dynamic var memory:        UInt64           = 2147483648
+    @objc public                dynamic var enableUEFI:    Bool             = false
     @objc public                dynamic var title:         String           = "Untitled"
     @objc public                dynamic var icon:          String?          = nil
     @objc public private( set ) dynamic var disks:         [ Disk ]         = []
@@ -65,6 +74,7 @@ public class Config: NSObject, Codable
         case vga
         case cores
         case memory
+        case enableUEFI
         case title
         case icon
         case disks
@@ -91,6 +101,7 @@ public class Config: NSObject, Codable
         self.vga           = try values.decode( String?.self,          forKey: .vga )
         self.cores         = try values.decode( UInt64.self,           forKey: .cores )
         self.memory        = try values.decode( UInt64.self,           forKey: .memory )
+        self.enableUEFI    = try values.decode( Bool.self,             forKey: .enableUEFI )
         self.title         = try values.decode( String.self,           forKey: .title )
         self.disks         = try values.decode( [ Disk ].self,         forKey: .disks )
         self.cdImage       = try values.decode( URL?.self,             forKey: .cdImage )
@@ -118,6 +129,7 @@ public class Config: NSObject, Codable
         try container.encode( self.vga,                      forKey: .vga )
         try container.encode( self.cores,                    forKey: .cores )
         try container.encode( self.memory,                   forKey: .memory )
+        try container.encode( self.enableUEFI,               forKey: .enableUEFI )
         try container.encode( self.title,                    forKey: .title )
         try container.encode( self.icon,                     forKey: .icon )
         try container.encode( self.disks,                    forKey: .disks )
