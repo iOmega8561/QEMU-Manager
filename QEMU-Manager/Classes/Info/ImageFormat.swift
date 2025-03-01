@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +18,15 @@
 
 import Foundation
 
-public class ImageFormat: InfoValue
-{
-    public static var all: [ ImageFormat ] =
-    {
-        return [
-            ImageFormat( name: "qcow2", title: "QCOW2 (KVM, Xen)", sorting: 0 ),
-            ImageFormat( name: "qed",   title: "QED (KVM)",        sorting: 1 ),
-            ImageFormat( name: "raw",   title: "Raw",              sorting: 2 ),
-            ImageFormat( name: "vdi",   title: "VDI (VirtualBox)", sorting: 3 ),
-            ImageFormat( name: "vpc",   title: "VHD (Hyper-V)",    sorting: 4 ),
-            ImageFormat( name: "vmdk",  title: "VMDK (VMware)",    sorting: 5 ),
-        ]
-    }()
+class ImageFormat: InfoValue {
+    
+    static let all: [ImageFormat] = [
+        
+        ImageFormat(name: "qcow2", title: "QCOW2 (KVM, Xen)", sorting: 0),
+        ImageFormat(name: "qed",   title: "QED (KVM)",        sorting: 1),
+        ImageFormat(name: "raw",   title: "Raw",              sorting: 2),
+        ImageFormat(name: "vdi",   title: "VDI (VirtualBox)", sorting: 3),
+        ImageFormat(name: "vpc",   title: "VHD (Hyper-V)",    sorting: 4),
+        ImageFormat(name: "vmdk",  title: "VMDK (VMware)",    sorting: 5),
+    ]
 }

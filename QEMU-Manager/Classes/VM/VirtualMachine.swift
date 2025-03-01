@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +25,7 @@ public class VirtualMachine: NSObject
         case invalidURL
     }
     
-    @objc public private( set ) dynamic var config:   Config
+    @objc        private( set ) dynamic var config:   Config
     @objc public private( set ) dynamic var url:      URL?
     @objc public private( set ) dynamic var icon:     NSImage?
     @objc public private( set ) dynamic var running = false

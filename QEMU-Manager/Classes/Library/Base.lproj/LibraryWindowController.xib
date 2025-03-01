@@ -183,7 +183,7 @@ DQ
                                                                                 <font key="font" metaFont="cellTitle"/>
                                                                             </buttonCell>
                                                                             <connections>
-                                                                                <binding destination="hvX-zT-ATA" name="title" keyPath="objectValue.config.architecture" id="6JX-cu-sFB">
+                                                                                <binding destination="hvX-zT-ATA" name="title" keyPath="objectValue.config.architecture" id="Smd-FK-XJK">
                                                                                     <dictionary key="options">
                                                                                         <string key="NSValueTransformerName">ArchitectureToString</string>
                                                                                     </dictionary>

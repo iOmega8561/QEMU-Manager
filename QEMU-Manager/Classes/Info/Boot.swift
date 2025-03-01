@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +18,11 @@
 
 import Foundation
 
-public class Boot: InfoValue
-{
-    public static var all: [ Boot ] =
-    {
-        return [
-            Boot( name: "d", title: "CD (if available)", sorting: 0 ),
-            Boot( name: "c", title: "Disk",              sorting: 1 ),
-            Boot( name: "n", title: "Network",           sorting: 2 ),
-        ]
-    }()
+class Boot: InfoValue {
+    
+    static let all: [Boot] = [
+        Boot(name: "d", title: "CD (if available)", sorting: 0),
+        Boot(name: "c", title: "Disk",              sorting: 1),
+        Boot(name: "n", title: "Network",           sorting: 2),
+    ]
 }

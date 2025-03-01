@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,7 +16,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="500" height="348"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1025"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="950"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="500" height="266"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -29,7 +29,7 @@
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Alert" id="KQm-Ak-Vn2"/>
                     </imageView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jU8-O7-6pY">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jU8-O7-6pY">
                         <rect key="frame" x="138" y="181" width="66" height="31"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="03C-RM-Rwn">
                             <font key="font" textStyle="largeTitle" name=".SFNS-Regular"/>
@@ -40,7 +40,7 @@
                             <binding destination="-2" name="value" keyPath="self.window.title" id="DX3-Wr-Flh"/>
                         </connections>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TS9-Zq-7e5">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TS9-Zq-7e5">
                         <rect key="frame" x="138" y="157" width="37" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="dF5-ZM-LjT">
                             <font key="font" metaFont="system"/>
@@ -54,7 +54,7 @@
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="PpM-OR-BRl">
                         <rect key="frame" x="12" y="115" width="476" height="5"/>
                     </box>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vHg-md-YdS">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vHg-md-YdS">
                         <rect key="frame" x="18" y="93" width="50" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Details:" id="G9k-1H-48i">
                             <font key="font" metaFont="system"/>
@@ -62,7 +62,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Hpw-Lu-2Ff">
+                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Hpw-Lu-2Ff">
                         <rect key="frame" x="18" y="69" width="464" height="16"/>
                         <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="O7L-h4-l0p">
                             <font key="font" metaFont="system"/>
@@ -70,8 +70,8 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="-2" name="font" keyPath="self.detailsFont" id="H7Z-e0-KGv"/>
                             <binding destination="-2" name="value" keyPath="self.details" id="1cN-NY-nI4"/>
+                            <binding destination="-2" name="font" keyPath="self.detailsFont" id="H7Z-e0-KGv"/>
                         </connections>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="sWy-EF-5Q5">
@@ -79,9 +79,6 @@
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FRW-Uw-TkY">
                         <rect key="frame" x="398" y="13" width="89" height="32"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="dWD-VB-Oy4"/>
-                        </constraints>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x4A-5g-H6n">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -89,6 +86,9 @@
 DQ
 </string>
                         </buttonCell>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="dWD-VB-Oy4"/>
+                        </constraints>
                         <connections>
                             <action selector="ok:" target="-2" id="gUO-VC-wIJ"/>
                         </connections>

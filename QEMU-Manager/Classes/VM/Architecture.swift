@@ -17,21 +17,33 @@
  ******************************************************************************/
 
 import Foundation
-
-class Machine: InfoValue {
     
-    static var all: [Architecture: [Machine]] = {
+@objc enum Architecture: Int, CaseIterable {
         
-        var all: [Architecture: [Machine]] = [:]
+    case aarch64
+    case arm
+    case x86_64
+    case i386
+    case ppc64
+    case ppc
+    case riscv64
+    case riscv32
+    case m68k
+    
+    var isARM: Bool { self == .aarch64 || self == .arm }
+    
+    var isX86: Bool { self == .x86_64 || self == .i386 }
+    
+    var supportsUEFI: Bool { self.isARM || self.isX86 }
+    
+    var edkFirmwarePath: String? {
         
-        Architecture.allCases.forEach { arch in
-            
-            all[arch] = QEMU.System(arch: arch).machines().map { machine in
-                
-                Machine(name: machine.0, title: machine.1, sorting: 0)
-            }
-        }
-        
-        return all
-    }()
+        Bundle.main.resourceURL?
+            .appendingPathComponent("QEMU")
+            .appendingPathComponent("share")
+            .appendingPathComponent("qemu")
+            .appendingPathComponent("edk2-\(self.description)-code.fd")
+            .absoluteURL
+            .path(percentEncoded: false)
+    }
 }

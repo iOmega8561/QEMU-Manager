@@ -25,7 +25,7 @@ public class NewDiskWindowController: NSWindowController
     @objc public private( set ) dynamic var min:     UInt64
     @objc public private( set ) dynamic var max:     UInt64
     @objc public private( set ) dynamic var loading: Bool
-    @objc public private( set ) dynamic var format:  ImageFormat?
+    @objc        private( set ) dynamic var format:  ImageFormat?
     
     @IBOutlet private var formatter: SizeFormatter!
     @IBOutlet private var formats:   NSArrayController!

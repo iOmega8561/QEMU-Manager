@@ -22,13 +22,13 @@ extension QEMU {
     
     struct System {
         
-        private let architecture: Config.Architecture
+        private let architecture: Architecture
         
         private let qemu: QEMU
         
-        init(arch: Config.Architecture) {
+        init(arch: Architecture) {
             self.architecture = arch
-            self.qemu = QEMU(executableName: "qemu-system-\(arch.description)")
+            self.qemu = QEMU(executableName: "qemu-system-\(arch.stringRawValue)")
         }
     }
 }

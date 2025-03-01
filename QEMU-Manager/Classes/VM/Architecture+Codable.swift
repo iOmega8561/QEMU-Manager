@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,20 +17,27 @@
 
 import Foundation
 
-class Machine: InfoValue {
+extension Architecture: Codable {
     
-    static var all: [Architecture: [Machine]] = {
+    enum Error: Swift.Error { case invalidArchitecture }
+    
+    func encode(to encoder: any Encoder) throws {
         
-        var all: [Architecture: [Machine]] = [:]
+        var container = encoder.singleValueContainer()
         
-        Architecture.allCases.forEach { arch in
-            
-            all[arch] = QEMU.System(arch: arch).machines().map { machine in
+        try container.encode(self.stringRawValue)
+    }
+    
+    init(from decoder: any Decoder) throws {
+        
+        let container = try decoder.singleValueContainer()
+
+        let value = try container.decode(String.self)
                 
-                Machine(name: machine.0, title: machine.1, sorting: 0)
-            }
+        guard let architecture = Architecture(string: value) else {
+            throw Error.invalidArchitecture
         }
-        
-        return all
-    }()
+                
+        self = architecture
+    }
 }

@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,20 +18,17 @@
 
 import Foundation
 
-public class CPU: InfoValue
-{
-    static var all: [ Config.Architecture : [ CPU ] ] =
-    {
-        () -> [ Config.Architecture : [ CPU ] ] in
+class CPU: InfoValue {
+    
+    static var all: [Architecture: [CPU]] = {
         
-        let archs: [ Config.Architecture ]           = [ .aarch64, .arm, .i386, .x86_64, .ppc, .ppc64, .riscv32, .riscv64, .m68k ]
-        var all:   [ Config.Architecture : [ CPU ] ] = [:]
+        var all: [Architecture : [CPU]] = [:]
         
-        archs.forEach
-        {
-            all[ $0 ] = QEMU.System(arch: $0).cpus().map
-            {
-                CPU( name: $0.0, title: $0.1, sorting: 0 )
+        Architecture.allCases.forEach { arch in
+            
+            all[arch] = QEMU.System(arch: arch).cpus().map { cpu in
+                
+                CPU(name: cpu.0, title: cpu.1, sorting: 0)
             }
         }
         

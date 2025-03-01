@@ -35,7 +35,7 @@ public class ConfigHardwareViewController: ConfigViewController
     {
         didSet
         {
-            if let arch = Config.Architecture( rawValue: self.architecture )
+            if let arch = Architecture( rawValue: self.architecture )
             {
                 self.vm.config.architecture = arch
                 self.enableUEFI = self.enableUEFI && canToggleUEFI
@@ -99,7 +99,7 @@ public class ConfigHardwareViewController: ConfigViewController
     }
     
     @objc dynamic var canToggleUEFI: Bool {
-        Config.Architecture(rawValue: self.architecture)?.supportsUEFI ?? false
+        Architecture(rawValue: self.architecture)?.supportsUEFI ?? false
     }
     
     public init( vm: VirtualMachine, sorting: Int )
@@ -164,7 +164,7 @@ public class ConfigHardwareViewController: ConfigViewController
         
         self.machines.addObject( unknown )
         
-        guard let arch     = Config.Architecture( rawValue: self.architecture ),
+        guard let arch     = Architecture( rawValue: self.architecture ),
               let machines = Machine.all[ arch ]
         else
         {
@@ -189,7 +189,7 @@ public class ConfigHardwareViewController: ConfigViewController
         
         self.cpus.addObject( unknown )
         
-        guard let arch = Config.Architecture( rawValue: self.architecture ),
+        guard let arch = Architecture( rawValue: self.architecture ),
               let cpus = CPU.all[ arch ]
         else
         {
@@ -214,7 +214,7 @@ public class ConfigHardwareViewController: ConfigViewController
         
         self.vgas.addObject( unknown )
         
-        guard let arch = Config.Architecture( rawValue: self.architecture ),
+        guard let arch = Architecture( rawValue: self.architecture ),
               let vgas = VGA.all[ arch ]
         else
         {
