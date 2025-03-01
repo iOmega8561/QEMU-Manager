@@ -42,8 +42,8 @@ import Foundation
             .appendingPathComponent("QEMU")
             .appendingPathComponent("share")
             .appendingPathComponent("qemu")
-            .appendingPathComponent("edk2-\(self.description)-code.fd")
+            .appendingPathComponent("edk2-\(self.stringRawValue)-code.fd")
             .absoluteURL
-            .path(percentEncoded: false)
+            .path
     }
 }

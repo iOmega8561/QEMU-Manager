@@ -82,7 +82,7 @@ extension QEMU.System {
         }
         
         if let cd = vm.config.cdImage,
-           FileManager.default.fileExists(atPath: cd.path(percentEncoded: false)) {
+           FileManager.default.fileExists(atPath: cd.path) {
             
             let cdromParam = vm.config.architecture.isARM ? ",if=none,id=cd0":""
             

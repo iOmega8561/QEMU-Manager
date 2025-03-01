@@ -46,7 +46,7 @@ struct QEMU {
         
         guard let executableURL,
               FileManager.default.fileExists(
-                atPath: executableURL.absoluteURL.path(percentEncoded: false)
+                atPath: executableURL.absoluteURL.path
         ) else {
             
             throw QEMUError.executableNotAvailable(

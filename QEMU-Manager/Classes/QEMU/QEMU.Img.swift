@@ -26,14 +26,14 @@ extension QEMU {
         func create( url: URL, size: UInt64, format: String ) throws {
             try qemu.execute(
                 arguments: ["create", "-f", format,
-                            url.path(percentEncoded: false), "\(size)"]
+                            url.path, "\(size)"]
             )
         }
         
         func info( url: URL ) throws -> [String] {
             
             let res = try qemu.execute(
-                arguments: ["info", url.path(percentEncoded: false)]
+                arguments: ["info", url.path]
             )
             
             return res?.out.components(

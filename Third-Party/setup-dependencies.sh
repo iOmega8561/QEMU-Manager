@@ -201,14 +201,16 @@ if [ ! -d "QEMU" ]; then
         --extra-cflags="-I$SCRIPTPATH/pixman/include \
                         -I$SCRIPTPATH/opus/include \
                         -I$SCRIPTPATH/glib/include \
-                        -I$SCRIPTPATH/libslirp/include" \
+                        -I$SCRIPTPATH/libslirp/include \
+                        -mmacosx-version-min=11.3" \
         --extra-ldflags="-L$SCRIPTPATH/pixman/lib \
                          -L$SCRIPTPATH/opus/lib \
                          -L$SCRIPTPATH/glib/lib \
                          -L$SCRIPTPATH/libslirp/lib \
                          -Bstatic -lglib-2.0 -lpixman-1 -lopus -lslirp \
                          -lc++ -lc++abi \
-                         -Bdynamic -lc -lSystem"
+                         -Bdynamic -lc -lSystem \
+                         -mmacosx-version-min=11.3"
 
     mkdir "$SCRIPTPATH/QEMU"
 
