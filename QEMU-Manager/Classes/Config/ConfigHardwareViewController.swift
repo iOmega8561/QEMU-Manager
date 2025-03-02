@@ -18,213 +18,89 @@
 
 import Cocoa
 
-public class ConfigHardwareViewController: ConfigViewController
-{
+class ConfigHardwareViewController: ConfigViewController {
+    
     @IBOutlet private var sizeFormatter: SizeFormatter!
     @IBOutlet private var machines:      NSArrayController!
     @IBOutlet private var cpus:          NSArrayController!
     @IBOutlet private var vgas:          NSArrayController!
     @IBOutlet private var cores:         NSArrayController!
+    @IBOutlet private var audios:        NSArrayController!
     
     @objc private dynamic var minCores:     UInt64
     @objc private dynamic var maxCores:     UInt64
     @objc private dynamic var minMemory:    UInt64
     @objc private dynamic var maxMemory:    UInt64
     @objc private dynamic var vm:           VirtualMachine
-    @objc private dynamic var architecture: Int
-    {
-        didSet
-        {
-            if let arch = Architecture( rawValue: self.architecture )
-            {
-                self.vm.config.architecture = arch
-                self.enableUEFI = self.enableUEFI && canToggleUEFI
-            }
-            
-            self.updateMachines()
-            self.updateCPUs()
-            self.updateVGAs()
-        }
-    }
     
-    @objc private dynamic var machine: Machine?
-    {
-        didSet
-        {
-            if let machine = self.machine, machine.sorting != -1
-            {
-                self.vm.config.machine = machine.name
-            }
-            else
-            {
-                self.vm.config.machine = nil
-            }
-        }
-    }
+    @objc private dynamic var machine: Machine? { didSet { set(new: machine, to: &vm.config.machine) } }
+    @objc private dynamic var cpu: CPU?         { didSet { set(new: cpu, to: &vm.config.cpu) } }
+    @objc private dynamic var vga: VGA?         { didSet { set(new: vga, to: &vm.config.vga) } }
+    @objc private dynamic var audio: Audio?     { didSet { set(new: audio, to: &vm.config.audio) } }
     
-    @objc private dynamic var cpu: CPU?
-    {
-        didSet
-        {
-            if let cpu = self.cpu, cpu.sorting != -1
-            {
-                self.vm.config.cpu = cpu.name
-            }
-            else
-            {
-                self.vm.config.cpu = nil
-            }
-        }
-    }
-    
-    @objc private dynamic var vga: VGA?
-    {
-        didSet
-        {
-            if let vga = self.vga, vga.sorting != -1
-            {
-                self.vm.config.vga = vga.name
-            }
-            else
-            {
-                self.vm.config.vga = nil
-            }
-        }
-    }
-    
-    @objc dynamic var enableUEFI: Bool = false {
-        didSet {
-            vm.config.enableUEFI = enableUEFI
-        }
+    @objc dynamic var enableUEFI: Bool {
+        get { vm.config.enableUEFI }
+        set { vm.config.enableUEFI = newValue }
     }
     
     @objc dynamic var canToggleUEFI: Bool {
         Architecture(rawValue: self.architecture)?.supportsUEFI ?? false
     }
     
-    public init( vm: VirtualMachine, sorting: Int )
-    {
+    @objc private dynamic var architecture: Int {
+        didSet {
+            if let arch = Architecture(rawValue: self.architecture) {
+                
+                self.vm.config.architecture = arch
+                self.enableUEFI  = self.enableUEFI && canToggleUEFI
+                
+            }; self.update()
+        }
+    }
+    
+    override var nibName: NSNib.Name? { "ConfigHardwareViewController" }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let sortDescriptors = [
+            NSSortDescriptor(key: "sorting", ascending: true),
+            NSSortDescriptor(key: "name",    ascending: true),
+            NSSortDescriptor(key: "title",   ascending: true)
+        ]
+        
+        self.sizeFormatter.min = self.minMemory
+        self.sizeFormatter.max = self.maxMemory
+        self.machines.sortDescriptors = sortDescriptors
+        self.cpus.sortDescriptors = sortDescriptors
+        self.update()
+        
+        for i in self.minCores ..< self.maxCores {
+            self.cores.addObject(i)
+        }
+    }
+    
+    private func set<T: Defaultable>(new: T?, to value: inout String?)  {
+        if let new, new.sorting != -1 { value = new.name } else { value = nil }
+    }
+    
+    private func update() {
+        (machines.content, machine) = Machine.fetchValues(for: architecture, vm.config.machine)
+        (cpus.content, cpu)         = CPU.fetchValues(for: architecture, vm.config.cpu)
+        (vgas.content, vga)         = VGA.fetchValues(for: architecture, vm.config.vga)
+        (audios.content, audio)     = Audio.fetchValues(for: architecture, vm.config.audio)
+    }
+    
+    init(vm: VirtualMachine, sorting: Int) {
         self.minCores     = 1
-        self.maxCores     = UInt64( ProcessInfo().processorCount )
+        self.maxCores     = UInt64(ProcessInfo().processorCount)
         self.minMemory    = 1024 * 1024
         self.maxMemory    = ProcessInfo().physicalMemory / 2
         self.vm           = vm
         self.architecture = vm.config.architecture.rawValue
         
-        super.init( title: "Hardware", icon: NSImage( named: "HardwareTemplate" ), sorting: sorting )
+        super.init(title: "Hardware", icon: NSImage(named: "HardwareTemplate"), sorting: sorting)
     }
     
-    required init?( coder: NSCoder )
-    {
-        nil
-    }
-    
-    public override var nibName: NSNib.Name?
-    {
-        "ConfigHardwareViewController"
-    }
-    
-    public override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        
-        self.sizeFormatter.min = self.minMemory
-        self.sizeFormatter.max = self.maxMemory
-        
-        self.machines.sortDescriptors = [
-            NSSortDescriptor( key: "sorting", ascending: true ),
-            NSSortDescriptor( key: "name",    ascending: true ),
-            NSSortDescriptor( key: "title",   ascending: true )
-        ]
-        
-        self.cpus.sortDescriptors = [
-            NSSortDescriptor( key: "sorting", ascending: true ),
-            NSSortDescriptor( key: "name",    ascending: true ),
-            NSSortDescriptor( key: "title",   ascending: true )
-        ]
-        
-        self.updateMachines()
-        self.updateCPUs()
-        self.updateVGAs()
-        
-        for i in self.minCores ..< self.maxCores
-        {
-            self.cores.addObject( i )
-        }
-    }
-    
-    private func updateMachines()
-    {
-        if let existing = self.machines.content as? [ Machine ]
-        {
-            existing.forEach { self.machines.removeObject( $0 ) }
-        }
-        
-        let unknown = Machine( name: "Default", title: "Unspecified machine", sorting: -1 )
-        
-        self.machines.addObject( unknown )
-        
-        guard let arch     = Architecture( rawValue: self.architecture ),
-              let machines = Machine.all[ arch ]
-        else
-        {
-            self.machine = unknown
-            
-            return
-        }
-        
-        self.machines.add( contentsOf: machines )
-        
-        self.machine = machines.first { $0.name == vm.config.machine } ?? unknown
-    }
-    
-    private func updateCPUs()
-    {
-        if let existing = self.cpus.content as? [ CPU ]
-        {
-            existing.forEach { self.cpus.removeObject( $0 ) }
-        }
-        
-        let unknown = CPU( name: "Default", title: "Unspecified CPU", sorting: -1 )
-        
-        self.cpus.addObject( unknown )
-        
-        guard let arch = Architecture( rawValue: self.architecture ),
-              let cpus = CPU.all[ arch ]
-        else
-        {
-            self.cpu = unknown
-            
-            return
-        }
-        
-        self.cpus.add( contentsOf: cpus )
-        
-        self.cpu = cpus.first { $0.name == vm.config.cpu } ?? unknown
-    }
-    
-    private func updateVGAs()
-    {
-        if let existing = self.vgas.content as? [ VGA ]
-        {
-            existing.forEach { self.vgas.removeObject( $0 ) }
-        }
-        
-        let unknown = VGA( name: "Default", title: "Unspecified VGA", sorting: -1 )
-        
-        self.vgas.addObject( unknown )
-        
-        guard let arch = Architecture( rawValue: self.architecture ),
-              let vgas = VGA.all[ arch ]
-        else
-        {
-            self.vga = unknown
-            
-            return
-        }
-        
-        self.vgas.add( contentsOf: vgas )
-        
-        self.vga = vgas.first { $0.name == vm.config.vga } ?? unknown
-    }
+    required init?(coder: NSCoder) { nil }
 }

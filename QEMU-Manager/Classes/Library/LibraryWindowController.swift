@@ -43,8 +43,10 @@ public class LibraryWindowController: NSWindowController, NSTableViewDelegate, N
         
         DispatchQueue.global( qos: .userInitiated ).async
         {
-            let _ = Machine.all
-            let _ = CPU.all
+            let _ = Machine.allValues
+            let _ = CPU.allValues
+            let _ = VGA.allValues
+            let _ = Audio.allValues
             
             DispatchQueue.main.async
             {

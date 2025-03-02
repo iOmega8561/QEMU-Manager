@@ -75,7 +75,7 @@ extension QEMU.System {
         
         var boot = vm.config.boot
         
-        if vm.config.architecture.isARM {
+        if architecture.isARM {
             
             arguments.append("-device")
             arguments.append("qemu-xhci,id=xhci0")
@@ -84,12 +84,12 @@ extension QEMU.System {
         if let cd = vm.config.cdImage,
            FileManager.default.fileExists(atPath: cd.path) {
             
-            let cdromParam = vm.config.architecture.isARM ? ",if=none,id=cd0":""
+            let cdromParam = architecture.isARM ? ",if=none,id=cd0":""
             
             arguments.append( "-drive" )
             arguments.append("file=\(cd.path),media=cdrom\(cdromParam)")
             
-            if vm.config.architecture.isARM {
+            if architecture.isARM {
                 
                 arguments.append( "-device" )
                 arguments.append( "usb-storage,drive=cd0" )
@@ -104,12 +104,12 @@ extension QEMU.System {
         
         vm.disks.forEach {
             
-            let diskParam = vm.config.architecture.isARM ? ",if=none,id=disk\(diskCount)" : ""
+            let diskParam = architecture.isARM ? ",if=none,id=disk\(diskCount)" : ""
             
             arguments.append("-drive")
             arguments.append("file=\($0.url.path),format=\( $0.disk.format ),media=disk\(diskParam)")
             
-            if vm.config.architecture.isARM {
+            if architecture.isARM {
                 
                 arguments.append("-device")
                 arguments.append("nvme,drive=disk\(diskCount),id=nvme\(diskCount),serial=\($0.url.lastPathComponent)")
@@ -125,27 +125,27 @@ extension QEMU.System {
             arguments.append("file=fat\($0.kind == .floppy ? ":floppy" : ""):rw:\($0.url.path),format=raw,media=disk")
         }
         
-        if vm.config.architecture.supportsPCI {
+        if let audio = vm.config.audio {
+            
             arguments.append("-device")
-            arguments.append("ac97")
+            arguments.append(audio)
+            
+            if audio.contains("hda") {
+                arguments.append("-device")
+                arguments.append("hda-duplex")
+            }
             
             arguments.append("-audio")
             arguments.append("driver=coreaudio")
-            
-            arguments.append("-nic")
-            arguments.append("user")
         }
         
         if let vga = vm.config.vga {
-            arguments.append("-vga")
+            
+            arguments.append(architecture.isARM ? "-device" : "-vga")
             arguments.append(vga)
         }
         
         if vm.config.architecture.isARM {
-            
-            arguments.append("-device")
-            arguments.append("ramfb")
-            
             arguments.append("-device")
             arguments.append("usb-tablet")
             
@@ -153,12 +153,17 @@ extension QEMU.System {
             arguments.append("usb-kbd")
         }
         
-        if (vm.config.enableUEFI && vm.config.architecture.supportsUEFI),
+        if vm.config.enableUEFI,
            let firmware = vm.config.architecture.edkFirmwarePath,
            FileManager.default.fileExists(atPath: firmware) {
             
             arguments.append("-drive")
             arguments.append("if=pflash,format=raw,readonly=on,file=\(firmware)")
+        }
+        
+        if architecture.supportsPCI {
+            arguments.append("-nic")
+            arguments.append("user")
         }
         
         arguments.append("-accel")

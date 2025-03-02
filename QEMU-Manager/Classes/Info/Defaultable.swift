@@ -18,36 +18,28 @@
 
 import Foundation
 
-final class Machine: InfoValue, Defaultable {
+protocol Defaultable: InfoValue {
+        
+    static var defaultValue: Self { get }
     
-    static var defaultValue: Machine {
-        Machine(
-            name: "Default",
-            title: "Unspecified machine",
-            sorting: -1
-        )
-    }
+    static var allValues: [Architecture: [Self]] { get }
     
-    static let allValues: [Architecture: [Machine]] = {
+    static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self)
+}
+
+extension Defaultable {
+    
+    static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self) {
         
-        var values: [Architecture: [Machine]] = [:]
+        let architecture: Architecture? = .init(rawValue: archRaw)
         
-        Architecture.allCases.forEach { arch in
-            
-            values[arch] = [.defaultValue]
-            
-            values[arch]?.append(
-                
-                contentsOf: QEMU.System(arch: arch).machines().map { machine in
-        
-                    Machine(
-                        name: machine.0,
-                        title: machine.1,
-                        sorting: 0
-                    )
-            })
+        guard let architecture else {
+            return ([.defaultValue], .defaultValue)
         }
         
-        return values
-    }()
+        let values:    [Self] = Self.allValues[architecture] ?? [.defaultValue]
+        let selection: Self   = values.first { $0.name == current } ?? .defaultValue
+        
+        return (values, selection)
+    }
 }

@@ -18,20 +18,36 @@
 
 import Foundation
 
-class CPU: InfoValue {
+final class CPU: InfoValue, Defaultable {
     
-    static var all: [Architecture: [CPU]] = {
+    static var defaultValue: CPU {
+        CPU(
+            name: "Default",
+            title: "Unspecified CPU",
+            sorting: -1
+        )
+    }
+    
+    static let allValues: [Architecture: [CPU]] = {
         
-        var all: [Architecture : [CPU]] = [:]
+        var values: [Architecture : [CPU]] = [:]
         
         Architecture.allCases.forEach { arch in
             
-            all[arch] = QEMU.System(arch: arch).cpus().map { cpu in
+            values[arch] = [.defaultValue]
+            
+            values[arch]?.append(
                 
-                CPU(name: cpu.0, title: cpu.1, sorting: 0)
-            }
+                contentsOf: QEMU.System(arch: arch).cpus().map { cpu in
+                
+                    CPU(
+                        name: cpu.0,
+                        title: cpu.1,
+                        sorting: 0
+                    )
+            })
         }
         
-        return all
+        return values
     }()
 }

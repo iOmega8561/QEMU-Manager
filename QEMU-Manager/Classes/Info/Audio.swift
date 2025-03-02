@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,45 +17,36 @@
 
 import Foundation
 
-final class VGA: InfoValue, Defaultable {
+final class Audio: InfoValue, Defaultable {
     
-    static var defaultValue: VGA {
-        VGA(
+    static var defaultValue: Audio {
+        Audio(
             name: "Default",
-            title: "Unspecified VGA",
+            title: "Unspecified Audio",
             sorting: -1
         )
     }
     
-    static let allValues: [Architecture: [VGA]] = {
+    static let allValues: [Architecture : [Audio]] = {
         
-        var values: [Architecture: [VGA]] = [:]
+        var values: [Architecture : [Audio]] = [:]
         
         Architecture.allCases.forEach { arch in
             
             values[arch] = [.defaultValue]
             
-            values[arch]?.append(
+            if arch.supportsPCI {
                 
-                contentsOf: QEMU.System(arch: arch).vga().map { vga in
-                
-                    VGA(
-                        name: vga.0,
-                        title: vga.1,
-                        sorting: 0
-                    )
-            })
-            
-            if let vgas = values[arch], vgas.count == 1 {
-                values[arch]?.append(contentsOf: nonVGAdevs)
+                values[arch]?.append(contentsOf: pciAudioDevs)
             }
+            
         }
         
         return values
     }()
     
-    private static var nonVGAdevs: [VGA] {
-        [VGA(name: "ramfb",          title: "RAM Framebuffer",   sorting: 0),
-         VGA(name: "virtio-gpu-pci", title: "VirtIO GPU Device", sorting: 0)]
+    private static var pciAudioDevs: [Audio] {
+        [Audio(name: "intel-hda", title: "High Definition Audio", sorting: 0),
+         Audio(name: "ac97",      title: "Legacy Audio",          sorting: 1)]
     }
 }
