@@ -38,12 +38,12 @@ class ConfigHardwareViewController: ConfigViewController {
     @objc private dynamic var vga: VGA?         { didSet { set(new: vga, to: &vm.config.vga) } }
     @objc private dynamic var audio: Audio?     { didSet { set(new: audio, to: &vm.config.audio) } }
     
-    @objc dynamic var enableUEFI: Bool {
+    @objc private dynamic var enableUEFI: Bool {
         get { vm.config.enableUEFI }
         set { vm.config.enableUEFI = newValue }
     }
     
-    @objc dynamic var canToggleUEFI: Bool {
+    @objc private dynamic var canToggleUEFI: Bool {
         Architecture(rawValue: self.architecture)?.supportsUEFI ?? false
     }
     
