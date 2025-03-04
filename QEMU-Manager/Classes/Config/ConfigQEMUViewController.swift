@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,163 +18,98 @@
 
 import Cocoa
 
-public class ConfigQEMUViewController: ConfigViewController, NSTableViewDataSource
-{
-    private static let pasteboardType = NSPasteboard.PasteboardType( rawValue: "qemu.argument" )
+final class ConfigQEMUViewController: ConfigViewController {
     
-    @IBOutlet private var arguments: NSArrayController!
-    @IBOutlet private var tableView: NSTableView!
+    static let pasteboardType: NSPasteboard.PasteboardType = .init(rawValue: "qemu.argument")
     
-    @objc private dynamic var vm: VirtualMachine
+    @IBOutlet         var arguments:    NSArrayController!
+    @IBOutlet private var accelerators: NSArrayController!
+    @IBOutlet private var tableView:    NSTableView!
     
-    public init( vm: VirtualMachine, sorting: Int )
-    {
-        self.vm = vm
+    @objc         dynamic var vm:           VirtualMachine
+    @objc private dynamic var supportsUEFI: Bool
+    @objc private dynamic var enableUEFI:   Bool   { didSet { vm.config.enableUEFI = enableUEFI } }
+    @objc private dynamic var accel:        Accel? { didSet { set(new: accel, to: &vm.config.accel) } }
+    
+    override var nibName: NSNib.Name? { "ConfigQEMUViewController" }
+    
+    override func viewDidAppear() {
         
-        super.init( title: "QEMU", icon: NSImage( named: "TerminalTemplate" ), sorting: sorting )
+        (accelerators.content, accel) = Accel.fetchValues(
+            for: vm.config.architecture.rawValue,
+            vm.config.accel
+        )
+        
+        enableUEFI   = vm.config.enableUEFI
+        supportsUEFI = vm.config.architecture.supportsUEFI
     }
     
-    required init?( coder: NSCoder )
-    {
-        nil
-    }
-    
-    deinit
-    {
-        if let args = self.arguments.content as? [ Argument ]
-        {
-            args.forEach { $0.removeObserver( self, forKeyPath: "value" ) }
-        }
-    }
-    
-    public override var nibName: NSNib.Name?
-    {
-        "ConfigQEMUViewController"
-    }
-    
-    public override func viewDidLoad()
-    {
+    override func viewDidLoad() {
+        
         super.viewDidLoad()
+
+        let arguments: [Argument] = vm.config.arguments.map {
+            .init(value: $0)
+        }
         
-        let args = self.vm.config.arguments.map { Argument( value: $0 ) }
+        registerObservers(for: arguments)
         
-        self.arguments.add( contentsOf: args )
-        args.forEach { $0.addObserver( self, forKeyPath: "value", options: .new, context: nil ) }
-        
-        self.tableView.registerForDraggedTypes( [ ConfigQEMUViewController.pasteboardType ] )
+        tableView.registerForDraggedTypes([Self.pasteboardType])
     }
     
-    @IBAction private func addRemoveArgument( _ sender: Any? )
-    {
-        guard let button = sender as? NSSegmentedControl else
-        {
-            NSSound.beep()
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if let _ = object as? Argument, keyPath == "value" {
             
-            return
+            return vm.config.setArguments(arguments.content as? [Argument])
         }
-        
-        switch button.selectedSegment
-        {
-            case 0:  self.addArgument( sender )
-            case 1:  self.removeArgument( sender )
-            default: NSSound.beep()
-        }
+
+        super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
     
-    @IBAction private func addArgument( _ sender: Any? )
-    {
-        let arg = Argument()
+    @IBAction private func addRemoveArgument(_ sender: Any?) {
         
-        arg.addObserver( self, forKeyPath: "value", options: .new, context: nil )
-        self.arguments.addObject( arg )
-        self.save()
+        guard let button = sender as? NSSegmentedControl else {
+            return NSSound.beep()
+        }
+        
+        switch button.selectedSegment {
+        case 0: registerObservers(for: [Argument()])
+        case 1: unregisterObservers(for: arguments.selectedObjects as? [Argument])
+        default: NSSound.beep()
+        }
+        
+        vm.config.setArguments(arguments.content as? [Argument])
     }
     
-    @IBAction private func removeArgument( _ sender: Any? )
-    {
-        guard let arg = self.arguments.selectedObjects.first as? Argument else
-        {
-            NSSound.beep()
-            
-            return
-        }
+    private func registerObservers(for arguments: [Argument]?) {
         
-        arg.removeObserver( self, forKeyPath: "value" )
-        self.arguments.remove( arg )
-        self.save()
+        self.arguments.add(contentsOf: arguments ?? [])
+       
+        arguments?.forEach { argument in
+            argument.addObserver(self, forKeyPath: "value", options: .new, context: nil)
+        }
+    }
+        
+    private func unregisterObservers(for arguments: [Argument]?) {
+        
+        self.arguments.remove(contentsOf: arguments ?? [])
+       
+        arguments?.forEach { argument in
+            argument.removeObserver(self, forKeyPath: "value")
+        }
+    }
+        
+    init(vm: VirtualMachine, sorting: Int) {
+        
+        self.vm           = vm
+        self.enableUEFI   = vm.config.enableUEFI
+        self.supportsUEFI = vm.config.architecture.supportsUEFI
+        
+        super.init(title: "QEMU", icon: NSImage(named: "TerminalTemplate"), sorting: sorting)
     }
     
-    private func save()
-    {
-        let args = self.arguments.content as? [ Argument ] ?? []
-        
-        self.vm.config.arguments = args.map { $0.value }
-    }
+    required init?(coder: NSCoder) { nil }
     
-    public override func observeValue( forKeyPath keyPath: String?, of object: Any?, change: [ NSKeyValueChangeKey : Any ]?, context: UnsafeMutableRawPointer? )
-    {
-        if let _ = object as? Argument, keyPath == "value"
-        {
-            self.save()
-        }
-        else
-        {
-            super.observeValue( forKeyPath: keyPath, of: object, change: change, context: context )
-        }
-    }
-    
-    public func tableView( _ tableView: NSTableView, pasteboardWriterForRow row: Int ) -> NSPasteboardWriting?
-    {
-        guard let arranged = self.arguments.arrangedObjects as? [ Argument ] else
-        {
-            return nil
-        }
-        
-        if row < 0 || row >= arranged.count
-        {
-            return nil
-        }
-        
-        let item = NSPasteboardItem()
-        
-        item.setPropertyList( row, forType: ConfigQEMUViewController.pasteboardType )
-        
-        return item
-    }
-    
-    public func tableView( _ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation ) -> NSDragOperation
-    {
-        if dropOperation == .above
-        {
-            return .move
-        }
-        else
-        {
-            return []
-        }
-    }
-    
-    public func tableView( _ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool
-    {
-        guard let item     = info.draggingPasteboard.pasteboardItems?.first,
-              let moved    = item.propertyList( forType: ConfigQEMUViewController.pasteboardType ) as? Int,
-              let arranged = self.arguments.arrangedObjects as? [ Argument ]
-        else
-        {
-            return false
-        }
-        
-        if moved < 0 || moved >= arranged.count
-        {
-            return false
-        }
-        
-        let new = moved < row ? row - 1 : row
-        let arg = arranged[ moved ]
-        
-        self.arguments.remove( atArrangedObjectIndex: moved )
-        self.arguments.insert( arg, atArrangedObjectIndex: new )
-        
-        return true
-    }
+    deinit { unregisterObservers(for: arguments.content as? [Argument]) }
 }

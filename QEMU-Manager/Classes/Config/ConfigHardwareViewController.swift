@@ -18,7 +18,7 @@
 
 import Cocoa
 
-class ConfigHardwareViewController: ConfigViewController {
+final class ConfigHardwareViewController: ConfigViewController {
     
     @IBOutlet private var sizeFormatter: SizeFormatter!
     @IBOutlet private var machines:      NSArrayController!
@@ -27,35 +27,19 @@ class ConfigHardwareViewController: ConfigViewController {
     @IBOutlet private var cores:         NSArrayController!
     @IBOutlet private var audios:        NSArrayController!
     
-    @objc private dynamic var minCores:     UInt64
-    @objc private dynamic var maxCores:     UInt64
-    @objc private dynamic var minMemory:    UInt64
-    @objc private dynamic var maxMemory:    UInt64
-    @objc private dynamic var vm:           VirtualMachine
+    @objc private dynamic var minCores:  UInt64
+    @objc private dynamic var maxCores:  UInt64
+    @objc private dynamic var minMemory: UInt64
+    @objc private dynamic var maxMemory: UInt64
+    @objc private dynamic var vm:        VirtualMachine
     
     @objc private dynamic var machine: Machine? { didSet { set(new: machine, to: &vm.config.machine) } }
     @objc private dynamic var cpu: CPU?         { didSet { set(new: cpu, to: &vm.config.cpu) } }
     @objc private dynamic var vga: VGA?         { didSet { set(new: vga, to: &vm.config.vga) } }
     @objc private dynamic var audio: Audio?     { didSet { set(new: audio, to: &vm.config.audio) } }
     
-    @objc private dynamic var enableUEFI: Bool {
-        get { vm.config.enableUEFI }
-        set { vm.config.enableUEFI = newValue }
-    }
-    
-    @objc private dynamic var canToggleUEFI: Bool {
-        Architecture(rawValue: self.architecture)?.supportsUEFI ?? false
-    }
-    
     @objc private dynamic var architecture: Int {
-        didSet {
-            if let arch = Architecture(rawValue: self.architecture) {
-                
-                self.vm.config.architecture = arch
-                self.enableUEFI  = self.enableUEFI && canToggleUEFI
-                
-            }; self.update()
-        }
+        didSet { vm.config.setArchitecture(architecture); update() }
     }
     
     override var nibName: NSNib.Name? { "ConfigHardwareViewController" }
@@ -78,10 +62,6 @@ class ConfigHardwareViewController: ConfigViewController {
         for i in self.minCores ..< self.maxCores {
             self.cores.addObject(i)
         }
-    }
-    
-    private func set<T: Defaultable>(new: T?, to value: inout String?)  {
-        if let new, new.sorting != -1 { value = new.name } else { value = nil }
     }
     
     private func update() {

@@ -22,7 +22,8 @@ final class Config: NSObject, Codable {
     
     @objc private(set) dynamic var version:       UInt64           = 0
     @objc private(set) dynamic var uuid:          UUID             = UUID()
-    @objc              dynamic var architecture:  Architecture     = .aarch64
+    @objc private(set) dynamic var architecture:  Architecture     = .aarch64
+    @objc              dynamic var accel:         String?          = nil
     @objc              dynamic var machine:       String?          = nil
     @objc              dynamic var cpu:           String?          = nil
     @objc              dynamic var vga:           String?          = nil
@@ -36,21 +37,35 @@ final class Config: NSObject, Codable {
     @objc              dynamic var cdImage:       URL?             = nil
     @objc              dynamic var boot:          String           = "d"
     @objc private(set) dynamic var sharedFolders: [SharedFolder]   = []
-    @objc              dynamic var arguments:     [String]         = []
+    @objc private(set) dynamic var arguments:     [String]         = []
     
-    func addDisk( _ disk: Disk ) {
+    func setArchitecture(_ arch: Architecture.RawValue) {
+        
+        guard let arch = Architecture(rawValue: arch) else {
+            return
+        }
+        
+        self.architecture = arch
+        self.enableUEFI   = enableUEFI && arch.supportsUEFI
+    }
+    
+    func setArguments(_ args: [Argument]?) {
+        self.arguments = args?.map { $0.value } ?? []
+    }
+    
+    func addDisk(_ disk: Disk) {
         self.disks.append( disk )
     }
     
-    func removeDisk( _ disk: Disk ) {
+    func removeDisk(_ disk: Disk) {
         self.disks.removeAll { $0.uuid == disk.uuid }
     }
     
-    func addSharedFolder( _ folder: SharedFolder ) {
+    func addSharedFolder(_ folder: SharedFolder) {
         self.sharedFolders.append( folder )
     }
     
-    func removeSharedFolder( _ folder: SharedFolder ) {
+    func removeSharedFolder(_ folder: SharedFolder) {
         self.sharedFolders.removeAll { $0.uuid == folder.uuid }
     }
 }

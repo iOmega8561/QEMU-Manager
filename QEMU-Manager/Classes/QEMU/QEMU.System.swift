@@ -36,6 +36,12 @@ extension QEMU {
 extension QEMU.System {
 
     func vga() -> [(String, String)] { self.help(command: "vga") }
+        
+    func hypervisor() -> Bool {
+        
+        self.help(command: "accel", skipLines: ["Accelerators supported in QEMU binary:"])
+            .contains { $0.0.lowercased().contains("hvf") }
+    }
     
     func machines() -> [(String, String)] {
         
@@ -72,6 +78,11 @@ extension QEMU.System {
         
         arguments.append( "-smp" )
         arguments.append(vm.config.cores > 0 ? "\(vm.config.cores)" : "1")
+        
+        if let accel = vm.config.accel {
+            arguments.append("-accel")
+            arguments.append(accel)
+        }
         
         var boot = vm.config.boot
         
@@ -166,9 +177,6 @@ extension QEMU.System {
             arguments.append("-nic")
             arguments.append("user")
         }
-        
-        arguments.append("-accel")
-        arguments.append(vm.config.architecture == .aarch64 ? "hvf" : "tcg")
         
         arguments.append("-display")
         arguments.append("cocoa")

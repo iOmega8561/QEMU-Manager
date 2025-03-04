@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,28 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-public class ConfigViewController: NSViewController {
+final class Accel: InfoValue, Defaultable {
     
-    @objc dynamic var icon:    NSImage?
-    @objc dynamic var sorting: Int = 0
+    static var defaultValue: Accel {
+        Accel(
+            name: "Default",
+            title: "Unspecified Acceleration",
+            sorting: -1
+        )
+    }
     
-    func set<T: Defaultable>(new: T?, to value: inout String?)  {
+    static let allValues: [Architecture : [Accel]] = {
         
-        if let new, new.sorting != -1 {
-            value = new.name
+        var values: [Architecture : [Accel]] = [:]
+        
+        Architecture.allCases.forEach { arch in
             
-        } else { value = nil }
-    }
-    
-    init( title: String, icon: NSImage? = nil, sorting: Int = 0 ) {
-        super.init( nibName: nil, bundle: nil )
+            values[arch] = [.defaultValue]
+            
+            values[arch]?.append(Accel(name: "tcg", title: "Tiny Code Generator", sorting: 0))
+            
+            if QEMU.System(arch: arch).hypervisor() {
+                
+                values[arch]?.append(
+                    Accel(name: "hvf", title: "Hypervisor Framework", sorting: 1)
+                )
+            }
+        }
         
-        self.title   = title
-        self.icon    = icon ?? NSImage(named: NSImage.applicationIconName)
-        self.sorting = sorting
-    }
-    
-    required init?(coder: NSCoder) { return nil }
+        return values
+    }()
 }
