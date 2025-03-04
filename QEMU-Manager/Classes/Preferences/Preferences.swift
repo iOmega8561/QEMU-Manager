@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,120 +15,60 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-public class Preferences: NSObject, Synchronizable
-{
-    @objc public  dynamic var lastStart: Date?
-    @objc private dynamic var vmURLs:    [ String ] = []
+final class Preferences {
     
-    @objc public static let shared = Preferences()
+    static let shared = Preferences()
     
-    override init()
-    {
-        super.init()
-        
-        guard let path = Bundle.main.path( forResource: "Defaults", ofType: "plist" ) else
-        {
-            return
-        }
-        
-        UserDefaults.standard.register( defaults: NSDictionary( contentsOfFile: path ) as? [ String : Any ] ?? [ : ] )
-        
-        for c in Mirror( reflecting: self ).children
-        {
-            guard let key = c.label else
-            {
-                continue
+    @UserDefault(key: "lastStart", defaultValue: nil)
+    var lastStart: Date?
+    
+    @UserDefault(key: "vmURLs", defaultValue: [String]())
+    private var vmURLs: [String]
+    
+    private let queue: DispatchQueue = .init(label: "com.QEMU-Manager.Preferences")
+    
+    func virtualMachines() -> [VirtualMachine] {
+        return queue.sync {
+
+            let validURLs = vmURLs.compactMap { URL(string: $0) }
+                                   .filter { FileManager.default.fileExists(atPath: $0.path) }
+
+            let validURLStrings = validURLs.map { $0.absoluteString }
+            
+            if validURLStrings != vmURLs {
+                vmURLs = validURLStrings
             }
             
-            self.setValue( UserDefaults.standard.object( forKey: key ), forKey: key )
-            self.addObserver( self, forKeyPath: key, options: .new, context: nil )
+            return validURLs.compactMap { VirtualMachine(url: $0) }
         }
     }
     
-    deinit
-    {
-        for c in Mirror( reflecting: self ).children
-        {
-            guard let key = c.label else
-            {
-                continue
-            }
-            
-            self.removeObserver( self, forKeyPath: key )
-        }
-    }
-    
-    public func virtualMachines() -> [ VirtualMachine ]
-    {
-        self.synchronized
-        {
-            self.vmURLs = self.vmURLs.filter
-            {
-                guard let url = URL( string: $0 ) else
-                {
-                    return false
-                }
-                
-                return FileManager.default.fileExists( atPath: url.path )
-            }
-            
-            return self.vmURLs.compactMap
-            {
-                guard let url = URL( string: $0 ) else
-                {
-                    return nil
-                }
-                
-                return VirtualMachine( url: url )
-            }
-        }
-    }
-    
-    public func addVirtualMachines( _ vm: VirtualMachine )
-    {
-        guard let url = vm.url else
-        {
-            return
-        }
+    func addVirtualMachine(_ vm: VirtualMachine) {
         
-        self.synchronized
-        {
-            var vms = self.vmURLs
-            
-            vms.append( url.absoluteString )
-            
-            self.vmURLs = vms
-        }
-    }
-    
-    public func removeVirtualMachines( _ vm: VirtualMachine )
-    {
-        guard let url = vm.url else
-        {
-            return
-        }
+        guard let url = vm.url else { return }
         
-        self.synchronized
-        {
-            self.vmURLs = self.vmURLs.filter { $0 != url.absoluteString }
+        queue.sync {
+            vmURLs.append(url.absoluteString)
         }
     }
     
-    @objc public override func observeValue( forKeyPath keyPath: String?, of object: Any?, change: [ NSKeyValueChangeKey : Any ]?, context: UnsafeMutableRawPointer? )
-    {
-        for c in Mirror( reflecting: self ).children
-        {
-            guard let key = c.label else
-            {
-                continue
-            }
+    func removeVirtualMachine(_ vm: VirtualMachine) {
+        
+        guard let url = vm.url else { return }
+        
+        queue.sync {
+            vmURLs.removeAll { $0 == url.absoluteString }
+        }
+    }
+    
+    fileprivate init() {
+        
+        if let path = Bundle.main.path(forResource: "Defaults", ofType: "plist"),
+           let defaultsDict = NSDictionary(contentsOfFile: path) as? [String: Any] {
             
-            if( key == keyPath )
-            {
-                UserDefaults.standard.set( change?[ NSKeyValueChangeKey.newKey ], forKey: key )
-            }
+            UserDefaults.standard.register(defaults: defaultsDict)
         }
     }
 }

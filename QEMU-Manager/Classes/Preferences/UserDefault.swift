@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,34 +17,14 @@
 
 import Foundation
 
-public protocol Synchronizable
-{
-    static func synchronized< T >( closure: () -> T ) -> T
+@propertyWrapper
+struct UserDefault<T> {
     
-    func synchronized< T >( closure: () -> T ) -> T
-}
+    let key: String
+    let defaultValue: T
 
-public extension Synchronizable
-{
-    static func synchronized< T >( closure: () -> T ) -> T
-    {
-        objc_sync_enter( self )
-        
-        let r = closure()
-        
-        objc_sync_exit( self )
-        
-        return r
-    }
-    
-    func synchronized< T >( closure: () -> T ) -> T
-    {
-        objc_sync_enter( self )
-        
-        let r = closure()
-        
-        objc_sync_exit( self )
-        
-        return r
+    var wrappedValue: T {
+        get { UserDefaults.standard.object(forKey: key) as? T ?? defaultValue }
+        set { UserDefaults.standard.set(newValue, forKey: key) }
     }
 }

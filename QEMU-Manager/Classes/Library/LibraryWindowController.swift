@@ -187,7 +187,7 @@ public class LibraryWindowController: NSWindowController, NSTableViewDelegate, N
                 
                 try vm.save( to: url )
                 
-                Preferences.shared.addVirtualMachines( vm )
+                Preferences.shared.addVirtualMachine( vm )
                 self.machines.addObject( vm )
                 self.showConfigWindow( for: vm )
                 
@@ -265,7 +265,7 @@ public class LibraryWindowController: NSWindowController, NSTableViewDelegate, N
             
             self.configWindowController( for: vm )?.close()
             self.machines.removeObject( vm )
-            Preferences.shared.removeVirtualMachines( vm )
+            Preferences.shared.removeVirtualMachine( vm )
             
             self.empty = self.virtualMachines.count == 0
             
@@ -372,7 +372,7 @@ public class LibraryWindowController: NSWindowController, NSTableViewDelegate, N
                 return
             }
             
-            Preferences.shared.addVirtualMachines( vm )
+            Preferences.shared.addVirtualMachine( vm )
             self.machines.addObject( vm )
             
             self.empty = false
