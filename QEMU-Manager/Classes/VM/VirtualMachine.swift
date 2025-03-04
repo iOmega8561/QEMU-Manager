@@ -58,7 +58,7 @@ public class VirtualMachine: NSObject
         
         do
         {
-            let data    = try Data( contentsOf: url.appendingPathComponent( "Config.json" ) )
+            let data    = try Data.contentsOf(url.appendingPathComponent( "Config.json" ))
             self.config = try JSONDecoder().decode( Config.self, from: data )
             self.url    = url
             

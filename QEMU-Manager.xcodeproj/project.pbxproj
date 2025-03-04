@@ -184,7 +184,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\n\n# Ensure destination exists\nmkdir -p \"$DEST_FOLDER\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$SCRIPT_OUTPUT_FILE_0\"\n\nfind \"$SCRIPT_OUTPUT_FILE_0\" -type f -perm +111 -exec xattr -c {} \\;\n";
+			shellScript = "export SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\n\n# Ensure destination exists\nmkdir -p \"$SCRIPT_OUTPUT_FILE_0\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$SCRIPT_OUTPUT_FILE_0\"\n\n# Remove existing attributes from QEMU executables\nfind \"$SCRIPT_OUTPUT_FILE_0\" -type f -perm +111 -exec xattr -c {} \\;\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
