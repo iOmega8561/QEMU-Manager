@@ -23,14 +23,6 @@ public class ConfigViewController: NSViewController {
     @objc dynamic var icon:    NSImage?
     @objc dynamic var sorting: Int = 0
     
-    func set<T: Defaultable>(new: T?, to value: inout String?)  {
-        
-        if let new, new.sorting != -1 {
-            value = new.name
-            
-        } else { value = nil }
-    }
-    
     init( title: String, icon: NSImage? = nil, sorting: Int = 0 ) {
         super.init( nibName: nil, bundle: nil )
         

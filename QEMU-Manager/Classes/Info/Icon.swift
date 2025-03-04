@@ -18,9 +18,14 @@
 
 import Foundation
 
-class Icon: InfoValue {
+final class Icon: InfoValue, GenericDefaultable {
     
-    static let all: [ Icon ] = [
+    static var defaultValue: Icon {
+        Icon(name: "Generic", title: "Default", sorting: -1)
+    }
+        
+    static let allValues: [Icon] = [
+        .defaultValue,
         Icon(name: "AppleTemplate",   title: "Apple",          sorting: 1),
         Icon(name: "AppleLegacy",     title: "Apple Legacy",   sorting: 2),
         Icon(name: "MacOS",           title: "Mac OS",         sorting: 3),

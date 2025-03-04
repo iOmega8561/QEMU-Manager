@@ -29,7 +29,7 @@ final class ConfigQEMUViewController: ConfigViewController {
     @objc         dynamic var vm:           VirtualMachine
     @objc private dynamic var supportsUEFI: Bool
     @objc private dynamic var enableUEFI:   Bool   { didSet { vm.config.enableUEFI = enableUEFI } }
-    @objc private dynamic var accel:        Accel? { didSet { set(new: accel, to: &vm.config.accel) } }
+    @objc private dynamic var accel:        Accel? { didSet { accel.set(to: &vm.config.accel) } }
     
     override var nibName: NSNib.Name? { "ConfigQEMUViewController" }
     

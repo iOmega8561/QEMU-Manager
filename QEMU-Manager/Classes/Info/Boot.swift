@@ -18,7 +18,7 @@
 
 import Foundation
 
-class Boot: InfoValue {
+final class Boot: InfoValue {
     
     static let all: [Boot] = [
         Boot(name: "d", title: "CD (if available)", sorting: 0),

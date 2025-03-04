@@ -17,7 +17,7 @@
 
 import Foundation
 
-final class Audio: InfoValue, Defaultable {
+final class Audio: InfoValue, SpecializedDefaultable {
     
     static var defaultValue: Audio {
         Audio(

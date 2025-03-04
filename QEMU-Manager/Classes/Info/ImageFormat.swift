@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ImageFormat: InfoValue {
+final class ImageFormat: InfoValue {
     
     static let all: [ImageFormat] = [
         

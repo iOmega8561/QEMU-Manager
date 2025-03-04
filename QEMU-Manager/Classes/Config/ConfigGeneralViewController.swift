@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,83 +18,43 @@
 
 import Cocoa
 
-public class ConfigGeneralViewController: ConfigViewController
-{
+final class ConfigGeneralViewController: ConfigViewController {
+    
     @IBOutlet private var machineIcons: NSArrayController!
     
     @objc private dynamic var vm:          VirtualMachine
     @objc private dynamic var path:        String
-    @objc private dynamic var machineIcon: Icon?
-    {
-        didSet
-        {
-            if let icon = self.machineIcon, icon.sorting != -1
-            {
-                self.vm.config.icon = icon.name
-            }
-            else
-            {
-                self.vm.config.icon = nil
-            }
-        }
-    }
+    @objc private dynamic var machineIcon: Icon? { didSet { machineIcon.set(to: &vm.config.icon) } }
     
-    public init( vm: VirtualMachine, sorting: Int )
-    {
-        self.vm   = vm
-        self.path = vm.url?.path ?? "--"
-        
-        super.init( title: "General", icon: NSImage( named: "InfoTemplate" ), sorting: sorting )
-    }
+    override var nibName: NSNib.Name? { "ConfigGeneralViewController" }
     
-    required init?( coder: NSCoder )
-    {
-        nil
-    }
-    
-    public override var nibName: NSNib.Name?
-    {
-        "ConfigGeneralViewController"
-    }
-    
-    public override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.machineIcons.sortDescriptors = [
-            NSSortDescriptor( key: "sorting", ascending: true ),
-            NSSortDescriptor( key: "name",    ascending: true ),
-            NSSortDescriptor( key: "title",   ascending: true )
+            NSSortDescriptor(key: "sorting", ascending: true),
+            NSSortDescriptor(key: "name",    ascending: true),
+            NSSortDescriptor(key: "title",   ascending: true)
         ]
         
-        self.updateIcons()
+        (machineIcons.content, machineIcon) = Icon.fetchValues(vm.config.icon)
     }
     
-    private func updateIcons()
-    {
-        if let existing = self.machineIcons.content as? [ Icon ]
-        {
-            existing.forEach { self.machineIcons.removeObject( $0 ) }
+    @IBAction private func revealInFinder(_ sender: Any) {
+        
+        guard let url = self.vm.url else {
+            return NSSound.beep()
         }
         
-        let unknown = Icon( name: "Generic", title: "Default", sorting: -1 )
-        let icons   = Icon.all
-        
-        self.machineIcons.addObject( unknown )
-        self.machineIcons.add( contentsOf: icons )
-        
-        self.machineIcon = icons.first { $0.name == vm.config.icon } ?? unknown
+        NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
     }
     
-    @IBAction private func revealInFinder( _ sender: Any? )
-    {
-        guard let url = self.vm.url else
-        {
-            NSSound.beep()
-            
-            return
-        }
+    init(vm: VirtualMachine, sorting: Int) {
+        self.vm   = vm
+        self.path = vm.url?.path ?? "--"
         
-        NSWorkspace.shared.selectFile( url.path, inFileViewerRootedAtPath: "" )
+        super.init(title: "General", icon: NSImage(named: "InfoTemplate"), sorting: sorting)
     }
+    
+    required init?(coder: NSCoder) { nil }
 }

@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class VGA: InfoValue, Defaultable {
+final class VGA: InfoValue, SpecializedDefaultable {
     
     static var defaultValue: VGA {
         VGA(

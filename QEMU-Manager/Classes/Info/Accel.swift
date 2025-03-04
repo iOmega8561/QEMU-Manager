@@ -17,7 +17,7 @@
 
 import Foundation
 
-final class Accel: InfoValue, Defaultable {
+final class Accel: InfoValue, SpecializedDefaultable {
     
     static var defaultValue: Accel {
         Accel(

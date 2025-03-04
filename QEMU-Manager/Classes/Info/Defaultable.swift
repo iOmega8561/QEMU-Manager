@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,12 +21,55 @@ protocol Defaultable: InfoValue {
         
     static var defaultValue: Self { get }
     
+    func set(to value: inout String?)
+}
+
+extension Defaultable {
+    
+    func set(to value: inout String?)  {
+        
+        value = self.sorting != -1 ? self.name : nil
+    }
+}
+
+extension Optional where Wrapped: Defaultable {
+    
+    func set(to value: inout String?)  {
+        
+        guard let self else {
+            value = nil; return
+        }
+        
+        self.set(to: &value)
+    }
+}
+
+protocol GenericDefaultable: Defaultable {
+    
+    static var allValues: [Self] { get }
+    
+    static func fetchValues(_ current: String?) -> ([Self], Self)
+}
+
+extension GenericDefaultable {
+    
+    static func fetchValues(_ current: String?) -> ([Self], Self) {
+        
+        let values:    [Self] = Self.allValues
+        let selection: Self   = values.first { $0.name == current } ?? .defaultValue
+        
+        return (values, selection)
+    }
+}
+
+protocol SpecializedDefaultable: Defaultable {
+    
     static var allValues: [Architecture: [Self]] { get }
     
     static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self)
 }
 
-extension Defaultable {
+extension SpecializedDefaultable {
     
     static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self) {
         
