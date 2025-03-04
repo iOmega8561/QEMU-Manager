@@ -18,126 +18,72 @@
 
 import Cocoa
 
-@main public class ApplicationDelegate: NSObject, NSApplicationDelegate
-{
-    public let aboutWindowController   = AboutWindowController()
-    public let libraryWindowController = LibraryWindowController()
-        
-    public func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+@main
+final class ApplicationDelegate: NSObject, NSApplicationDelegate {
+    
+    let aboutWindowController   = AboutWindowController()
+    let libraryWindowController = LibraryWindowController()
+    
+    func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
     }
     
-    public func applicationDidFinishLaunching( _ notification: Notification )
-    {
-        self.showLibraryWindow( nil )
-        
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        self.showLibraryWindow(nil)
     }
 
-    public func applicationWillTerminate( _ notification: Notification )
-    {
+    func applicationWillTerminate(_ notification: Notification) {
         Preferences.shared.lastStart = Date()
     }
     
-    public func applicationShouldTerminate( _ sender: NSApplication ) -> NSApplication.TerminateReply
-    {
-        for vm in self.libraryWindowController.virtualMachines
-        {
-            if vm.running
-            {
-                let alert = NSAlert()
-                
-                alert.messageText     = "Virtual Machines are running"
-                alert.informativeText = "Please shut-down all virtual machines before quitting."
-                
-                alert.addButton( withTitle: "OK" )
-                
-                alert.tryBeginSheetModal( for: self.libraryWindowController.window, completionHandler: nil )
-                
-                return .terminateCancel
-            }
+    func application(_ application: NSApplication, open urls: [ URL ]) {
+        self.libraryWindowController.addVirtualMachines(from: urls)
+    }
+    
+    func applicationShouldTerminate( _ sender: NSApplication ) -> NSApplication.TerminateReply {
+        
+        if libraryWindowController.virtualMachines.contains(where: { $0.running }) {
+            
+            let alert = NSAlert()
+            
+            alert.messageText     = "Virtual Machines are running"
+            alert.informativeText = "Please shut-down all virtual machines before quitting."
+            alert.addButton(withTitle: "OK")
+            
+            alert.tryBeginSheetModal(
+                for: self.libraryWindowController.window,
+                completionHandler: nil
+            )
+            
+            return .terminateCancel
+            
         }
         
         return .terminateNow
     }
     
-    @IBAction func invertAppearance( _ sender: Any? )
-    {
-        let name = NSApp.effectiveAppearance.name
+    @IBAction func showAboutWindow(_ sender: Any?) {
         
-        if name == NSAppearance.Name.aqua
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.darkAqua )
+        guard let window = self.aboutWindowController.window else {
+            NSSound.beep(); return
         }
-        else if name == NSAppearance.Name.darkAqua
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.aqua )
-        }
-        else if name == NSAppearance.Name.vibrantLight
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.vibrantDark )
-        }
-        else if name == NSAppearance.Name.vibrantDark
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.vibrantLight )
-        }
-        else if name == NSAppearance.Name.accessibilityHighContrastAqua
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.accessibilityHighContrastDarkAqua )
-        }
-        else if name == NSAppearance.Name.accessibilityHighContrastDarkAqua
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.accessibilityHighContrastAqua )
-        }
-        else if name == NSAppearance.Name.accessibilityHighContrastVibrantDark
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.accessibilityHighContrastVibrantLight )
-        }
-        else if name == NSAppearance.Name.accessibilityHighContrastVibrantLight
-        {
-            NSApp.appearance = NSAppearance( named: NSAppearance.Name.accessibilityHighContrastVibrantDark )
-        }
-    }
-    
-    @IBAction func showAboutWindow( _ sender: Any? )
-    {
-        guard let window = self.aboutWindowController.window else
-        {
-            NSSound.beep()
-            
-            return
-        }
-        
         window.layoutIfNeeded()
         
-        if window.isVisible == false
-        {
-            window.center()
-        }
+        if window.isVisible == false { window.center() }
         
-        window.makeKeyAndOrderFront( nil )
+        window.makeKeyAndOrderFront(nil)
     }
     
-    @IBAction func showLibraryWindow( _ sender: Any? )
-    {
-        guard let window = self.libraryWindowController.window else
-        {
-            NSSound.beep()
-            
-            return
-        }
+    @IBAction func showLibraryWindow(_ sender: Any?) {
         
+        guard let window = self.libraryWindowController.window else {
+            NSSound.beep(); return
+        }
         window.layoutIfNeeded()
         
-        if window.isVisible == false && Preferences.shared.lastStart == nil
-        {
-            window.center()
-        }
+        if window.isVisible == false &&
+           Preferences.shared.lastStart == nil { window.center() }
         
-        window.makeKeyAndOrderFront( nil )
-    }
-    
-    public func application( _ application: NSApplication, open urls: [ URL ] )
-    {
-        self.libraryWindowController.addVirtualMachines( from: urls )
+        window.makeKeyAndOrderFront(nil)
     }
 }
