@@ -184,7 +184,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\n\n# Ensure destination exists\nmkdir -p \"$DEST_FOLDER\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$SCRIPT_OUTPUT_FILE_0\"\n";
+			shellScript = "export SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\n\n# Ensure destination exists\nmkdir -p \"$DEST_FOLDER\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$SCRIPT_OUTPUT_FILE_0\"\n\nfind \"$SCRIPT_OUTPUT_FILE_0\" -type f -perm +111 -exec xattr -c {} \\;\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -283,7 +283,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "QEMU-Manager/QEMU-Manager.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = T8HX5554JX;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "QEMU-Manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "QEMU Manager";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -295,6 +299,7 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.giusepperocco.QEMU-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "QEMU-Manager/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -309,7 +314,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "QEMU-Manager/QEMU-Manager.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = T8HX5554JX;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "QEMU-Manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "QEMU Manager";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -321,6 +330,7 @@
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.giusepperocco.QEMU-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "QEMU-Manager/Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
