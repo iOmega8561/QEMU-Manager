@@ -35,18 +35,19 @@ final class Audio: InfoValue, Defaultable {
             
             values[arch] = [.defaultValue]
             
-            if arch.supportsPCI {
-                
-                values[arch]?.append(contentsOf: pciAudioDevs)
-            }
-            
+            values[arch]?.append(
+                contentsOf: arch.supportsPCI ? pciAudioDevs : []
+            )
         }
         
         return values
     }()
     
     private static var pciAudioDevs: [Audio] {
-        [Audio(name: "intel-hda", title: "High Definition Audio", sorting: 0),
-         Audio(name: "ac97",      title: "Legacy Audio",          sorting: 1)]
+        [Audio(name: "intel-hda",        title: "High Definition Audio", sorting: 0),
+         Audio(name: "ich9-intel-hda",   title: "High Definition Audio (ICH9)", sorting: 1),
+         Audio(name: "ac97",             title: "Intel 82801AA AC97", sorting: 2),
+         Audio(name: "es1370",           title: "ENSONIQ AudioPCI ES1370", sorting: 3),
+         Audio(name: "virtio-sound-pci", title: "Virtio Sound", sorting: 4)]
     }
 }

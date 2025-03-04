@@ -131,6 +131,7 @@ extension QEMU.System {
             arguments.append(audio)
             
             if audio.contains("hda") {
+                
                 arguments.append("-device")
                 arguments.append("hda-duplex")
             }
