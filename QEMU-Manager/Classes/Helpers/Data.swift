@@ -15,6 +15,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
+import Foundation
+
 extension Data {
     
     static func contentsOf(_ url: URL, attempts: Int = 3) throws -> Data {

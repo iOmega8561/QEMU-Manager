@@ -25,7 +25,6 @@
 
 /* Begin PBXFileReference section */
 		058C98BA26332FAA0086E57E /* Defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Defaults.plist; sourceTree = "<group>"; };
-		05CCF02F2646084600A3A9F8 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		05DFDD1D261F7BFD00BBE4E3 /* QEMU Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QEMU Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		05DFDD27261F7BFE00BBE4E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05DFDD28261F7BFE00BBE4E3 /* QEMU-Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QEMU-Manager.entitlements"; sourceTree = "<group>"; };
@@ -80,7 +79,6 @@
 		05DFDD33261F7C4400BBE4E3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				05CCF02F2646084600A3A9F8 /* Bridging-Header.h */,
 				058C98BA26332FAA0086E57E /* Defaults.plist */,
 				05DFDD27261F7BFE00BBE4E3 /* Info.plist */,
 				05DFDD28261F7BFE00BBE4E3 /* QEMU-Manager.entitlements */,
@@ -184,7 +182,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\n\n# Ensure destination exists\nmkdir -p \"$SCRIPT_OUTPUT_FILE_0\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$SCRIPT_OUTPUT_FILE_0\"\n\n# Remove existing attributes from QEMU executables\nfind \"$SCRIPT_OUTPUT_FILE_0\" -type f -perm +111 -exec xattr -c {} \\;\n";
+			shellScript = "export SRC_FOLDER=\"${SRCROOT}/Third-Party/QEMU\"\n\n# Copy the folder and maintain structure\ncp -R \"$SRC_FOLDER\" \"$SCRIPT_OUTPUT_FILE_0\"\n\n# Remove existing attributes from QEMU executables\nfind \"$SCRIPT_OUTPUT_FILE_0\" -type f -perm +111 -exec xattr -c {} \\;\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -301,7 +299,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "QEMU-Manager/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -332,7 +330,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "QEMU-Manager/Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

@@ -69,10 +69,8 @@ struct QEMU {
         process.standardOutput      = out
         process.standardError       = err
         
-        try ObjC.catchException {
-            process.launch()
-            process.waitUntilExit()
-        }
+        try process.run()
+        process.waitUntilExit()
         
         let dataOut = try? out.fileHandleForReading.readToEnd()
         let dataErr = try? err.fileHandleForReading.readToEnd()
