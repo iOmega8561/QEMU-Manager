@@ -43,19 +43,12 @@ public class VirtualMachine: NSObject
         
         self.iconObserver = self.observe( \.config.icon )
         {
-            o, c in self.updateIcon()
+            [weak self] _, _ in self?.updateIcon()
         }
     }
     
     public init?( url: URL )
     {
-        var isDir = ObjCBool( false )
-        
-        if FileManager.default.fileExists( atPath: url.path, isDirectory: &isDir ) == false || isDir.boolValue == false
-        {
-            return nil
-        }
-        
         do
         {
             let data    = try Data.contentsOf(url.appendingPathComponent( "Config.json" ))
@@ -67,7 +60,7 @@ public class VirtualMachine: NSObject
             
             self.iconObserver = self.observe( \.config.icon )
             {
-                o, c in self.updateIcon()
+                [weak self] _, _ in self?.updateIcon()
             }
         }
         catch
@@ -99,17 +92,8 @@ public class VirtualMachine: NSObject
         {
             throw Error.invalidURL
         }
-        
-        var isDir = ObjCBool( booleanLiteral: false )
-        
-        if FileManager.default.fileExists( atPath: url.path, isDirectory: &isDir ) == false
-        {
-            try FileManager.default.createDirectory( at: url, withIntermediateDirectories: true, attributes: nil )
-        }
-        else if isDir.boolValue == false
-        {
-            throw Error.invalidURL
-        }
+    
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         
         let encoder              = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
