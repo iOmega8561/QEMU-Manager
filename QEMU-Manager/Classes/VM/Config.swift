@@ -20,6 +20,18 @@ import Foundation
 
 final class Config: NSObject, Codable {
     
+    final class Device: NSObject, Codable {
+        
+        @objc private(set) dynamic var uuid  : UUID   = .init()
+        @objc              dynamic var name  : String
+        @objc              dynamic var params: String
+        
+        init(name: String, params: String) {
+            self.name = name
+            self.params = params
+        }
+    }
+    
     @objc private(set) dynamic var version:       UInt64           = 0
     @objc private(set) dynamic var uuid:          UUID             = UUID()
     @objc private(set) dynamic var architecture:  Architecture     = .aarch64
@@ -37,6 +49,7 @@ final class Config: NSObject, Codable {
     @objc              dynamic var cdImage:       URL?             = nil
     @objc              dynamic var boot:          String           = "d"
     @objc private(set) dynamic var sharedFolders: [SharedFolder]   = []
+    @objc private(set) dynamic var devices:       [Device]         = []
     @objc private(set) dynamic var arguments:     [String]         = []
     
     func setArchitecture(_ arch: Architecture.RawValue) {
@@ -67,5 +80,13 @@ final class Config: NSObject, Codable {
     
     func removeSharedFolder(_ folder: SharedFolder) {
         self.sharedFolders.removeAll { $0.uuid == folder.uuid }
+    }
+    
+    func addDevice(_ device: Device) {
+        self.devices.append(device)
+    }
+    
+    func removeDevice(_ device: Device) {
+        self.devices.removeAll { $0.uuid == device.uuid }
     }
 }
