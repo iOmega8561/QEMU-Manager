@@ -37,17 +37,22 @@ final class CPU: InfoValue, SpecializedDefaultable {
             values[arch] = [.defaultValue]
             
             values[arch]?.append(
-                
-                contentsOf: QEMU.System(arch: arch).cpus().map { cpu in
-                
-                    CPU(
-                        name: cpu.0,
-                        title: cpu.1,
-                        sorting: 0
-                    )
-            })
+                contentsOf: QEMU.System(arch: arch).cpus()
+            )
         }
         
         return values
     }()
+}
+
+fileprivate extension QEMU.System {
+    
+    func cpus() -> [CPU] {
+        
+        self.help(
+            command: "cpu",
+            skipLines: ["Available CPU", "CPU feature flags", "Numerical features"],
+            skipPrefixes: ["x86", "PowerPC"]
+        )
+    }
 }

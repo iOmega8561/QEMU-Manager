@@ -37,7 +37,5 @@ final class Icon: InfoValue, GenericDefaultable {
         Icon(name: "FreeBSD",         title: "FreeBSD",        sorting: 9),
     ]
     
-    override var description: String {
-        self.title
-    }
+    override var description: String { self.title ?? "Default" }
 }

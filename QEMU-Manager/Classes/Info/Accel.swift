@@ -48,3 +48,15 @@ final class Accel: InfoValue, SpecializedDefaultable {
         return values
     }()
 }
+
+fileprivate extension QEMU.System {
+    
+    func hypervisor() -> Bool {
+        
+        self.help(
+            command: "accel",
+            skipLines: ["Accelerators supported in QEMU binary:"]
+        
+        ).contains { $0.name == "hvf" }
+    }
+}
