@@ -92,7 +92,10 @@ final class ConfigAdvancedViewController: ConfigViewController {
         
         let controller = NewDeviceArgWindowController(
             vm: self.vm,
-            completionHandler: self.registerObservers
+            completionHandler: { [weak self] arguments in
+                self?.registerObservers(for: arguments)
+                self?.vm.config.setArguments(self?.arguments.content as? [Argument])
+            }
         )
         
         guard let window = self.view.window,

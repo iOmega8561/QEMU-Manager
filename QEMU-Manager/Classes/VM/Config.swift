@@ -30,7 +30,6 @@ final class Config: NSObject, Codable {
     @objc              dynamic var cores:         UInt64           = 1
     @objc              dynamic var memory:        UInt64           = 2147483648
     @objc              dynamic var enableUEFI:    Bool             = false
-    @objc              dynamic var audio:         String?          = nil
     @objc              dynamic var title:         String           = "Untitled"
     @objc              dynamic var icon:          String?          = nil
     @objc private(set) dynamic var disks:         [Disk]           = []

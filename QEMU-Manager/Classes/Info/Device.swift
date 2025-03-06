@@ -28,7 +28,7 @@ final class Device: InfoValue {
             values[arch] = []
             
             values[arch]?.append(
-                contentsOf: QEMU.System(arch: arch).deviceHelp()
+                contentsOf: QEMU.System(arch: arch).help()
             )
         }
                 
@@ -49,71 +49,3 @@ final class Device: InfoValue {
         fatalError("init(name:title:sorting:) cannot be used for Device")
     }
 }
-
-fileprivate extension QEMU.System {
-    
-    func deviceHelp() -> [Device] {
-
-        let result = try? qemu.execute(arguments: ["-device", "help"])
-        
-        guard let result else { return [] }
-        
-        let lines = result.out.components(separatedBy: .newlines)
-        
-        var currentCategoryName: String?
-        var currentDevices:      [Device] = []
-        
-        for line in lines {
-            
-            let trimmedLine = line.trimmingCharacters(in: .whitespaces)
-            
-            guard trimmedLine.isEmpty == false else { continue }
-            
-            guard trimmedLine.hasSuffix("devices:") == false else {
-                
-                let components      = trimmedLine.split(separator: " ")
-                currentCategoryName = components.first.map { .init($0) }
-                continue
-            }
-            
-            let tokens = trimmedLine.split(separator: ",")
-            
-            var deviceName: String?
-            var deviceBus: String?
-            var deviceDesc: String?
-            
-            for token in tokens {
-                
-                let tokenTrimmed = token.trimmingCharacters(in: .whitespaces)
-                
-                if tokenTrimmed.hasPrefix("name ") {
-
-                    let value = tokenTrimmed.dropFirst("name ".count)
-                    deviceName = value.trimmingCharacters(in: .init(charactersIn: "\""))
-                    
-                } else if tokenTrimmed.hasPrefix("bus ") {
-                    
-                    let value = tokenTrimmed.dropFirst("bus ".count)
-                    deviceBus = value.trimmingCharacters(in: .init(charactersIn: "\""))
-                    
-                } else if tokenTrimmed.hasPrefix("desc ") {
-                    
-                    let value = tokenTrimmed.dropFirst("desc ".count)
-                    deviceDesc = value.trimmingCharacters(in: .init(charactersIn: "\""))
-                }
-            }
-            
-            guard let currentCategoryName, let deviceName else { continue }
-            
-            currentDevices.append(.init(
-                name: deviceName,
-                category: currentCategoryName,
-                title: deviceDesc,
-                bus: deviceBus
-            ))
-        }
-        
-        return currentDevices
-    }
-}
-
