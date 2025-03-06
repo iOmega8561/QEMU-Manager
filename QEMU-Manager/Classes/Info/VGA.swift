@@ -37,26 +37,15 @@ final class VGA: InfoValue, SpecializedDefaultable {
             values[arch] = [.defaultValue]
             
             values[arch]?.append(
-                
-                contentsOf: QEMU.System(arch: arch).vga().map { vga in
-                
-                    VGA(
-                        name: vga.0,
-                        title: vga.1,
-                        sorting: 0
-                    )
-            })
-            
-            if let vgas = values[arch], vgas.count == 1 {
-                values[arch]?.append(contentsOf: nonVGAdevs)
-            }
+                contentsOf: QEMU.System(arch: arch).vga()
+            )
         }
         
         return values
     }()
+}
+
+fileprivate extension QEMU.System {
     
-    private static var nonVGAdevs: [VGA] {
-        [VGA(name: "ramfb",          title: "RAM Framebuffer",   sorting: 0),
-         VGA(name: "virtio-gpu-pci", title: "VirtIO GPU Device", sorting: 0)]
-    }
+    func vga() -> [VGA] { self.help(command: "vga") }
 }

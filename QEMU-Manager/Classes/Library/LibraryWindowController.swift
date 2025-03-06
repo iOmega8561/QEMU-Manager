@@ -46,8 +46,8 @@ public class LibraryWindowController: NSWindowController, NSTableViewDelegate, N
             let _ = Machine.allValues
             let _ = CPU.allValues
             let _ = VGA.allValues
-            let _ = Audio.allValues
             let _ = Accel.allValues
+            let _ = Device.allValues
             
             DispatchQueue.main.async
             {

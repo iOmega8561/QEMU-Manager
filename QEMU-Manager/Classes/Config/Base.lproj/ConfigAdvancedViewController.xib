@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ConfigQEMUViewController" customModule="QEMU_Manager" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ConfigAdvancedViewController" customModule="QEMU_Manager" customModuleProvider="target">
             <connections>
                 <outlet property="accelerators" destination="aN5-EC-jTu" id="1pN-XN-Bu3"/>
                 <outlet property="arguments" destination="VNk-pU-Lv1" id="N0e-ef-Imj"/>
@@ -127,7 +127,7 @@
                             <rect key="frame" x="17" y="288" width="78" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="5aG-kU-Dae" id="6Ki-NE-21A">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" id="aJW-Kt-phm">
                                     <items>
                                         <menuItem title="Item 1" state="on" id="5aG-kU-Dae"/>
@@ -148,8 +148,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="self.supportsUEFI" id="Xqm-sX-h8l"/>
                                 <binding destination="-2" name="value" keyPath="self.enableUEFI" id="cYq-Tj-ZeV"/>
+                                <binding destination="-2" name="enabled" keyPath="self.supportsUEFI" id="Xqm-sX-h8l"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vKt-Eu-k1w">
+                            <rect key="frame" x="304" y="13" width="183" height="32"/>
+                            <buttonCell key="cell" type="push" title="Create Device Argument" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4vl-G5-8Vd">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="addDeviceArgument:" target="-2" id="4jo-nR-4IU"/>
                             </connections>
                         </button>
                     </subviews>
@@ -157,16 +167,19 @@
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="06d-g8-UeM" secondAttribute="trailing" constant="20" symbolic="YES" id="4rU-7h-EuP"/>
                         <constraint firstItem="RC4-xj-5mt" firstAttribute="leading" secondItem="EJb-hE-XAM" secondAttribute="leading" constant="20" symbolic="YES" id="4wn-xu-Sjd"/>
                         <constraint firstItem="RC4-xj-5mt" firstAttribute="leading" secondItem="Gva-kx-yBJ" secondAttribute="leading" id="Deq-zK-uZQ"/>
+                        <constraint firstItem="vKt-Eu-k1w" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qev-vS-FJ5" secondAttribute="trailing" constant="8" symbolic="YES" id="Gew-vz-uio"/>
                         <constraint firstItem="Gva-kx-yBJ" firstAttribute="top" secondItem="06d-g8-UeM" secondAttribute="bottom" constant="8" symbolic="YES" id="H9j-RK-n2N"/>
                         <constraint firstItem="qev-vS-FJ5" firstAttribute="top" secondItem="Gva-kx-yBJ" secondAttribute="bottom" constant="8" symbolic="YES" id="KxY-M4-DaS"/>
                         <constraint firstItem="RC4-xj-5mt" firstAttribute="leading" secondItem="dWz-i0-RTS" secondAttribute="leading" id="L3P-yb-Pr1"/>
                         <constraint firstItem="RC4-xj-5mt" firstAttribute="top" secondItem="dWz-i0-RTS" secondAttribute="bottom" constant="8" symbolic="YES" id="TtK-CO-Xn7"/>
+                        <constraint firstItem="vKt-Eu-k1w" firstAttribute="trailing" secondItem="Gva-kx-yBJ" secondAttribute="trailing" id="Wn3-AA-fa2"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dWz-i0-RTS" secondAttribute="trailing" constant="20" symbolic="YES" id="XFz-6H-JgX"/>
                         <constraint firstItem="edZ-AT-dbf" firstAttribute="centerY" secondItem="RC4-xj-5mt" secondAttribute="centerY" id="bMZ-5P-gOk"/>
                         <constraint firstItem="edZ-AT-dbf" firstAttribute="trailing" secondItem="Gva-kx-yBJ" secondAttribute="trailing" id="dRb-78-Vfy"/>
                         <constraint firstItem="06d-g8-UeM" firstAttribute="top" secondItem="EJb-hE-XAM" secondAttribute="top" constant="104" id="hgF-dN-7HT"/>
                         <constraint firstAttribute="trailing" secondItem="Gva-kx-yBJ" secondAttribute="trailing" constant="20" symbolic="YES" id="led-cL-1ZO"/>
                         <constraint firstItem="06d-g8-UeM" firstAttribute="top" secondItem="RC4-xj-5mt" secondAttribute="bottom" constant="20" id="ndz-gB-Lhf"/>
+                        <constraint firstItem="vKt-Eu-k1w" firstAttribute="baseline" secondItem="qev-vS-FJ5" secondAttribute="baseline" id="qug-s1-fbZ"/>
                         <constraint firstItem="RC4-xj-5mt" firstAttribute="leading" secondItem="qev-vS-FJ5" secondAttribute="leading" id="uAW-UV-YJc"/>
                         <constraint firstItem="edZ-AT-dbf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RC4-xj-5mt" secondAttribute="trailing" constant="8" symbolic="YES" id="vGx-Ny-4gN"/>
                         <constraint firstItem="06d-g8-UeM" firstAttribute="leading" secondItem="RC4-xj-5mt" secondAttribute="leading" id="vnA-xf-NnE"/>
@@ -183,6 +196,15 @@
         </customView>
         <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="VNk-pU-Lv1" userLabel="Arguments"/>
         <arrayController id="aN5-EC-jTu" userLabel="Accelerators"/>
+        <button verticalHuggingPriority="750" id="2mR-Uc-ivz">
+            <rect key="frame" x="0.0" y="0.0" width="82" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vhv-MX-tWO">
+                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                <font key="font" metaFont="system"/>
+            </buttonCell>
+            <point key="canvasLocation" x="-257" y="712"/>
+        </button>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="18" height="17"/>

@@ -17,37 +17,35 @@
 
 import Foundation
 
-final class Audio: InfoValue, SpecializedDefaultable {
+final class Device: InfoValue {
     
-    static var defaultValue: Audio {
-        Audio(
-            name: "Default",
-            title: "Unspecified Audio",
-            sorting: -1
-        )
-    }
-    
-    static let allValues: [Architecture : [Audio]] = {
+    static let allValues: [Architecture: [Device]] = {
         
-        var values: [Architecture : [Audio]] = [:]
+        var values: [Architecture: [Device]] = [:]
         
         Architecture.allCases.forEach { arch in
             
-            values[arch] = [.defaultValue]
+            values[arch] = []
             
             values[arch]?.append(
-                contentsOf: arch.supportsPCI ? pciAudioDevs : []
+                contentsOf: QEMU.System(arch: arch).help()
             )
         }
-        
+                
         return values
     }()
     
-    private static var pciAudioDevs: [Audio] {
-        [Audio(name: "intel-hda",        title: "High Definition Audio", sorting: 0),
-         Audio(name: "ich9-intel-hda",   title: "High Definition Audio (ICH9)", sorting: 1),
-         Audio(name: "ac97",             title: "Intel 82801AA AC97", sorting: 2),
-         Audio(name: "es1370",           title: "ENSONIQ AudioPCI ES1370", sorting: 3),
-         Audio(name: "virtio-sound-pci", title: "Virtio Sound", sorting: 4)]
+    @objc private(set) dynamic var category: String
+    @objc private(set) dynamic var bus:      String?
+    
+    init(name: String, category: String, title: String? = nil, bus: String? = nil) {
+        self.category = category
+        self.bus = bus
+        
+        super.init(name: name, title: title)
+    }
+    
+    required init(name: String, title: String? = nil, sorting: Int = 0) {
+        fatalError("init(name:title:sorting:) cannot be used for Device")
     }
 }

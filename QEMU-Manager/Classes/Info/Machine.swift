@@ -23,7 +23,7 @@ final class Machine: InfoValue, SpecializedDefaultable {
     static var defaultValue: Machine {
         Machine(
             name: "Default",
-            title: "Unspecified machine",
+            title: "Unspecified Machine",
             sorting: -1
         )
     }
@@ -37,17 +37,21 @@ final class Machine: InfoValue, SpecializedDefaultable {
             values[arch] = [.defaultValue]
             
             values[arch]?.append(
-                
-                contentsOf: QEMU.System(arch: arch).machines().map { machine in
-        
-                    Machine(
-                        name: machine.0,
-                        title: machine.1,
-                        sorting: 0
-                    )
-            })
+                contentsOf: QEMU.System(arch: arch).machines()
+            )
         }
         
         return values
     }()
+}
+
+fileprivate extension QEMU.System {
+    
+    func machines() -> [Machine] {
+        
+        self.help(
+            command: "machine",
+            skipLines: ["Supported machines are:"]
+        )
+    }
 }

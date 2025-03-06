@@ -20,10 +20,10 @@ import Foundation
 public class InfoValue: NSObject
 {
     @objc public private( set ) dynamic var name:    String
-    @objc public private( set ) dynamic var title:   String
+    @objc public private( set ) dynamic var title:   String?
     @objc public private( set ) dynamic var sorting: Int
     
-    public init( name: String, title: String, sorting: Int )
+    public required init( name: String, title: String? = nil, sorting: Int = 0 )
     {
         self.name    = name
         self.title   = title
@@ -32,9 +32,9 @@ public class InfoValue: NSObject
     
     public override var description: String
     {
-        if self.title.count > 0
+        if let title = self.title, title.count > 0
         {
-            return "\( self.name ) - \( self.title )"
+            return "\( self.name ) - \( title )"
         }
         
         return self.name

@@ -33,29 +33,8 @@ extension QEMU {
     }
 }
 
-extension QEMU.System {
 
-    func vga() -> [(String, String)] { self.help(command: "vga") }
-        
-    func hypervisor() -> Bool {
-        
-        self.help(command: "accel", skipLines: ["Accelerators supported in QEMU binary:"])
-            .contains { $0.0.lowercased().contains("hvf") }
-    }
-    
-    func machines() -> [(String, String)] {
-        
-        self.help(command: "machine", skipLines: ["Supported machines are:"])
-    }
-    
-    func cpus() -> [(String, String)] {
-        
-        self.help(
-            command: "cpu",
-            skipLines: ["Available CPU", "CPU feature flags", "Numerical features"],
-            skipPrefixes: ["x86", "PowerPC"]
-        )
-    }
+extension QEMU.System {
     
     func start(vm: VirtualMachine) throws {
         
@@ -65,31 +44,26 @@ extension QEMU.System {
         arguments.append(SizeFormatter().string(from: NSNumber(value: vm.config.memory), style: .qemu))
         
         if let machine = vm.config.machine, machine.count > 0 {
-            
-            arguments.append("-M")
-            arguments.append(machine)
+            arguments.append(contentsOf: ["-M", machine])
         }
         
         if let cpu = vm.config.cpu, cpu.count > 0 {
-            
-            arguments.append( "-cpu" )
-            arguments.append( cpu )
+            arguments.append(contentsOf: ["-cpu", cpu])
         }
         
-        arguments.append( "-smp" )
+        arguments.append("-smp")
         arguments.append(vm.config.cores > 0 ? "\(vm.config.cores)" : "1")
         
         if let accel = vm.config.accel {
-            arguments.append("-accel")
-            arguments.append(accel)
+            arguments.append(contentsOf: ["-accel", accel])
         }
+        
+        arguments.append(contentsOf: vm.config.arguments)
         
         var boot = vm.config.boot
         
         if architecture.isARM {
-            
-            arguments.append("-device")
-            arguments.append("qemu-xhci,id=xhci0")
+            arguments.append(contentsOf: ["-device", "qemu-xhci,id=xhci0"])
         }
         
         if let cd = vm.config.cdImage,
@@ -97,19 +71,16 @@ extension QEMU.System {
             
             let cdromParam = architecture.isARM ? ",if=none,id=cd0":""
             
-            arguments.append( "-drive" )
+            arguments.append("-drive")
             arguments.append("file=\(cd.path),media=cdrom\(cdromParam)")
             
             if architecture.isARM {
-                
-                arguments.append( "-device" )
-                arguments.append( "usb-storage,drive=cd0" )
+                arguments.append(contentsOf: ["-device", "usb-storage,drive=cd0"])
             }
             
         } else if boot == "d" { boot = "c" }
         
-        arguments.append( "-boot" )
-        arguments.append( boot )
+        arguments.append(contentsOf: ["-boot", boot])
         
         var diskCount: Int = 0
         
@@ -136,33 +107,15 @@ extension QEMU.System {
             arguments.append("file=fat\($0.kind == .floppy ? ":floppy" : ""):rw:\($0.url.path),format=raw,media=disk")
         }
         
-        if let audio = vm.config.audio {
-            
-            arguments.append("-device")
-            arguments.append(audio)
-            
-            if audio.contains("hda") {
-                
-                arguments.append("-device")
-                arguments.append("hda-duplex")
-            }
-            
-            arguments.append("-audio")
-            arguments.append("driver=coreaudio")
-        }
+        arguments.append(contentsOf: ["-audio", "driver=coreaudio"])
         
         if let vga = vm.config.vga {
-            
-            arguments.append(architecture.isARM ? "-device" : "-vga")
-            arguments.append(vga)
+            arguments.append(contentsOf: ["-vga", vga])
         }
         
         if vm.config.architecture.isARM {
-            arguments.append("-device")
-            arguments.append("usb-tablet")
-            
-            arguments.append("-device")
-            arguments.append("usb-kbd")
+            arguments.append(contentsOf: ["-device", "usb-tablet"])
+            arguments.append(contentsOf: ["-device", "usb-kbd"])
         }
         
         if vm.config.enableUEFI,
@@ -174,37 +127,30 @@ extension QEMU.System {
         }
         
         if architecture.supportsPCI {
-            arguments.append("-nic")
-            arguments.append("user")
+            arguments.append(contentsOf: ["-nic", "user"])
         }
         
-        arguments.append("-display")
-        arguments.append("cocoa")
-        
-        arguments.append("-name")
-        arguments.append(vm.config.title)
-                
-        arguments.append( contentsOf: vm.config.arguments )
+        arguments.append(contentsOf: ["-display", "cocoa"])
+        arguments.append(contentsOf: ["-name", vm.config.title])
         
         try qemu.execute(arguments: arguments)
     }
+}
+
+
+extension QEMU.System {
     
-    func help(
-        command: String,
-        skipLines: [String] = [],
-        skipPrefixes: [String] = []
+    func help<T: InfoValue>(command: String, skipLines: [String] = [], skipPrefixes: [String] = []) -> [T] {
         
-    ) -> [(String, String)] {
-
         let result = try? qemu.execute(arguments: ["-\(command)", "help"])
-
+        
         guard let result  else { return [] }
         
         let lines = result.out.components(separatedBy: .newlines)
-        var values: [(String, String)] = []
+        var values: [T] = []
         
         for rawLine in lines {
-
+            
             var line = rawLine.trimmingCharacters(in: .whitespaces)
             
             if skipLines.contains(where: { line.contains($0) }) {
@@ -229,11 +175,80 @@ extension QEMU.System {
                 
                 let key   = String(parts[0])
                 let value = String(parts[1]).trimmingCharacters(in: .whitespaces)
-                values.append((key, value))
+                values.append(.init(name: key, title: value))
                 
-            } else { values.append((line, line)) }
+            } else { values.append(.init(name: line)) }
         }
         
         return values
+    }
+}
+
+
+
+extension QEMU.System {
+    
+    func help() -> [Device] {
+        
+        let result = try? qemu.execute(arguments: ["-device", "help"])
+        
+        guard let result else { return [] }
+        
+        let lines = result.out.components(separatedBy: .newlines)
+        
+        var currentCategoryName: String?
+        var currentDevices:      [Device] = []
+        
+        for line in lines {
+            
+            let trimmedLine = line.trimmingCharacters(in: .whitespaces)
+            
+            guard trimmedLine.isEmpty == false else { continue }
+            
+            guard trimmedLine.hasSuffix("devices:") == false else {
+                
+                let components      = trimmedLine.split(separator: " ")
+                currentCategoryName = components.first.map { .init($0) }
+                continue
+            }
+            
+            let tokens = trimmedLine.split(separator: ",")
+            
+            var deviceName: String?
+            var deviceBus: String?
+            var deviceDesc: String?
+            
+            for token in tokens {
+                
+                let tokenTrimmed = token.trimmingCharacters(in: .whitespaces)
+                
+                if tokenTrimmed.hasPrefix("name ") {
+                    
+                    let value = tokenTrimmed.dropFirst("name ".count)
+                    deviceName = value.trimmingCharacters(in: .init(charactersIn: "\""))
+                    
+                } else if tokenTrimmed.hasPrefix("bus ") {
+                    
+                    let value = tokenTrimmed.dropFirst("bus ".count)
+                    deviceBus = value.trimmingCharacters(in: .init(charactersIn: "\""))
+                    
+                } else if tokenTrimmed.hasPrefix("desc ") {
+                    
+                    let value = tokenTrimmed.dropFirst("desc ".count)
+                    deviceDesc = value.trimmingCharacters(in: .init(charactersIn: "\""))
+                }
+            }
+            
+            guard let currentCategoryName, let deviceName else { continue }
+            
+            currentDevices.append(.init(
+                name: deviceName,
+                category: currentCategoryName,
+                title: deviceDesc,
+                bus: deviceBus
+            ))
+        }
+        
+        return currentDevices
     }
 }
