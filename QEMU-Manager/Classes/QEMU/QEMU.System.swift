@@ -24,7 +24,7 @@ extension QEMU {
         
         private let architecture: Architecture
         
-        private let qemu: QEMU
+        let qemu: QEMU
         
         func start(vm: VirtualMachine) throws {
             

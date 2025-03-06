@@ -25,7 +25,6 @@ final class ConfigHardwareViewController: ConfigViewController {
     @IBOutlet private var cpus:          NSArrayController!
     @IBOutlet private var vgas:          NSArrayController!
     @IBOutlet private var cores:         NSArrayController!
-    @IBOutlet private var audios:        NSArrayController!
     
     @objc private dynamic var minCores:  UInt64
     @objc private dynamic var maxCores:  UInt64
@@ -36,7 +35,6 @@ final class ConfigHardwareViewController: ConfigViewController {
     @objc private dynamic var machine: Machine? { didSet { machine.set(to: &vm.config.machine) } }
     @objc private dynamic var cpu: CPU?         { didSet { cpu.set(to:     &vm.config.cpu) } }
     @objc private dynamic var vga: VGA?         { didSet { vga.set(to:     &vm.config.vga) } }
-    @objc private dynamic var audio: Audio?     { didSet { audio.set(to:   &vm.config.audio) } }
     
     @objc private dynamic var architecture: Int {
         didSet { vm.config.setArchitecture(architecture); update() }
@@ -68,7 +66,6 @@ final class ConfigHardwareViewController: ConfigViewController {
         (machines.content, machine) = Machine.fetchValues(for: architecture, vm.config.machine)
         (cpus.content, cpu)         = CPU.fetchValues(for: architecture, vm.config.cpu)
         (vgas.content, vga)         = VGA.fetchValues(for: architecture, vm.config.vga)
-        (audios.content, audio)     = Audio.fetchValues(for: architecture, vm.config.audio)
     }
     
     init(vm: VirtualMachine, sorting: Int) {
