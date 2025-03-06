@@ -18,7 +18,7 @@
 
 import Cocoa
 
-final class ConfigQEMUViewController: ConfigViewController {
+final class ConfigAdvancedViewController: ConfigViewController {
     
     static let pasteboardType: NSPasteboard.PasteboardType = .init(rawValue: "qemu.argument")
     
@@ -31,7 +31,9 @@ final class ConfigQEMUViewController: ConfigViewController {
     @objc private dynamic var enableUEFI:   Bool   { didSet { vm.config.enableUEFI = enableUEFI } }
     @objc private dynamic var accel:        Accel? { didSet { accel.set(to: &vm.config.accel) } }
     
-    override var nibName: NSNib.Name? { "ConfigQEMUViewController" }
+    private var newDeviceArgWindowController: NewDeviceArgWindowController?
+    
+    override var nibName: NSNib.Name? { "ConfigAdvancedViewController" }
     
     override func viewDidAppear() {
         
@@ -82,6 +84,25 @@ final class ConfigQEMUViewController: ConfigViewController {
         vm.config.setArguments(arguments.content as? [Argument])
     }
     
+    @IBAction private func addDeviceArgument(_ sender: Any?) {
+        
+        guard self.newDeviceArgWindowController == nil else {
+            return NSSound.beep()
+        }
+        
+        let controller = NewDeviceArgWindowController(
+            vm: self.vm,
+            completionHandler: self.registerObservers
+        )
+        
+        guard let window = self.view.window,
+              let sheet  = controller.window else { return NSSound.beep() }
+        
+        self.newDeviceArgWindowController = controller
+        
+        window.beginSheet(sheet) { _ in self.newDeviceArgWindowController = nil }
+    }
+    
     private func registerObservers(for arguments: [Argument]?) {
         
         self.arguments.add(contentsOf: arguments ?? [])
@@ -106,7 +127,7 @@ final class ConfigQEMUViewController: ConfigViewController {
         self.enableUEFI   = vm.config.enableUEFI
         self.supportsUEFI = vm.config.architecture.supportsUEFI
         
-        super.init(title: "QEMU", icon: NSImage(named: "TerminalTemplate"), sorting: sorting)
+        super.init(title: "Advanced", icon: NSImage(named: "TerminalTemplate"), sorting: sorting)
     }
     
     required init?(coder: NSCoder) { nil }

@@ -18,7 +18,7 @@
 
 import Cocoa
 
-extension ConfigQEMUViewController: NSTableViewDataSource {
+extension ConfigAdvancedViewController: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         

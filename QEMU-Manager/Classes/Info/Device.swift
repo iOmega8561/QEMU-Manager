@@ -37,10 +37,6 @@ final class Device: InfoValue {
     
     @objc private(set) dynamic var category: String
     @objc private(set) dynamic var bus:      String?
-
-    override var description: String {
-        [category, bus, name, title].compactMap { $0 }.joined(separator: " - ")
-    }
     
     init(name: String, category: String, title: String? = nil, bus: String? = nil) {
         self.category = category
@@ -57,48 +53,53 @@ final class Device: InfoValue {
 fileprivate extension QEMU.System {
     
     func deviceHelp() -> [Device] {
-        // Execute QEMU with "-device help"
-        guard let result = try? qemu.execute(arguments: ["-device", "help"]) else {
-            return []
-        }
+
+        let result = try? qemu.execute(arguments: ["-device", "help"])
+        
+        guard let result else { return [] }
         
         let lines = result.out.components(separatedBy: .newlines)
         
         var currentCategoryName: String?
-        var currentDevices = [Device]()
+        var currentDevices:      [Device] = []
         
         for line in lines {
-            let trimmedLine = line.trimmingCharacters(in: .whitespaces)
-            if trimmedLine.isEmpty { continue }
             
-            // Check if the line is a category header (e.g., "Input devices:")
-            if trimmedLine.hasSuffix("devices:") {
+            let trimmedLine = line.trimmingCharacters(in: .whitespaces)
+            
+            guard trimmedLine.isEmpty == false else { continue }
+            
+            guard trimmedLine.hasSuffix("devices:") == false else {
                 
-                // Extract the category name. For example, "Network devices:" becomes "Network"
-                let components = trimmedLine.split(separator: " ")
-                currentCategoryName = components.first.map { String($0) }
+                let components      = trimmedLine.split(separator: " ")
+                currentCategoryName = components.first.map { .init($0) }
                 continue
             }
             
-            // Otherwise, assume this is a device line.
-            // Example: name "i8042", bus ISA, desc "Some description"
             let tokens = trimmedLine.split(separator: ",")
+            
             var deviceName: String?
             var deviceBus: String?
             var deviceDesc: String?
             
             for token in tokens {
+                
                 let tokenTrimmed = token.trimmingCharacters(in: .whitespaces)
+                
                 if tokenTrimmed.hasPrefix("name ") {
-                    // Remove the "name " prefix and trim quotes
+
                     let value = tokenTrimmed.dropFirst("name ".count)
-                    deviceName = value.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+                    deviceName = value.trimmingCharacters(in: .init(charactersIn: "\""))
+                    
                 } else if tokenTrimmed.hasPrefix("bus ") {
+                    
                     let value = tokenTrimmed.dropFirst("bus ".count)
-                    deviceBus = value.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+                    deviceBus = value.trimmingCharacters(in: .init(charactersIn: "\""))
+                    
                 } else if tokenTrimmed.hasPrefix("desc ") {
+                    
                     let value = tokenTrimmed.dropFirst("desc ".count)
-                    deviceDesc = value.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+                    deviceDesc = value.trimmingCharacters(in: .init(charactersIn: "\""))
                 }
             }
             

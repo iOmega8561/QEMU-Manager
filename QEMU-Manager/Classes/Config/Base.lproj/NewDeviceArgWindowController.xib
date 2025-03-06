@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NewDeviceArgWindowController" customModule="QEMU_Manager" customModuleProvider="target">
+            <connections>
+                <outlet property="buses" destination="MTH-es-cZi" id="s0B-y8-psx"/>
+                <outlet property="categories" destination="Jhi-do-DEm" id="Lgj-kJ-S7h"/>
+                <outlet property="devices" destination="uZb-UL-bSs" id="4RB-EL-hhV"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="14A-JQ-EfC"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="New Disk" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="QvC-M9-y7g" userLabel="New Device Argument">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="480" height="358"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="950"/>
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+                <rect key="frame" x="0.0" y="0.0" width="358" height="358"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2yP-hk-h1A">
+                        <rect key="frame" x="18" y="312" width="217" height="26"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="New Device Argument" id="xp0-Oy-Zbh">
+                            <font key="font" textStyle="title1" name=".SFNS-Regular"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box horizontalHuggingPriority="246" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="A2C-eR-DWU">
+                        <rect key="frame" x="12" y="297" width="342" height="9"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="5" id="Auu-50-Hcz"/>
+                        </constraints>
+                    </box>
+                    <progressIndicator maxValue="100" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="ib7-p9-dfu">
+                        <rect key="frame" x="167" y="164" width="32" height="32"/>
+                        <connections>
+                            <binding destination="-2" name="animate" keyPath="self.loading" id="QWM-E1-0Hm"/>
+                            <binding destination="-2" name="hidden" keyPath="self.loading" id="tky-2B-aq5">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </progressIndicator>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Urv-T5-Di1">
+                        <rect key="frame" x="0.0" y="61" width="358" height="238"/>
+                        <subviews>
+                            <popUpButton autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="gul-7T-1C2">
+                                <rect key="frame" x="17" y="166" width="78" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="uVX-Pc-12f" id="U9C-nr-xFI">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="c89-de-khz">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="uVX-Pc-12f"/>
+                                            <menuItem title="Item 2" id="Ofe-ql-dUM"/>
+                                            <menuItem title="Item 3" id="Yqg-cz-OlL"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="PYC-RA-AtJ"/>
+                                </constraints>
+                                <connections>
+                                    <binding destination="Jhi-do-DEm" name="content" keyPath="arrangedObjects" id="8u5-AG-8qn">
+                                        <dictionary key="options">
+                                            <bool key="NSInsertsNullPlaceholder" value="YES"/>
+                                            <string key="NSNullPlaceholder">Any Category</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="selectedObject" keyPath="self.category" previousBinding="8u5-AG-8qn" id="HcL-nf-1P7"/>
+                                </connections>
+                            </popUpButton>
+                            <popUpButton autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="sYh-70-RPb">
+                                <rect key="frame" x="222" y="166" width="120" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="U40-i8-gX4" id="UTa-6D-71f">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="tBt-Km-9v9">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="U40-i8-gX4"/>
+                                            <menuItem title="Item 2" id="6jj-vZ-oET"/>
+                                            <menuItem title="Item 3" id="om6-F6-QBg"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="113" id="yeW-0h-dv4"/>
+                                </constraints>
+                                <connections>
+                                    <binding destination="MTH-es-cZi" name="content" keyPath="arrangedObjects" id="32o-E7-Av5">
+                                        <dictionary key="options">
+                                            <bool key="NSInsertsNullPlaceholder" value="YES"/>
+                                            <string key="NSNullPlaceholder">Any Bus</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="selectedObject" keyPath="self.bus" previousBinding="32o-E7-Av5" id="vv2-Kw-zkD"/>
+                                </connections>
+                            </popUpButton>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qUA-Tj-23m">
+                                <rect key="frame" x="18" y="117" width="50" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Device:" id="iXw-TM-K5O">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zez-AW-h51" userLabel="Parameters">
+                                <rect key="frame" x="18" y="53" width="77" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Parameters:" id="Ntp-lL-paM" userLabel="Parameters">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="cYW-5D-LE4">
+                                <rect key="frame" x="20" y="20" width="318" height="21"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="eh7-Wy-iyg">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="-2" name="value" keyPath="self.params" id="hmp-hA-xAn"/>
+                                </connections>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KlS-7O-W8I">
+                                <rect key="frame" x="18" y="198" width="109" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Device Category:" id="DfV-dH-WHB">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BBu-jL-0r9" userLabel="Device">
+                                <rect key="frame" x="17" y="85" width="200" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="vcd-p2-Nm4" id="ygk-5b-IOX" userLabel="Device">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <menu key="menu" id="e1a-EJ-Olb">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="vcd-p2-Nm4" userLabel="Item 1"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="2Fx-lI-p5g"/>
+                                </constraints>
+                                <connections>
+                                    <binding destination="uZb-UL-bSs" name="content" keyPath="arrangedObjects" id="Me7-CW-u2b">
+                                        <dictionary key="options">
+                                            <bool key="NSInsertsNullPlaceholder" value="YES"/>
+                                            <string key="NSNullPlaceholder">Select a Device</string>
+                                        </dictionary>
+                                    </binding>
+                                    <binding destination="-2" name="selectedObject" keyPath="self.device" previousBinding="Me7-CW-u2b" id="qGi-H8-xKc"/>
+                                </connections>
+                            </popUpButton>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nan-IE-d9F">
+                                <rect key="frame" x="223" y="198" width="76" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Device Bus:" id="RuR-fC-br2">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cYW-5D-LE4" firstAttribute="leading" secondItem="Urv-T5-Di1" secondAttribute="leading" constant="20" symbolic="YES" id="1ak-zb-fs1"/>
+                            <constraint firstAttribute="bottom" secondItem="cYW-5D-LE4" secondAttribute="bottom" constant="20" symbolic="YES" id="7sT-Hp-try"/>
+                            <constraint firstItem="gul-7T-1C2" firstAttribute="leading" secondItem="Urv-T5-Di1" secondAttribute="leading" constant="20" symbolic="YES" id="8Z2-q6-FIF"/>
+                            <constraint firstItem="BBu-jL-0r9" firstAttribute="trailing" secondItem="gul-7T-1C2" secondAttribute="trailing" constant="122" id="ANY-h4-dTf"/>
+                            <constraint firstItem="Nan-IE-d9F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KlS-7O-W8I" secondAttribute="trailing" constant="8" symbolic="YES" id="AcF-Gd-7MT"/>
+                            <constraint firstAttribute="trailing" secondItem="BBu-jL-0r9" secondAttribute="trailing" constant="145" id="Bmv-5K-rRK"/>
+                            <constraint firstAttribute="trailing" secondItem="Nan-IE-d9F" secondAttribute="trailing" constant="61" id="Bpb-9F-oqX"/>
+                            <constraint firstItem="sYh-70-RPb" firstAttribute="baseline" secondItem="gul-7T-1C2" secondAttribute="baseline" id="H1L-Ke-WBr"/>
+                            <constraint firstItem="BBu-jL-0r9" firstAttribute="leading" secondItem="qUA-Tj-23m" secondAttribute="leading" id="KJb-dP-r0V"/>
+                            <constraint firstAttribute="trailing" secondItem="sYh-70-RPb" secondAttribute="trailing" constant="20" symbolic="YES" id="L7B-rw-pnM"/>
+                            <constraint firstItem="KlS-7O-W8I" firstAttribute="top" secondItem="Urv-T5-Di1" secondAttribute="top" constant="24" id="LyJ-GB-sf6"/>
+                            <constraint firstItem="qUA-Tj-23m" firstAttribute="top" secondItem="gul-7T-1C2" secondAttribute="bottom" constant="37" id="SKC-sh-r3M"/>
+                            <constraint firstAttribute="trailing" secondItem="cYW-5D-LE4" secondAttribute="trailing" constant="20" id="VSp-7F-coz"/>
+                            <constraint firstItem="KlS-7O-W8I" firstAttribute="leading" secondItem="Urv-T5-Di1" secondAttribute="leading" constant="20" id="ask-yw-LhJ"/>
+                            <constraint firstItem="Zez-AW-h51" firstAttribute="top" secondItem="BBu-jL-0r9" secondAttribute="bottom" constant="20" id="bjl-4W-Qer"/>
+                            <constraint firstItem="BBu-jL-0r9" firstAttribute="top" secondItem="qUA-Tj-23m" secondAttribute="bottom" constant="8" symbolic="YES" id="erq-4v-Beq"/>
+                            <constraint firstItem="sYh-70-RPb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Nan-IE-d9F" secondAttribute="leading" id="fZC-tg-bGB"/>
+                            <constraint firstItem="Zez-AW-h51" firstAttribute="leading" secondItem="Urv-T5-Di1" secondAttribute="leading" constant="20" id="fjd-Mu-Wbq"/>
+                            <constraint firstItem="KlS-7O-W8I" firstAttribute="baseline" secondItem="Nan-IE-d9F" secondAttribute="baseline" id="jKS-VC-gbc"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qUA-Tj-23m" secondAttribute="trailing" constant="20" symbolic="YES" id="kiA-hb-fzE"/>
+                            <constraint firstItem="gul-7T-1C2" firstAttribute="leading" secondItem="KlS-7O-W8I" secondAttribute="leading" id="pJc-7A-3kh"/>
+                            <constraint firstAttribute="trailing" secondItem="Nan-IE-d9F" secondAttribute="trailing" constant="61" id="qwk-vz-EyG"/>
+                            <constraint firstItem="gul-7T-1C2" firstAttribute="top" secondItem="KlS-7O-W8I" secondAttribute="bottom" constant="8" symbolic="YES" id="tD0-Hw-Yhg"/>
+                            <constraint firstItem="qUA-Tj-23m" firstAttribute="leading" secondItem="Urv-T5-Di1" secondAttribute="leading" constant="20" id="vUL-CV-mnE"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Zez-AW-h51" secondAttribute="trailing" constant="20" symbolic="YES" id="yuS-48-YFT"/>
+                            <constraint firstItem="sYh-70-RPb" firstAttribute="leading" secondItem="Nan-IE-d9F" secondAttribute="leading" id="zGh-nd-O9C"/>
+                        </constraints>
+                        <connections>
+                            <binding destination="-2" name="hidden" keyPath="self.loading" id="dmq-B4-GsC"/>
+                        </connections>
+                    </customView>
+                    <box horizontalHuggingPriority="249" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="OHM-JM-ACu">
+                        <rect key="frame" x="12" y="58" width="342" height="5"/>
+                    </box>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fM1-cS-fZw">
+                        <rect key="frame" x="13" y="13" width="76" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ubh-2C-fJi">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="bAM-K3-n4J"/>
+                            <binding destination="-2" name="enabled" keyPath="self.loading" id="9He-nR-8dZ">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QZS-Yp-up0" userLabel="Add Device">
+                        <rect key="frame" x="262" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Confirm" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mht-0o-2eC" userLabel="Add Device">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="createDevice:" target="-2" id="2WZ-wt-Rri"/>
+                            <binding destination="-2" name="enabled" keyPath="self.loading" id="uC9-TL-Byv">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2yP-hk-h1A" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="20" symbolic="YES" id="2cf-BB-I93"/>
+                    <constraint firstItem="A2C-eR-DWU" firstAttribute="trailing" secondItem="OHM-JM-ACu" secondAttribute="trailing" id="4Xy-l9-Joy"/>
+                    <constraint firstItem="ib7-p9-dfu" firstAttribute="centerX" secondItem="OHM-JM-ACu" secondAttribute="centerX" id="4fd-Qb-S79"/>
+                    <constraint firstItem="Urv-T5-Di1" firstAttribute="centerY" secondItem="ib7-p9-dfu" secondAttribute="centerY" id="4oR-5I-QLV"/>
+                    <constraint firstItem="OHM-JM-ACu" firstAttribute="top" secondItem="Urv-T5-Di1" secondAttribute="bottom" id="Bug-bz-PW4"/>
+                    <constraint firstItem="2yP-hk-h1A" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" constant="20" symbolic="YES" id="C8W-HG-nUT"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2yP-hk-h1A" secondAttribute="trailing" constant="20" symbolic="YES" id="H5L-7P-cuw"/>
+                    <constraint firstAttribute="bottom" secondItem="fM1-cS-fZw" secondAttribute="bottom" constant="20" symbolic="YES" id="Hsg-zz-Vkf"/>
+                    <constraint firstAttribute="trailing" secondItem="A2C-eR-DWU" secondAttribute="trailing" constant="4" id="KmR-L1-Xw0"/>
+                    <constraint firstItem="A2C-eR-DWU" firstAttribute="leading" secondItem="OHM-JM-ACu" secondAttribute="leading" id="LQZ-GF-vxM"/>
+                    <constraint firstItem="Urv-T5-Di1" firstAttribute="top" secondItem="A2C-eR-DWU" secondAttribute="bottom" id="M60-kB-sDd"/>
+                    <constraint firstItem="Urv-T5-Di1" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="Qch-FD-Ik3"/>
+                    <constraint firstItem="fM1-cS-fZw" firstAttribute="top" secondItem="OHM-JM-ACu" secondAttribute="bottom" constant="20" symbolic="YES" id="YXw-Cc-G3S"/>
+                    <constraint firstItem="A2C-eR-DWU" firstAttribute="top" secondItem="2yP-hk-h1A" secondAttribute="bottom" constant="8" symbolic="YES" id="ber-oK-r6q"/>
+                    <constraint firstItem="2yP-hk-h1A" firstAttribute="leading" secondItem="fM1-cS-fZw" secondAttribute="leading" id="f8c-xY-lLi"/>
+                    <constraint firstItem="QZS-Yp-up0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fM1-cS-fZw" secondAttribute="trailing" constant="12" symbolic="YES" id="jZG-1V-kwk"/>
+                    <constraint firstItem="ib7-p9-dfu" firstAttribute="centerX" secondItem="Urv-T5-Di1" secondAttribute="centerX" constant="4" id="sop-4Y-4FH"/>
+                    <constraint firstItem="A2C-eR-DWU" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="12" symbolic="YES" id="u6z-fo-FiB"/>
+                    <constraint firstAttribute="trailing" secondItem="QZS-Yp-up0" secondAttribute="trailing" constant="20" id="xEN-Zj-LoJ"/>
+                    <constraint firstItem="fM1-cS-fZw" firstAttribute="baseline" secondItem="QZS-Yp-up0" secondAttribute="baseline" id="y0B-fp-s7J"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="654" y="110"/>
+        </window>
+        <arrayController id="Jhi-do-DEm" userLabel="Categories"/>
+        <arrayController id="MTH-es-cZi" userLabel="Buses"/>
+        <arrayController id="uZb-UL-bSs" userLabel="Devices"/>
+    </objects>
+</document>
