@@ -25,11 +25,7 @@ final class Device: InfoValue {
         
         Architecture.allCases.forEach { arch in
             
-            values[arch] = []
-            
-            values[arch]?.append(
-                contentsOf: QEMU.System(arch: arch).help()
-            )
+            values[arch] = QEMU.System(arch: arch).help()
         }
                 
         return values

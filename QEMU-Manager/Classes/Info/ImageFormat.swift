@@ -21,7 +21,6 @@ import Foundation
 final class ImageFormat: InfoValue {
     
     static let all: [ImageFormat] = [
-        
         ImageFormat(name: "qcow2", title: "QCOW2 (KVM, Xen)", sorting: 0),
         ImageFormat(name: "qed",   title: "QED (KVM)",        sorting: 1),
         ImageFormat(name: "raw",   title: "Raw",              sorting: 2),
