@@ -44,7 +44,7 @@
                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                         <tableColumns>
-                                            <tableColumn width="414" minWidth="40" maxWidth="1000" id="5hu-7M-2TC">
+                                            <tableColumn width="415" minWidth="40" maxWidth="1000" id="5hu-7M-2TC">
                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -88,7 +88,7 @@
                                                             </textField>
                                                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dly-J8-Y7S">
                                                                 <rect key="frame" x="3" y="5" width="37" height="16"/>
-                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Label" id="5gj-b0-YFn">
+                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" title="Label" id="5gj-b0-YFn">
                                                                     <font key="font" usesAppearanceFont="YES"/>
                                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -112,7 +112,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button translatesAutoresizingMaskIntoConstraints="NO" id="he1-lC-iy4">
-                                                                <rect key="frame" x="405" y="14" width="16" height="22"/>
+                                                                <rect key="frame" x="405" y="26" width="16" height="22"/>
                                                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRevealFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="9tN-Fz-ipq">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -136,20 +136,34 @@
                                                                     </binding>
                                                                 </connections>
                                                             </button>
+                                                            <button verticalHuggingPriority="750" id="uKG-7J-ybf">
+                                                                <rect key="frame" x="404" y="5" width="18" height="18"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="TCn-Hc-FpU">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="khS-Yd-yp2" name="value" keyPath="objectValue.disk.auto" id="aqE-co-t8O"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstItem="he1-lC-iy4" firstAttribute="leading" secondItem="gg6-EV-4xD" secondAttribute="trailing" constant="8" symbolic="YES" id="7k7-MI-Vm7"/>
                                                             <constraint firstItem="dly-J8-Y7S" firstAttribute="leading" secondItem="khS-Yd-yp2" secondAttribute="leading" constant="5" id="CcP-sp-k0v"/>
+                                                            <constraint firstItem="he1-lC-iy4" firstAttribute="top" secondItem="khS-Yd-yp2" secondAttribute="top" constant="5" id="D35-PG-bgb"/>
                                                             <constraint firstItem="Oy2-gv-cuT" firstAttribute="leading" secondItem="khS-Yd-yp2" secondAttribute="leading" constant="5" id="EBI-Ic-6h3"/>
                                                             <constraint firstAttribute="bottom" secondItem="UTo-vs-RKV" secondAttribute="bottom" constant="5" id="Ixv-uj-5Qm"/>
+                                                            <constraint firstItem="uKG-7J-ybf" firstAttribute="top" secondItem="he1-lC-iy4" secondAttribute="bottom" constant="8" symbolic="YES" id="K0R-A2-dSn"/>
                                                             <constraint firstItem="gg6-EV-4xD" firstAttribute="top" secondItem="khS-Yd-yp2" secondAttribute="top" constant="5" id="Qio-Of-pvy"/>
                                                             <constraint firstItem="UTo-vs-RKV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dly-J8-Y7S" secondAttribute="trailing" constant="8" symbolic="YES" id="SdH-a0-bMd"/>
                                                             <constraint firstItem="dly-J8-Y7S" firstAttribute="top" secondItem="Oy2-gv-cuT" secondAttribute="bottom" constant="8" symbolic="YES" id="Tn4-Ak-8Bp"/>
                                                             <constraint firstItem="Oy2-gv-cuT" firstAttribute="top" secondItem="khS-Yd-yp2" secondAttribute="top" constant="5" id="Xud-OZ-KBv"/>
+                                                            <constraint firstItem="uKG-7J-ybf" firstAttribute="centerX" secondItem="he1-lC-iy4" secondAttribute="centerX" id="fdf-7i-BML"/>
                                                             <constraint firstAttribute="trailing" secondItem="he1-lC-iy4" secondAttribute="trailing" constant="5" id="hy2-j6-ysM"/>
                                                             <constraint firstAttribute="bottom" secondItem="dly-J8-Y7S" secondAttribute="bottom" constant="5" id="iVn-9f-NV4"/>
                                                             <constraint firstItem="gg6-EV-4xD" firstAttribute="leading" secondItem="Oy2-gv-cuT" secondAttribute="trailing" constant="8" symbolic="YES" id="j2Q-7k-RLA"/>
-                                                            <constraint firstItem="he1-lC-iy4" firstAttribute="centerY" secondItem="khS-Yd-yp2" secondAttribute="centerY" id="nId-C4-SaO"/>
+                                                            <constraint firstItem="he1-lC-iy4" firstAttribute="centerY" secondItem="khS-Yd-yp2" secondAttribute="centerY" constant="-12" id="nId-C4-SaO"/>
                                                             <constraint firstItem="he1-lC-iy4" firstAttribute="leading" secondItem="UTo-vs-RKV" secondAttribute="trailing" constant="8" symbolic="YES" id="qgw-1l-5Tp"/>
                                                         </constraints>
                                                     </tableCellView>
@@ -307,7 +321,7 @@
                 <constraint firstAttribute="trailing" secondItem="c22-O7-iKe" secondAttribute="trailing" id="d5h-qH-Zei"/>
                 <constraint firstItem="c22-O7-iKe" firstAttribute="leading" secondItem="f1a-O6-Rbu" secondAttribute="leading" id="foe-Y1-zip"/>
             </constraints>
-            <point key="canvasLocation" x="-379" y="356.5"/>
+            <point key="canvasLocation" x="-379" y="356"/>
         </customView>
     </objects>
     <resources>

@@ -5,7 +5,7 @@ set -e
 # HOMEBREW
 # brew install cmake meson ninja automake autoconf autoconf-archive libtool wget
 #
-# PYTHON
+# PYTHON VENV - NEEDED FOR SPICE
 # python3 -m venv pyenv
 # source pyenv/bin/activate
 # pip install six pyparsing
@@ -23,21 +23,17 @@ export CFLAGS="-mmacosx-version-min=11.3"
 export LDFLAGS="-mmacosx-version-min=11.3"
 
 # PKG PATHS
-OPUS_PKG="$SCRIPTPATH/opus/lib/pkgconfig"
 PIXMAN_PKG="$SCRIPTPATH/pixman/lib/pkgconfig"
 GLIB_PKG="$SCRIPTPATH/glib/lib/pkgconfig"
 LIBSLIRP_PKG="$SCRIPTPATH/libslirp/lib/pkgconfig"
 
-export PKG_CONFIG_PATH="$OPUS_PKG:\
-$PIXMAN_PKG:\
+export PKG_CONFIG_PATH="$PIXMAN_PKG:\
 $GLIB_PKG:\
 $LIBSLIRP_PKG"
 
 # QEMU SETTINGS
 
 QEMU_UPSTREAM="https://download.qemu.org/qemu-9.2.2.tar.xz"
-
-QEMU_UTM="$(curl -sL "https://api.github.com/repos/utmapp/qemu/releases/latest" | jq -r '.assets[] | select(.name | endswith(".tar.xz")) | .browser_download_url')"
 
 QEMU_TARGETS="aarch64-softmmu,\
 arm-softmmu,\
@@ -105,26 +101,6 @@ fi
 
 rm -fr glib-src
 
-# ZLIB
-if [ ! -d "zlib" ]; then
-
-    if [ ! -d "zlib-src" ]; then
-        git clone https://github.com/madler/zlib.git zlib-src
-    fi
-    
-    cd zlib-src
-    
-    ./configure \
-      --static \
-      --prefix="$SCRIPTPATH/zlib"
-    
-    mkdir "$SCRIPTPATH/zlib"
-    
-    make && make install && make clean && cd ..
-fi
-
-rm -fr zlib-src
-
 # PIXMAN
 if [ ! -d "pixman" ]; then
 
@@ -144,26 +120,6 @@ if [ ! -d "pixman" ]; then
 fi
 
 rm -fr pixman-src
-
-# OPUS
-if [ ! -d "opus" ]; then
-
-    if [ ! -d "opus-src" ]; then
-        git clone https://github.com/xiph/opus.git opus-src
-    fi
-    
-    cd opus-src && ./autogen.sh
-    
-    ./configure --prefix="$SCRIPTPATH/opus" \
-        --enable-static \
-        --disable-shared
-
-    mkdir "$SCRIPTPATH/opus"
-
-    make -j$(sysctl -n hw.logicalcpu) && make install && cd ..
-fi
-
-rm -fr opus-src
 
 # LIBSLIRP
 if [ ! -d "libslirp" ]; then
@@ -200,25 +156,25 @@ if [ ! -d "QEMU" ]; then
         --prefix="$SCRIPTPATH/QEMU" \
         --datadir="./share" \
         --target-list="$QEMU_TARGETS" \
+        --enable-tcg \
         --enable-hvf \
         --enable-coreaudio \
         --enable-cocoa \
-        --enable-slirp \
+        --enable-vmnet \
         --enable-lto \
+        --enable-slirp \
         --disable-sdl \
         --disable-spice \
         --disable-vnc \
         --disable-debug-info \
         --disable-strip \
         --extra-cflags="-I$SCRIPTPATH/pixman/include \
-                        -I$SCRIPTPATH/opus/include \
                         -I$SCRIPTPATH/glib/include \
                         -I$SCRIPTPATH/libslirp/include" \
         --extra-ldflags="-L$SCRIPTPATH/pixman/lib \
-                         -L$SCRIPTPATH/opus/lib \
                          -L$SCRIPTPATH/glib/lib \
                          -L$SCRIPTPATH/libslirp/lib \
-                         -Bstatic -lglib-2.0 -lpixman-1 -lopus -lslirp \
+                         -Bstatic -lglib-2.0 -lpixman-1 -lslirp \
                          -lc++ -lc++abi \
                          -Bdynamic -lc -lSystem"
 

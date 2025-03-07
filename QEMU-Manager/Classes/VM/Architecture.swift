@@ -44,18 +44,22 @@ import Foundation
     
     var isRISC: Bool { self == .riscv64 || self == .riscv32 }
     
-    var supportsUEFI: Bool { self.isARM || self.isX86 }
+    var supportsUEFI: Bool {
+    
+        guard let edkFirmwarePath else {
+            return false
+        }
+        
+        return FileManager.default.fileExists(atPath: edkFirmwarePath)
+    }
     
     var supportsPCI: Bool { self.isARM || self.isX86 || self.isPPC || self.isRISC }
     
     var edkFirmwarePath: String? {
-        
-        Bundle.main.resourceURL?
-            .appendingPathComponent("QEMU")
+        QEMU.rootDirectoryURL?
             .appendingPathComponent("share")
             .appendingPathComponent("qemu")
             .appendingPathComponent("edk2-\(self.stringRawValue)-code.fd")
-            .absoluteURL
-            .path
+            .absoluteURL.path
     }
 }

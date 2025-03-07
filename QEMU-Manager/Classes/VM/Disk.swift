@@ -19,7 +19,16 @@ import Foundation
 
 public class Disk: NSObject, Codable
 {
-    @objc public private( set ) dynamic var uuid   = UUID()
+    @objc public private( set ) dynamic var uuid: UUID = {
+        var uuid: UUID = .init()
+        
+        while uuid.uuidString.prefix(1).rangeOfCharacter(from: .letters) == nil {
+            uuid = .init()
+        }
+        return uuid
+    }()
+    
     @objc public                dynamic var label  = "Untitled"
     @objc public                dynamic var format = "qcow2"
+    @objc public private( set ) dynamic var auto   = true
 }
