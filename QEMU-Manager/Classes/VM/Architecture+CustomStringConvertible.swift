@@ -21,24 +21,13 @@ import Foundation
 extension Architecture: CustomStringConvertible {
 
     init?(string: String) {
-        switch string {
-        case "aarch64":  self = .aarch64
-        case "arm":      self = .arm
-        case "i386":     self = .i386
-        case "m68k":     self = .m68k
-        case "ppc":      self = .ppc
-        case "ppc64":    self = .ppc64
-        case "riscv32":  self = .riscv32
-        case "riscv64":  self = .riscv64
-        case "sparc":    self = .sparc
-        case "sparc64":  self = .sparc64
-        case "mips":     self = .mips
-        case "mips64":   self = .mips64
-        case "mipsel":   self = .mipsel
-        case "mips64el": self = .mips64el
-        case "x86_64":   self = .x86_64
-        default:         return nil
-        }
+        
+        guard let arch = Architecture.allCases.first(
+            where: { $0.stringRawValue == string }
+        
+        ) else { return nil }
+        
+        self = arch
     }
 
     var stringRawValue: String {
