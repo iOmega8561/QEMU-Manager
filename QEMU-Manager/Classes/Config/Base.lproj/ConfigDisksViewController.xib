@@ -57,7 +57,7 @@
                                                 <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                 <prototypeCellViews>
                                                     <tableCellView id="khS-Yd-yp2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="426" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="427" height="50"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oy2-gv-cuT">
@@ -160,7 +160,7 @@
                                                             <constraint firstItem="dly-J8-Y7S" firstAttribute="top" secondItem="Oy2-gv-cuT" secondAttribute="bottom" constant="8" symbolic="YES" id="Tn4-Ak-8Bp"/>
                                                             <constraint firstItem="Oy2-gv-cuT" firstAttribute="top" secondItem="khS-Yd-yp2" secondAttribute="top" constant="5" id="Xud-OZ-KBv"/>
                                                             <constraint firstItem="uKG-7J-ybf" firstAttribute="centerX" secondItem="he1-lC-iy4" secondAttribute="centerX" id="fdf-7i-BML"/>
-                                                            <constraint firstAttribute="trailing" secondItem="he1-lC-iy4" secondAttribute="trailing" constant="5" id="hy2-j6-ysM"/>
+                                                            <constraint firstAttribute="trailing" secondItem="he1-lC-iy4" secondAttribute="trailing" constant="6" id="hy2-j6-ysM"/>
                                                             <constraint firstAttribute="bottom" secondItem="dly-J8-Y7S" secondAttribute="bottom" constant="5" id="iVn-9f-NV4"/>
                                                             <constraint firstItem="gg6-EV-4xD" firstAttribute="leading" secondItem="Oy2-gv-cuT" secondAttribute="trailing" constant="8" symbolic="YES" id="j2Q-7k-RLA"/>
                                                             <constraint firstItem="he1-lC-iy4" firstAttribute="centerY" secondItem="khS-Yd-yp2" secondAttribute="centerY" constant="-12" id="nId-C4-SaO"/>
