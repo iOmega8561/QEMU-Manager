@@ -75,33 +75,34 @@ extension QEMU.System {
         }
                 
         arguments += vm.config.arguments
-        
-        var boot = vm.config.boot
-        
+                
         if let bootResource = vm.config.bootResource {
             
             switch bootResource.kind {
-            case .cdrom:  arguments += ["-cdrom",  bootResource.url.path]
             case .bios:   arguments += ["-bios",   bootResource.url.path]
             case .kernel: arguments += ["-kernel", bootResource.url.path]
             case .initrd: arguments += ["-initrd", bootResource.url.path]
             case .dbt:    arguments += ["-dtb",    bootResource.url.path]
             }
-            
-        } else if boot == "d" { boot = "c" }
+        }
         
-        arguments += ["-boot", boot]
+        arguments += ["-boot", vm.config.boot]
                 
         vm.disks.forEach { diskDrive in
                         
             var driveParams = [
                 "file=" + diskDrive.url.path,
-                "format=" + diskDrive.disk.format,
-                "media=disk",
+                "media=" + (diskDrive.disk.type == .cdrom ? "cdrom" : "disk"),
                 "id=" + diskDrive.disk.uuid.uuidString
             ]
             
-            if !diskDrive.disk.auto { driveParams.append("if=none") }
+            if let format = diskDrive.disk.format {
+                driveParams.append("format=\(format)")
+            }
+            
+            if !diskDrive.disk.auto {
+                driveParams.append("if=none")
+            }
             
             arguments += ["-drive", driveParams.joined(separator: ",")]
         }

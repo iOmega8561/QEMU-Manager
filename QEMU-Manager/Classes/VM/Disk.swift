@@ -17,9 +17,14 @@
 
 import Foundation
 
-public class Disk: NSObject, Codable
-{
-    @objc public private( set ) dynamic var uuid: UUID = {
+final class Disk: NSObject, Codable {
+    
+    @objc enum MediaType: Int, Codable {
+        case disk
+        case cdrom
+    }
+
+    @objc private(set) dynamic var uuid: UUID = {
         var uuid: UUID = .init()
         
         while uuid.uuidString.prefix(1).rangeOfCharacter(from: .letters) == nil {
@@ -27,8 +32,24 @@ public class Disk: NSObject, Codable
         }
         return uuid
     }()
+
+    @objc              dynamic var label:  String
+    @objc private(set) dynamic var format: String?
+    @objc private(set) dynamic var url:    URL?
+    @objc private(set) dynamic var type:   MediaType
+    @objc              dynamic var auto:   Bool   = true
     
-    @objc public                dynamic var label  = "Untitled"
-    @objc public                dynamic var format = "qcow2"
-    @objc public private( set ) dynamic var auto   = true
+    init(label: String, format: String) {
+        self.label  = label
+        self.format = format
+        self.url    = nil
+        self.type   = .disk
+    }
+    
+    init(url: URL, type: MediaType) {
+        self.url    = url
+        self.type   = type
+        self.label  = url.lastPathComponent
+        self.format = try? QEMU.Img().format(url: url)        
+    }
 }

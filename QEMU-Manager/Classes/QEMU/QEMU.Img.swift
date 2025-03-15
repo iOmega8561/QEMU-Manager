@@ -41,20 +41,30 @@ extension QEMU {
             ).map { $0.trimmingCharacters(in: .whitespaces) } ?? []
         }
         
-        func size( url: URL ) throws -> String? {
+        func infoKey( url: URL, keyPrefix: String ) throws -> String? {
             
             let info = try self.info(url: url)
             
             for line in info {
                 
-                if line.hasPrefix("virtual size:") {
+                if line.hasPrefix(keyPrefix) {
                     
                     return .init(line.suffix(
-                        from: line.index(line.startIndex, offsetBy: 13)
+                        from: line.index(line.startIndex, offsetBy: keyPrefix.count)
                     )).trimmingCharacters( in: .whitespaces )
                 }
                 
             }; return nil
+        }
+        
+        func format( url: URL ) throws -> String? {
+            
+            try self.infoKey(url: url, keyPrefix: "file format:")
+        }
+        
+        func size( url: URL ) throws -> String? {
+            
+            try self.infoKey(url: url, keyPrefix: "virtual size:")
         }
         
         init() { self.qemu = QEMU(executableName: "qemu-img") }

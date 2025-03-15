@@ -17,22 +17,20 @@
 
 import Cocoa
 
-final class BootResourceAccessoryViewController: NSViewController {
+final class DiskAccessoryViewController: NSViewController {
     
     @objc private dynamic var selectedIndex = 0
     
-    var bootResourceKind: BootResource.Kind {
+    var mediaType: Disk.MediaType {
         
         switch self.selectedIndex {
-        case 1:  .kernel
-        case 2:  .initrd
-        case 3:  .dbt
-        default: .bios
+        case 1:  .cdrom
+        default: .disk
         }
     }
     
     override var nibName: NSNib.Name? {
-        "BootResourceAccessoryViewController"
+        "DiskAccessoryViewController"
     }
     
     override func viewDidLoad() {

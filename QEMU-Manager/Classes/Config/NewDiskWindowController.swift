@@ -106,14 +106,13 @@ public class NewDiskWindowController: NSWindowController
         
         DispatchQueue.global( qos: .userInitiated ).async
         {
-            let disk    = Disk()
-            disk.format = self.format?.name ?? "qcow2"
-            disk.label  = self.label
-            let path    = url.appendingPathComponent( disk.uuid.uuidString ).appendingPathExtension( disk.format ).path
+            let format  = self.format?.name ?? "qcow2"
+            let disk    = Disk(label: self.label, format: format)
+            let path    = url.appendingPathComponent( disk.uuid.uuidString ).appendingPathExtension( format ).path
             
             do
             {
-                try QEMU.Img().create( url: URL( fileURLWithPath: path ), size: self.size, format: disk.format )
+                try QEMU.Img().create( url: URL( fileURLWithPath: path ), size: self.size, format: format )
                 self.vm.config.addDisk( disk )
                 try self.vm.save()
                 
