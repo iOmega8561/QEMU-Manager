@@ -73,24 +73,19 @@ extension QEMU.System {
             
             arguments += ["-drive", "if=pflash,format=raw,readonly=on,file=\(firmware)"]
         }
-        
-        if architecture.isARM {
-            arguments += ["-device", "qemu-xhci,id=xhci0"]
-        }
                 
         arguments += vm.config.arguments
         
         var boot = vm.config.boot
         
-        if let cd = vm.config.cdImage,
-           FileManager.default.fileExists(atPath: cd.path) {
+        if let bootResource = vm.config.bootResource {
             
-            let cdromParam = architecture.isARM ? ",if=none,id=cd0":""
-            
-            arguments += ["-drive", "file=\(cd.path),media=cdrom\(cdromParam)"]
-            
-            if architecture.isARM {
-                arguments += ["-device", "usb-storage,drive=cd0"]
+            switch bootResource.kind {
+            case .cdrom:  arguments += ["-cdrom",  bootResource.url.path]
+            case .bios:   arguments += ["-bios",   bootResource.url.path]
+            case .kernel: arguments += ["-kernel", bootResource.url.path]
+            case .initrd: arguments += ["-initrd", bootResource.url.path]
+            case .dbt:    arguments += ["-dtb",    bootResource.url.path]
             }
             
         } else if boot == "d" { boot = "c" }

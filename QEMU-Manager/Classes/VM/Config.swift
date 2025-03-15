@@ -33,7 +33,7 @@ final class Config: NSObject, Codable {
     @objc              dynamic var title:         String           = "Untitled"
     @objc              dynamic var icon:          String?          = nil
     @objc private(set) dynamic var disks:         [Disk]           = []
-    @objc              dynamic var cdImage:       URL?             = nil
+    @objc              dynamic var bootResource:  BootResource?    = nil
     @objc              dynamic var boot:          String           = "d"
     @objc private(set) dynamic var sharedFolders: [SharedFolder]   = []
     @objc private(set) dynamic var arguments:     [String]         = []

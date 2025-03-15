@@ -206,8 +206,8 @@
                             </connections>
                         </segmentedControl>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gOk-2v-Rmg">
-                            <rect key="frame" x="18" y="108" width="67" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="CD Image:" id="zWV-yK-yIJ">
+                            <rect key="frame" x="18" y="108" width="97" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Boot Resource:" id="zWV-yK-yIJ">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -221,7 +221,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.cdImage" id="m32-l4-3kM">
+                                <binding destination="-2" name="value" keyPath="self.vm.config.bootResource.url" id="dOw-1p-WIL">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">OptionalPath</string>
                                     </dictionary>
@@ -240,7 +240,7 @@
                             </constraints>
                             <connections>
                                 <action selector="removeCDImage:" target="-2" id="zdF-YX-Iad"/>
-                                <binding destination="-2" name="hidden" keyPath="self.vm.config.cdImage" id="a99-Dl-fCi">
+                                <binding destination="-2" name="hidden" keyPath="self.vm.config.bootResource" id="xqt-jW-zg9">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">NSIsNil</string>
                                     </dictionary>

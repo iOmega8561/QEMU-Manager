@@ -177,19 +177,24 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
             return
         }
         
+        let accessoryView             = BootResourceAccessoryViewController()
         let panel                     = NSOpenPanel()
         panel.canChooseFiles          = true
         panel.canChooseDirectories    = false
         panel.allowsMultipleSelection = false
+        panel.accessoryView           = accessoryView.view
         
         panel.beginSheetModal( for: window )
         {
-            r in if r != .OK
+            r in guard r == .OK, let url = panel.url else
             {
                 return
             }
             
-            self.vm.config.cdImage = panel.url
+            self.vm.config.bootResource = .init(
+                kind: accessoryView.bootResourceKind,
+                url: url
+            )
         }
     }
     
@@ -207,6 +212,6 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
     
     @IBAction private func removeCDImage( _ sender: Any? )
     {
-        self.vm.config.cdImage = nil
+        self.vm.config.bootResource = nil
     }
 }
