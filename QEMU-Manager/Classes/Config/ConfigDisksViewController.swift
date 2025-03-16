@@ -130,7 +130,7 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
             return
         }
         
-        guard disk.disk.url != nil else {
+        guard disk.disk.url == nil else {
             self.vm.config.removeDisk( disk.disk )
             try? self.vm.save()
             self.reloadDisks()

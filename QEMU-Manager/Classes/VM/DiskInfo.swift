@@ -38,20 +38,7 @@ public class DiskInfo: NSObject
         
         self.vm   = vm
         self.disk = disk
-        
-        if let diskURL = disk.url {
-            self.url = diskURL
-            
-        } else {
-            
-            var diskURL = url.appendingPathComponent(disk.uuid.uuidString)
-            
-            if let format = disk.format {
-                diskURL = diskURL.appendingPathExtension(format)
-            }
-            
-            self.url = diskURL
-        }
+        self.url = disk.url ?? url.appendingPathComponent(disk.uuid.uuidString).appendingPathExtension(disk.format.description)
                 
         do
         {

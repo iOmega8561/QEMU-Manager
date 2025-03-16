@@ -42,11 +42,6 @@ public class InfoValue: NSObject
     
     public override func isEqual( _ object: Any? ) -> Bool
     {
-        guard let format = object as? ImageFormat else
-        {
-            return false
-        }
-        
-        return self.name == format.name
+        return false    
     }
 }

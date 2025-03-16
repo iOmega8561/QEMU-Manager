@@ -18,11 +18,6 @@
 import Foundation
 
 final class Disk: NSObject, Codable {
-    
-    @objc enum MediaType: Int, Codable {
-        case disk
-        case cdrom
-    }
 
     @objc private(set) dynamic var uuid: UUID = {
         var uuid: UUID = .init()
@@ -32,14 +27,14 @@ final class Disk: NSObject, Codable {
         }
         return uuid
     }()
-
-    @objc              dynamic var label:  String
-    @objc private(set) dynamic var format: String?
+    
     @objc private(set) dynamic var url:    URL?
     @objc private(set) dynamic var type:   MediaType
-    @objc              dynamic var auto:   Bool   = true
+    @objc private(set) dynamic var format: ImageFormat
+    @objc              dynamic var label:  String
+    @objc              dynamic var auto:   Bool = true
     
-    init(label: String, format: String) {
+    init(label: String, format: ImageFormat) {
         self.label  = label
         self.format = format
         self.url    = nil
@@ -50,6 +45,47 @@ final class Disk: NSObject, Codable {
         self.url    = url
         self.type   = type
         self.label  = url.lastPathComponent
-        self.format = try? QEMU.Img().format(url: url)        
+        
+        let stringFormat = try? QEMU.Img().format(url: url)
+        
+        self.format = .init(string: stringFormat ?? "raw") ?? .raw
+    }
+}
+
+extension Disk {
+    
+    @objc enum MediaType: Int, StringCodable {
+        case disk
+        case cdrom
+        
+        var description: String {
+            switch self {
+            case .disk:  "disk"
+            case .cdrom: "cdrom"
+            }
+        }
+    }
+}
+
+extension Disk {
+    
+    @objc enum ImageFormat: Int, StringCodable {
+        case qcow2
+        case qed
+        case raw
+        case vdi
+        case vpc
+        case vmdk
+        
+        var description: String {
+            switch self {
+            case .qcow2: "qcow2"
+            case .qed:   "qed"
+            case .raw:   "raw"
+            case .vdi:   "vdi"
+            case .vpc:   "vpc"
+            case .vmdk:  "vmdk"
+            }
+        }
     }
 }

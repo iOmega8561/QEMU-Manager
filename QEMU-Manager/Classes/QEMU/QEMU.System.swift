@@ -28,7 +28,7 @@ extension QEMU {
         
         init(arch: Architecture) {
             self.architecture = arch
-            self.qemu = QEMU(executableName: "qemu-system-\(arch.stringRawValue)")
+            self.qemu = QEMU(executableName: "qemu-system-\(arch.description)")
         }
     }
 }
@@ -40,7 +40,7 @@ extension QEMU.System {
         
         var arguments: [String] = []
         
-        arguments.append( "-m" )
+        arguments.append("-m")
         arguments.append(SizeFormatter().string(from: NSNumber(value: vm.config.memory), style: .qemu))
         
         if let machine = vm.config.machine, machine.count > 0 {
@@ -91,14 +91,11 @@ extension QEMU.System {
         vm.disks.forEach { diskDrive in
                         
             var driveParams = [
-                "file=" + diskDrive.url.path,
-                "media=" + (diskDrive.disk.type == .cdrom ? "cdrom" : "disk"),
-                "id=" + diskDrive.disk.uuid.uuidString
+                "file="   + diskDrive.url.path,
+                "format=" + diskDrive.disk.format.description,
+                "media="  + diskDrive.disk.type.description,
+                "id="     + diskDrive.disk.uuid.uuidString
             ]
-            
-            if let format = diskDrive.disk.format {
-                driveParams.append("format=\(format)")
-            }
             
             if !diskDrive.disk.auto {
                 driveParams.append("if=none")
