@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,15 +17,41 @@
 
 import Foundation
 
-@objc(ArchitectureToString) class ArchitectureToString: StringCodableValueTransformer {
+protocol StringCodable: CaseIterable, Codable, CustomStringConvertible, RawRepresentable where RawValue == Int {
+    init?(string: String)
+}
+
+enum StringCodableError: Error {
+    case invalidArchitecture
+}
+
+extension StringCodable {
     
-    override func transformEnum(from intValue: Int) -> String? {
+    func encode(to encoder: any Encoder) throws {
         
-        guard let arch = Architecture(rawValue: intValue) else {
+        var container = encoder.singleValueContainer()
+        
+        try container.encode(self.description)
+    }
+    
+    init(from decoder: any Decoder) throws {
+        
+        let container = try decoder.singleValueContainer()
+
+        let value = try container.decode(String.self)
+        
+        guard let decodedValue = Self(string: value) else {
+            throw StringCodableError.invalidArchitecture
+        }
+        
+        self = decodedValue
+    }
+    
+    init?(string: String) {
+        guard let value = Self.allCases.first(where: { $0.description == string }) else {
             return nil
         }
         
-        return arch.displayName
+        self = value
     }
 }
-

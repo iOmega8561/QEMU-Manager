@@ -1,4 +1,5 @@
 /*******************************************************************************
+ * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,27 +18,15 @@
 
 import Foundation
 
-extension Architecture: Codable {
+@objc(ImageFormatToString) class ImageFormatToString: StringCodableValueTransformer {
     
-    enum Error: Swift.Error { case invalidArchitecture }
-    
-    func encode(to encoder: any Encoder) throws {
+    override func transformEnum(from intValue: Int) -> String? {
         
-        var container = encoder.singleValueContainer()
-        
-        try container.encode(self.stringRawValue)
-    }
-    
-    init(from decoder: any Decoder) throws {
-        
-        let container = try decoder.singleValueContainer()
-
-        let value = try container.decode(String.self)
-                
-        guard let architecture = Architecture(string: value) else {
-            throw Error.invalidArchitecture
+        guard let arch = Disk.ImageFormat(rawValue: intValue) else {
+            return nil
         }
-                
-        self = architecture
+        
+        return arch.description.uppercased()
     }
 }
+

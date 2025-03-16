@@ -17,9 +17,9 @@
 
 import Foundation
 
-public class Disk: NSObject, Codable
-{
-    @objc public private( set ) dynamic var uuid: UUID = {
+final class Disk: NSObject, Codable {
+
+    @objc private(set) dynamic var uuid: UUID = {
         var uuid: UUID = .init()
         
         while uuid.uuidString.prefix(1).rangeOfCharacter(from: .letters) == nil {
@@ -28,7 +28,64 @@ public class Disk: NSObject, Codable
         return uuid
     }()
     
-    @objc public                dynamic var label  = "Untitled"
-    @objc public                dynamic var format = "qcow2"
-    @objc public private( set ) dynamic var auto   = true
+    @objc private(set) dynamic var url:    URL?
+    @objc private(set) dynamic var type:   MediaType
+    @objc private(set) dynamic var format: ImageFormat
+    @objc              dynamic var label:  String
+    @objc              dynamic var auto:   Bool = true
+    
+    init(label: String, format: ImageFormat) {
+        self.label  = label
+        self.format = format
+        self.url    = nil
+        self.type   = .disk
+    }
+    
+    init(url: URL, type: MediaType) {
+        self.url    = url
+        self.type   = type
+        self.label  = url.lastPathComponent
+        
+        let stringFormat = try? QEMU.Img().format(url: url)
+        
+        self.format = .init(string: stringFormat ?? "raw") ?? .raw
+    }
+}
+
+extension Disk {
+    
+    @objc enum MediaType: Int, StringCodable {
+        case disk
+        case cdrom
+        
+        var description: String {
+            switch self {
+            case .disk:  "disk"
+            case .cdrom: "cdrom"
+            }
+        }
+    }
+}
+
+extension Disk {
+    
+    @objc enum ImageFormat: Int, StringCodable {
+        case qcow2
+        case qed
+        case raw
+        case vdi
+        case vpc
+        case vmdk
+        
+        var description: String {
+            switch self {
+            case .qcow2: "qcow2"
+            case .qed:   "qed"
+            case .raw:   "raw"
+            case .vdi:   "vdi"
+            case .vpc:   "vpc"
+            case .vmdk:  "vmdk"
+            }
+        }
+    }
 }

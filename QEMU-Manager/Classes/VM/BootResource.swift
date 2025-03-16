@@ -20,7 +20,6 @@ import Foundation
 final class BootResource: NSObject, Codable {
     
     @objc enum Kind: Int, Codable {
-        case cdrom
         case bios
         case kernel
         case initrd

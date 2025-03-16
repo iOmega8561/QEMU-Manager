@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,10 @@ final class BootResourceAccessoryViewController: NSViewController {
     var bootResourceKind: BootResource.Kind {
         
         switch self.selectedIndex {
-        case 1:  .bios
-        case 2:  .kernel
-        case 3:  .initrd
-        case 4:  .dbt
-        default: .cdrom
+        case 1:  .kernel
+        case 2:  .initrd
+        case 3:  .dbt
+        default: .bios
         }
     }
     

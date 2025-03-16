@@ -28,7 +28,7 @@ extension QEMU {
         
         init(arch: Architecture) {
             self.architecture = arch
-            self.qemu = QEMU(executableName: "qemu-system-\(arch.stringRawValue)")
+            self.qemu = QEMU(executableName: "qemu-system-\(arch.description)")
         }
     }
 }
@@ -40,7 +40,7 @@ extension QEMU.System {
         
         var arguments: [String] = []
         
-        arguments.append( "-m" )
+        arguments.append("-m")
         arguments.append(SizeFormatter().string(from: NSNumber(value: vm.config.memory), style: .qemu))
         
         if let machine = vm.config.machine, machine.count > 0 {
@@ -75,33 +75,31 @@ extension QEMU.System {
         }
                 
         arguments += vm.config.arguments
-        
-        var boot = vm.config.boot
-        
+                
         if let bootResource = vm.config.bootResource {
             
             switch bootResource.kind {
-            case .cdrom:  arguments += ["-cdrom",  bootResource.url.path]
             case .bios:   arguments += ["-bios",   bootResource.url.path]
             case .kernel: arguments += ["-kernel", bootResource.url.path]
             case .initrd: arguments += ["-initrd", bootResource.url.path]
             case .dbt:    arguments += ["-dtb",    bootResource.url.path]
             }
-            
-        } else if boot == "d" { boot = "c" }
+        }
         
-        arguments += ["-boot", boot]
+        arguments += ["-boot", vm.config.boot]
                 
         vm.disks.forEach { diskDrive in
                         
             var driveParams = [
-                "file=" + diskDrive.url.path,
-                "format=" + diskDrive.disk.format,
-                "media=disk",
-                "id=" + diskDrive.disk.uuid.uuidString
+                "file="   + diskDrive.url.path,
+                "format=" + diskDrive.disk.format.description,
+                "media="  + diskDrive.disk.type.description,
+                "id="     + diskDrive.disk.uuid.uuidString
             ]
             
-            if !diskDrive.disk.auto { driveParams.append("if=none") }
+            if !diskDrive.disk.auto {
+                driveParams.append("if=none")
+            }
             
             arguments += ["-drive", driveParams.joined(separator: ",")]
         }

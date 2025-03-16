@@ -18,7 +18,7 @@
 
 import Foundation
     
-@objc enum Architecture: Int, CaseIterable {
+@objc enum Architecture: Int, StringCodable {
         
     case aarch64
     case arm
@@ -36,14 +36,6 @@ import Foundation
     case mipsel
     case m68k
     
-    var isARM: Bool { self == .aarch64 || self == .arm }
-    
-    var isX86: Bool { self == .x86_64 || self == .i386 }
-    
-    var isPPC: Bool { self == .ppc64 || self == .ppc }
-    
-    var isRISC: Bool { self == .riscv64 || self == .riscv32 }
-    
     var supportsUEFI: Bool {
     
         guard let edkFirmwarePath else {
@@ -52,14 +44,52 @@ import Foundation
         
         return FileManager.default.fileExists(atPath: edkFirmwarePath)
     }
-    
-    var supportsPCI: Bool { self.isARM || self.isX86 || self.isPPC || self.isRISC }
-    
+        
     var edkFirmwarePath: String? {
         QEMU.rootDirectoryURL?
             .appendingPathComponent("share")
             .appendingPathComponent("qemu")
-            .appendingPathComponent("edk2-\(self.stringRawValue)-code.fd")
+            .appendingPathComponent("edk2-\(self.description)-code.fd")
             .absoluteURL.path
+    }
+
+    var description: String {
+        switch self {
+        case .aarch64:  "aarch64"
+        case .arm:      "arm"
+        case .x86_64:   "x86_64"
+        case .i386:     "i386"
+        case .ppc64:    "ppc64"
+        case .ppc:      "ppc"
+        case .riscv64:  "riscv64"
+        case .riscv32:  "riscv32"
+        case .sparc64:  "sparc64"
+        case .sparc:    "sparc"
+        case .mips64:   "mips64"
+        case .mips:     "mips"
+        case .mips64el: "mips64el"
+        case .mipsel:   "mipsel"
+        case .m68k:     "m68k"
+        }
+    }
+
+    var displayName: String {
+        switch self {
+        case .aarch64:  "ARM 64-bits"
+        case .arm:      "ARM 32-bits"
+        case .x86_64:   "Intel 64-bits"
+        case .i386:     "Intel 32-bits"
+        case .ppc64:    "PowerPC 64-bits"
+        case .ppc:      "PowerPC 32-bits"
+        case .riscv64:  "RISC-V 64-bits"
+        case .riscv32:  "RISC-V 32-bits"
+        case .sparc64:  "SPARC 64-bits"
+        case .sparc:    "SPARC 32-bits"
+        case .mips64:   "MIPS 64-bits"
+        case .mips:     "MIPS 32-bits"
+        case .mips64el: "MIPS 64-bits (Little-Endian)"
+        case .mipsel:   "MIPS 32-bits (Little-Endian)"
+        case .m68k:     "Motorola 68k"
+        }
     }
 }

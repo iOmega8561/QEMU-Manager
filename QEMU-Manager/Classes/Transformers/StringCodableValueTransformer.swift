@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,31 +17,20 @@
 
 import Foundation
 
-public class InfoValue: NSObject
-{
-    @objc public private( set ) dynamic var name:    String
-    @objc public private( set ) dynamic var title:   String?
-    @objc public private( set ) dynamic var sorting: Int
+@objc class StringCodableValueTransformer: ValueTransformer {
     
-    public required init( name: String, title: String? = nil, sorting: Int = 0 )
-    {
-        self.name    = name
-        self.title   = title
-        self.sorting = sorting
+    override class func transformedValueClass() -> AnyClass {
+        return NSString.self
     }
     
-    public override var description: String
-    {
-        if let title = self.title, title.count > 0
-        {
-            return "\( self.name ) - \( title )"
-        }
-        
-        return self.name
+    override class func allowsReverseTransformation() -> Bool { false }
+
+    func transformEnum(from intValue: Int) -> String? {
+        return nil // This is overridden in subclasses
     }
     
-    public override func isEqual( _ object: Any? ) -> Bool
-    {
-        return false    
+    override func transformedValue(_ value: Any?) -> Any? {
+        guard let intValue = value as? Int else { return "--" }
+        return transformEnum(from: intValue) as NSString? ?? "--"
     }
 }
