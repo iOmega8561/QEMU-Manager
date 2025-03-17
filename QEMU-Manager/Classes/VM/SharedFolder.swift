@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2021 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,12 +38,11 @@ final class SharedFolder: NSObject, Codable {
         }
     }
     
-    @objc dynamic var uuid: UUID
-    @objc dynamic var url:  URL
-    @objc dynamic var kind: Kind
+    @objc private(set) dynamic var uuid: UUID = .init()
+    @objc private(set) dynamic var url:  URL
+    @objc private(set) dynamic var kind: Kind
     
     init(url: URL, kind: Kind) {
-        self.uuid = UUID()
         self.url  = url
         self.kind = kind
     }
