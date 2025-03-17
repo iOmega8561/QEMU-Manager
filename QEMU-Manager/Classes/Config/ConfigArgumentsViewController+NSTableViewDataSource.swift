@@ -18,7 +18,7 @@
 
 import Cocoa
 
-extension ConfigAdvancedViewController: NSTableViewDataSource {
+extension ConfigArgumentsViewController: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         

@@ -105,11 +105,9 @@ extension QEMU.System {
         }
         
         vm.config.sharedFolders.forEach { dirShare in
-            
-            let shareKind = dirShare.kind == .floppy ? "fat:floppy" : "fat"
-            
+                        
             let shareParams = [
-                "file=" + shareKind + ":" + dirShare.url.path,
+                "file=" + dirShare.kind.description + ":rw:" + dirShare.url.path,
                 "format=raw",
                 "media=disk"
             ]
