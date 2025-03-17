@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +17,7 @@
 
 import Foundation
 
-@objc(ArchitectureToString) class ArchitectureToString: StringCodableValueTransformer {
+@objc(ArchitectureToString) final class ArchitectureToString: StringCodableValueTransformer {
     
     override func transformEnum(from intValue: Int) -> String? {
         

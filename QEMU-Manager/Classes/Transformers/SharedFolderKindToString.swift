@@ -17,31 +17,14 @@
 
 import Foundation
 
-@objc( SharedFolderKindToString ) public class SharedFolderKindToString: ValueTransformer
-{
-    public override class func transformedValueClass() -> AnyClass
-    {
-        NSString.self
-    }
+@objc(SharedFolderKindToString) final class SharedFolderKindToString: StringCodableValueTransformer {
     
-    public override class func allowsReverseTransformation() -> Bool
-    {
-        false
-    }
-    
-    public override func transformedValue( _ value: Any? ) -> Any?
-    {
-        guard let n    = ( value as? NSNumber )?.intValue,
-              let kind = SharedFolder.Kind( rawValue: n )
-        else
-        {
-            return "--"
+    override func transformEnum(from intValue: Int) -> String? {
+        
+        guard let kind = SharedFolder.Kind(rawValue: intValue) else {
+            return nil
         }
         
-        switch kind
-        {
-            case .fat:    return "FAT"
-            case .floppy: return "FLOPPY"
-        }
+        return kind.displayName
     }
 }
