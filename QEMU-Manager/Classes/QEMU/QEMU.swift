@@ -19,12 +19,6 @@
 import Foundation
 
 struct QEMU {
-    
-    enum QEMUError: Swift.Error {
-        case launchFailure(status: Int, message: String)
-        case executableDirectoryNotAvailable
-        case executableNotAvailable(executableName: String)
-    }
 
     static var rootDirectoryURL: URL? {
         Bundle.main.resourceURL?
@@ -45,7 +39,7 @@ struct QEMU {
         guard let executableURL,
              FileManager.default.fileExists(atPath: executableURL.absoluteURL.path) else {
             
-            throw QEMUError.executableNotAvailable(executableName: executableName)
+            throw Error.executableNotAvailable(executableName: executableName)
         }
         
         let out                     = Pipe()
@@ -67,7 +61,7 @@ struct QEMU {
         
         guard process.terminationStatus == 0 else {
             
-            throw QEMUError.launchFailure(
+            throw Error.launchFailure(
                 status: .init(process.terminationStatus),
                 message: strErr
             )

@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,60 +18,34 @@
 
 import Cocoa
 
-public class QEMUErrorWindowController: NSWindowController
-{
-                 private( set ) dynamic var error:       QEMU.QEMUError
-    @objc public private( set ) dynamic var statusText:  String
-    @objc public private( set ) dynamic var details:     String
-    @objc public private( set ) dynamic var detailsFont: NSFont?
+final class QEMUErrorWindowController: NSWindowController {
+        
+    @objc private dynamic var statusText:  String
+    @objc private dynamic var details:     String  = "No details available..."
+    @objc private dynamic var detailsFont: NSFont? = .userFixedPitchFont(ofSize: NSFont.systemFontSize)
     
-    init(error: QEMU.QEMUError) {
-        
-        self.error       = error
-        
-        switch error {
-        case .launchFailure(let status, let message):
-            self.statusText  = "Process exited with code \(status)"
-            self.details     = message
-            
-        case .executableDirectoryNotAvailable:
-            self.statusText  = "The executable location is not accessible"
-            self.details     = ""
-            
-        case .executableNotAvailable(let executableName):
-            self.statusText  = "The executable \(executableName) is not available"
-            self.details     = ""
-        }
-        
-        self.detailsFont = NSFont.userFixedPitchFont( ofSize: NSFont.systemFontSize )
-        
-        if self.details.count == 0
-        {
-            self.details = "No details available..."
-        }
-        
-        super.init( window: nil )
-    }
+    override var windowNibName: NSNib.Name? { "QEMUErrorWindowController" }
     
-    required init?( coder: NSCoder )
-    {
-        nil
-    }
-    
-    public override var windowNibName: NSNib.Name?
-    {
-        "QEMUErrorWindowController"
-    }
-    
-    public override func windowDidLoad()
-    {
+    override func windowDidLoad() {
         super.windowDidLoad()
-        
         self.window?.title = "Cannot Launch QEMU"
     }
     
-    @IBAction private func ok( _ sender: Any )
-    {
+    @IBAction private func ok(_ sender: Any) {
         self.window?.close()
     }
+    
+    init(error: QEMU.Error) {
+                
+        switch error {
+        case .launchFailure(_, let message):
+            self.details = message; fallthrough
+            
+        default: self.statusText  = error.statusMessage
+        }
+                
+        super.init(window: nil)
+    }
+    
+    required init?(coder: NSCoder) { nil }
 }

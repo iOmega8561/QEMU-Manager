@@ -141,7 +141,7 @@ public class VirtualMachine: NSObject
                         self.running = false
                     }
                 }
-                catch let error as QEMU.QEMUError
+                catch let error as QEMU.Error
                 {
                     DispatchQueue.main.async
                     {

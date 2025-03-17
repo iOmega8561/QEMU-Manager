@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-@objc public extension NSError
-{
-    @objc convenience init( exception: NSException )
-    {
-        var info: [ String: Any ] =
-        [
-            NSLocalizedDescriptionKey : exception.name,
-        ]
+extension QEMU {
+    
+    enum Error: Swift.Error {
         
-        if let reason = exception.reason
-        {
-            info[ NSLocalizedRecoverySuggestionErrorKey ] = reason
+        case launchFailure(status: Int, message: String)
+        case executableDirectoryNotAvailable
+        case executableNotAvailable(executableName: String)
+        
+        var statusMessage: String {
+            switch self {
+            case .launchFailure(let status, _):
+                "Process exited with code \(status)"
+                
+            case .executableDirectoryNotAvailable:             
+                "The executable location is not accessible"
+                
+            case .executableNotAvailable(let executableName):
+                "The executable \(executableName) is not available"
+            }
         }
-        
-        self.init( domain: NSCocoaErrorDomain, code: 0, userInfo: info )
     }
+    
 }
