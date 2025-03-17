@@ -205,36 +205,6 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
         }
     }
     
-    @IBAction private func chooseImage( _ sender: Any? )
-    {
-        guard let window = self.view.window else
-        {
-            NSSound.beep()
-            
-            return
-        }
-        
-        let accessoryView             = BootResourceAccessoryViewController()
-        let panel                     = NSOpenPanel()
-        panel.canChooseFiles          = true
-        panel.canChooseDirectories    = false
-        panel.allowsMultipleSelection = false
-        panel.accessoryView           = accessoryView.view
-        
-        panel.beginSheetModal( for: window )
-        {
-            r in guard r == .OK, let url = panel.url else
-            {
-                return
-            }
-            
-            self.vm.config.bootResource = .init(
-                kind: accessoryView.bootResourceKind,
-                url: url
-            )
-        }
-    }
-    
     @IBAction public func revealDisk( _ sender: Any? )
     {
         guard let disk = sender as? DiskInfo else
@@ -245,10 +215,5 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
         }
         
         NSWorkspace.shared.selectFile( disk.url.path, inFileViewerRootedAtPath: "" )
-    }
-    
-    @IBAction private func removeCDImage( _ sender: Any? )
-    {
-        self.vm.config.bootResource = nil
     }
 }

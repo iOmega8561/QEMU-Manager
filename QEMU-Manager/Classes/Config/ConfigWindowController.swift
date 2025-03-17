@@ -41,7 +41,7 @@ public class ConfigWindowController: NSWindowController, NSTableViewDelegate
         self.addController( ConfigHardwareViewController(  vm: vm, sorting: 1 ) )
         self.addController( ConfigDisksViewController(     vm: vm, sorting: 2 ) )
         self.addController( ConfigSharingViewController(   vm: vm, sorting: 3 ) )
-        self.addController( ConfigQEMUViewController(      vm: vm, sorting: 4 ) )
+        self.addController( ConfigEmulationViewController( vm: vm, sorting: 4 ) )
         self.addController( ConfigArgumentsViewController( vm: vm, sorting: 5 ) )
     }
     

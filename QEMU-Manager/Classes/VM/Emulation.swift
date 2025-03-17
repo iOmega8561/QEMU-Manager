@@ -15,27 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-final class BootResourceAccessoryViewController: NSViewController {
+final class Emulation: NSObject, Codable {
     
-    @objc private dynamic var selectedIndex = 0
-    
-    var bootResourceKind: BootResource.Kind {
-        
-        switch self.selectedIndex {
-        case 1:  .kernel
-        case 2:  .initrd
-        case 3:  .dbt
-        default: .bios
-        }
-    }
-    
-    override var nibName: NSNib.Name? {
-        "BootResourceAccessoryViewController"
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    @objc dynamic var accel:  String? = nil
+    @objc dynamic var uefi:   Bool    = false
+    @objc dynamic var bios:   URL?    = nil
+    @objc dynamic var kernel: URL?    = nil
+    @objc dynamic var initrd: URL?    = nil
+    @objc dynamic var dbt:    URL?    = nil
 }

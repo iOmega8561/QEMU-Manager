@@ -59,33 +59,37 @@ extension QEMU.System {
             arguments += ["-smp", "\(vm.config.cores)"]
         }
         
-        if let accel = vm.config.accel {
+        if let accel = vm.config.emulation.accel {
             arguments += ["-accel", accel]
+        }
+        
+        if let bios = vm.config.emulation.bios {
+            arguments += ["-bios", bios.path]
+        }
+        
+        if let kernel = vm.config.emulation.kernel {
+            arguments += ["-kernel", kernel.path]
+        }
+        
+        if let initrd = vm.config.emulation.initrd {
+            arguments += ["-initrd", initrd.path]
+        }
+        
+        if let dbt = vm.config.emulation.dbt {
+            arguments += ["-accel", dbt.path]
+        }
+        
+        if vm.config.emulation.uefi, architecture.supportsUEFI,
+           let firmware = vm.config.architecture.edkFirmwarePath {
+            
+            arguments += ["-drive", "if=pflash,format=raw,readonly=on,file=\(firmware)"]
         }
         
         arguments += ["-audio",   "driver=coreaudio"]
         arguments += ["-nic",     "user"]
         arguments += ["-display", "cocoa"]
         arguments += ["-name",    vm.config.title]
-        
-        if vm.config.enableUEFI, architecture.supportsUEFI,
-           let firmware = vm.config.architecture.edkFirmwarePath {
-            
-            arguments += ["-drive", "if=pflash,format=raw,readonly=on,file=\(firmware)"]
-        }
-                
         arguments += vm.config.arguments
-                
-        if let bootResource = vm.config.bootResource {
-            
-            switch bootResource.kind {
-            case .bios:   arguments += ["-bios",   bootResource.url.path]
-            case .kernel: arguments += ["-kernel", bootResource.url.path]
-            case .initrd: arguments += ["-initrd", bootResource.url.path]
-            case .dbt:    arguments += ["-dtb",    bootResource.url.path]
-            }
-        }
-        
         arguments += ["-boot", vm.config.boot]
                 
         vm.disks.forEach { diskDrive in

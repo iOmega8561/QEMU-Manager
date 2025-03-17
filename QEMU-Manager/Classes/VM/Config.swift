@@ -23,17 +23,15 @@ final class Config: NSObject, Codable {
     @objc private(set) dynamic var version:       UInt64           = 0
     @objc private(set) dynamic var uuid:          UUID             = UUID()
     @objc private(set) dynamic var architecture:  Architecture     = .aarch64
-    @objc              dynamic var accel:         String?          = nil
     @objc              dynamic var machine:       String?          = nil
     @objc              dynamic var cpu:           String?          = nil
     @objc              dynamic var vga:           String?          = nil
     @objc              dynamic var cores:         UInt64           = 1
     @objc              dynamic var memory:        UInt64           = 2147483648
-    @objc              dynamic var enableUEFI:    Bool             = false
     @objc              dynamic var title:         String           = "Untitled"
     @objc              dynamic var icon:          String?          = nil
     @objc private(set) dynamic var disks:         [Disk]           = []
-    @objc              dynamic var bootResource:  BootResource?    = nil
+    @objc private(set) dynamic var emulation:     Emulation        = .init()
     @objc              dynamic var boot:          String           = "d"
     @objc private(set) dynamic var sharedFolders: [SharedFolder]   = []
     @objc private(set) dynamic var arguments:     [String]         = []
@@ -44,8 +42,8 @@ final class Config: NSObject, Codable {
             return
         }
         
-        self.architecture = arch
-        self.enableUEFI   = enableUEFI && arch.supportsUEFI
+        self.architecture   = arch
+        self.emulation.uefi = self.emulation.uefi && arch.supportsUEFI
     }
     
     func setArguments(_ args: [Argument]?) {

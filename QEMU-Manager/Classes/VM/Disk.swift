@@ -1,5 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
