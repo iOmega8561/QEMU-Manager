@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Giuseppe Rocco
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,12 @@
 
 import Foundation
 
-@objc(SharedFolderKindToString) final class SharedFolderKindToString: StringCodableValueTransformer {
+final class Emulation: NSObject, Codable {
     
-    override func transformEnum(from intValue: Int) -> String? {
-        
-        guard let kind = SharedFolder.Kind(rawValue: intValue) else {
-            return nil
-        }
-        
-        return kind.displayName
-    }
+    @objc dynamic var accel:  String? = nil
+    @objc dynamic var uefi:   Bool    = false
+    @objc dynamic var bios:   URL?    = nil
+    @objc dynamic var kernel: URL?    = nil
+    @objc dynamic var initrd: URL?    = nil
+    @objc dynamic var dbt:    URL?    = nil
 }

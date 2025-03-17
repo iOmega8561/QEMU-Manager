@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Giuseppe Rocco
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,20 @@
 
 import Foundation
 
-@objc(SharedFolderKindToString) final class SharedFolderKindToString: StringCodableValueTransformer {
+@objc class StringCodableValueTransformer: ValueTransformer {
     
-    override func transformEnum(from intValue: Int) -> String? {
-        
-        guard let kind = SharedFolder.Kind(rawValue: intValue) else {
-            return nil
-        }
-        
-        return kind.displayName
+    override class func transformedValueClass() -> AnyClass {
+        return NSString.self
+    }
+    
+    override class func allowsReverseTransformation() -> Bool { false }
+
+    func transformEnum(from intValue: Int) -> String? {
+        return nil // This is overridden in subclasses
+    }
+    
+    override func transformedValue(_ value: Any?) -> Any? {
+        guard let intValue = value as? Int else { return "--" }
+        return transformEnum(from: intValue) as NSString? ?? "--"
     }
 }

@@ -20,11 +20,11 @@ import Foundation
 public class DiskInfo: NSObject
 {
     @objc public private( set ) dynamic var vm:      VirtualMachine
-    @objc public private( set ) dynamic var disk:    Disk
+    @objc        private( set ) dynamic var disk:    Disk
     @objc public private( set ) dynamic var url:     URL
     @objc public private( set ) dynamic var size:    UInt64
     
-    public init?( vm: VirtualMachine, disk: Disk )
+    init?( vm: VirtualMachine, disk: Disk )
     {
         guard let url = vm.url else
         {
@@ -38,8 +38,8 @@ public class DiskInfo: NSObject
         
         self.vm   = vm
         self.disk = disk
-        self.url  = url.appendingPathComponent( disk.uuid.uuidString ).appendingPathExtension( disk.format )
-        
+        self.url = disk.url ?? url.appendingPathComponent(disk.uuid.uuidString).appendingPathExtension(disk.format.description)
+                
         do
         {
             guard let size   = try QEMU.Img().size(url: self.url),

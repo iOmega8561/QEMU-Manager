@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,20 +17,12 @@
 
 import Foundation
 
-@objc(ArchitectureToString) class ArchitectureToString: ValueTransformer {
+@objc(ArchitectureToString) final class ArchitectureToString: StringCodableValueTransformer {
     
-    override class func transformedValueClass() -> AnyClass {
-        NSString.self
-    }
-    
-    override class func allowsReverseTransformation() -> Bool { false }
-    
-    override func transformedValue( _ value: Any? ) -> Any? {
+    override func transformEnum(from intValue: Int) -> String? {
         
-        guard let n    = value as? Int,
-              let arch = Architecture(rawValue: n) else {
-            
-            return "--"
+        guard let arch = Architecture(rawValue: intValue) else {
+            return nil
         }
         
         return arch.displayName

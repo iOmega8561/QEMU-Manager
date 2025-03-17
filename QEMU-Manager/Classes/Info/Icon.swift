@@ -29,12 +29,14 @@ final class Icon: InfoValue, GenericDefaultable {
         Icon(name: "AppleTemplate",   title: "Apple",          sorting: 1),
         Icon(name: "AppleLegacy",     title: "Apple Legacy",   sorting: 2),
         Icon(name: "MacOS",           title: "Mac OS",         sorting: 3),
-        Icon(name: "WindowsTemplate", title: "Windows",        sorting: 4),
-        Icon(name: "WindowsLegacy",   title: "Windows Legacy", sorting: 5),
-        Icon(name: "Linux",           title: "Linux",          sorting: 6),
-        Icon(name: "Fedora",          title: "Fedora",         sorting: 7),
-        Icon(name: "Ubuntu",          title: "Ubuntu",         sorting: 8),
-        Icon(name: "FreeBSD",         title: "FreeBSD",        sorting: 9),
+        Icon(name: "Windows11",       title: "Windows 11",     sorting: 4),
+        Icon(name: "WindowsTemplate", title: "Windows",        sorting: 5),
+        Icon(name: "WindowsLegacy",   title: "Windows Legacy", sorting: 6),
+        Icon(name: "Windows9X",       title: "Windows 9X",     sorting: 7),
+        Icon(name: "Linux",           title: "Linux",          sorting: 8),
+        Icon(name: "Fedora",          title: "Fedora",         sorting: 9),
+        Icon(name: "Ubuntu",          title: "Ubuntu",         sorting: 10),
+        Icon(name: "FreeBSD",         title: "FreeBSD",        sorting: 11),
     ]
     
     override var description: String { self.title ?? "Default" }

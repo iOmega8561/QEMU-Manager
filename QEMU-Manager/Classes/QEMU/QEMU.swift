@@ -26,45 +26,33 @@ struct QEMU {
         case executableNotAvailable(executableName: String)
     }
 
-    let executableName: String
-    
-    private var executableDirectoryURL: URL? {
+    static var rootDirectoryURL: URL? {
         Bundle.main.resourceURL?
             .appendingPathComponent("QEMU")
-            .appendingPathComponent("bin")
     }
+    
+    let executableName: String
     
     private var executableURL:  URL? {
-        executableDirectoryURL?.appendingPathComponent(executableName)
-    }
-    
-    private func checkExecutableAvailability() throws {
-        
-        guard executableDirectoryURL != nil else {
-            throw QEMUError.executableDirectoryNotAvailable
-        }
-        
-        guard let executableURL,
-              FileManager.default.fileExists(
-                atPath: executableURL.absoluteURL.path
-        ) else {
-            
-            throw QEMUError.executableNotAvailable(
-                executableName: executableName
-            )
-        }
+        QEMU.rootDirectoryURL?
+            .appendingPathComponent("bin")
+            .appendingPathComponent(executableName)
     }
     
     @discardableResult
     func execute(arguments: [String]) throws -> (out: String, err: String)? {
         
-        try checkExecutableAvailability()
+        guard let executableURL,
+             FileManager.default.fileExists(atPath: executableURL.absoluteURL.path) else {
+            
+            throw QEMUError.executableNotAvailable(executableName: executableName)
+        }
         
         let out                     = Pipe()
         let err                     = Pipe()
         let process                 = Process()
         process.executableURL       = executableURL
-        process.currentDirectoryURL = executableDirectoryURL
+        process.currentDirectoryURL = QEMU.rootDirectoryURL
         process.arguments           = arguments
         process.standardOutput      = out
         process.standardError       = err
@@ -74,13 +62,13 @@ struct QEMU {
         
         let dataOut = try? out.fileHandleForReading.readToEnd()
         let dataErr = try? err.fileHandleForReading.readToEnd()
-        let strOut  = String( data: dataOut ?? Data(), encoding: .utf8 ) ?? ""
-        let strErr  = String( data: dataErr ?? Data(), encoding: .utf8 ) ?? ""
+        let strOut  = String(data: dataOut ?? Data(), encoding: .utf8) ?? ""
+        let strErr  = String(data: dataErr ?? Data(), encoding: .utf8) ?? ""
         
-        if process.terminationStatus != 0 {
+        guard process.terminationStatus == 0 else {
             
             throw QEMUError.launchFailure(
-                status: Int( process.terminationStatus ),
+                status: .init(process.terminationStatus),
                 message: strErr
             )
         }

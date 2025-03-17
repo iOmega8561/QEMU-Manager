@@ -18,33 +18,18 @@
 
 import Cocoa
 
-final class ConfigAdvancedViewController: ConfigViewController {
+final class ConfigArgumentsViewController: ConfigViewController {
     
     static let pasteboardType: NSPasteboard.PasteboardType = .init(rawValue: "qemu.argument")
     
     @IBOutlet         var arguments:    NSArrayController!
-    @IBOutlet private var accelerators: NSArrayController!
     @IBOutlet private var tableView:    NSTableView!
     
-    @objc         dynamic var vm:           VirtualMachine
-    @objc private dynamic var supportsUEFI: Bool
-    @objc private dynamic var enableUEFI:   Bool   { didSet { vm.config.enableUEFI = enableUEFI } }
-    @objc private dynamic var accel:        Accel? { didSet { accel.set(to: &vm.config.accel) } }
+    @objc private dynamic var vm: VirtualMachine
     
     private var newDeviceArgWindowController: NewDeviceArgWindowController?
     
-    override var nibName: NSNib.Name? { "ConfigAdvancedViewController" }
-    
-    override func viewDidAppear() {
-        
-        (accelerators.content, accel) = Accel.fetchValues(
-            for: vm.config.architecture.rawValue,
-            vm.config.accel
-        )
-        
-        enableUEFI   = vm.config.enableUEFI
-        supportsUEFI = vm.config.architecture.supportsUEFI
-    }
+    override var nibName: NSNib.Name? { "ConfigArgumentsViewController" }
     
     override func viewDidLoad() {
         
@@ -127,10 +112,7 @@ final class ConfigAdvancedViewController: ConfigViewController {
     init(vm: VirtualMachine, sorting: Int) {
         
         self.vm           = vm
-        self.enableUEFI   = vm.config.enableUEFI
-        self.supportsUEFI = vm.config.architecture.supportsUEFI
-        
-        super.init(title: "Advanced", icon: NSImage(named: "TerminalTemplate"), sorting: sorting)
+        super.init(title: "Arguments", icon: NSImage(named: "TerminalTemplate"), sorting: sorting)
     }
     
     required init?(coder: NSCoder) { nil }

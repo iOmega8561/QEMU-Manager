@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NewDiskWindowController" customModule="QEMU_Manager" customModuleProvider="target">
             <connections>
-                <outlet property="formats" destination="uZb-UL-bSs" id="UWk-ig-M4r"/>
                 <outlet property="formatter" destination="ztR-bQ-Kco" id="c9U-0U-FQP"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="14A-JQ-EfC"/>
             </connections>
@@ -105,27 +105,23 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BBu-jL-0r9">
-                                <rect key="frame" x="17" y="16" width="89" height="25"/>
-                                <popUpButtonCell key="cell" type="push" title="QCOW2" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="m8m-vH-kGa" id="ygk-5b-IOX">
+                                <rect key="frame" x="17" y="16" width="214" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="qcow2 - QCOW2 (KVM, Xen)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="m8m-vH-kGa" id="ygk-5b-IOX">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="message"/>
                                     <menu key="menu" id="e1a-EJ-Olb">
                                         <items>
-                                            <menuItem title="QCOW2" state="on" id="m8m-vH-kGa"/>
-                                            <menuItem title="QED" id="p1D-3D-0kR"/>
-                                            <menuItem title="Raw" id="A2j-dJ-k2O"/>
-                                            <menuItem title="VDI" id="Ifc-D7-g7d"/>
-                                            <menuItem title="VHD" id="tNP-MT-6lF"/>
-                                            <menuItem title="VMDK" id="vcd-p2-Nm4"/>
+                                            <menuItem title="qcow2 - QCOW2 (KVM, Xen)" state="on" id="m8m-vH-kGa"/>
+                                            <menuItem title="qed - QED (KVM)" id="p1D-3D-0kR"/>
+                                            <menuItem title="raw - Raw" id="A2j-dJ-k2O"/>
+                                            <menuItem title="vdi - VDI (VirtualBox)" id="Ifc-D7-g7d"/>
+                                            <menuItem title="vpc - VHD (Hyper-V)" id="tNP-MT-6lF"/>
+                                            <menuItem title="vmdk - VMDK (VMware)" id="vcd-p2-Nm4"/>
                                         </items>
                                     </menu>
-                                    <connections>
-                                        <binding destination="-2" name="selectedObject" keyPath="self.format" id="hPJ-Bm-xLl"/>
-                                    </connections>
                                 </popUpButtonCell>
                                 <connections>
-                                    <binding destination="uZb-UL-bSs" name="content" keyPath="arrangedObjects" id="p9o-jP-ztl"/>
-                                    <binding destination="-2" name="selectedObject" keyPath="self.format" previousBinding="p9o-jP-ztl" id="ZWK-k7-RcE"/>
+                                    <binding destination="-2" name="selectedIndex" keyPath="self.format" id="xGf-Wa-98I"/>
                                 </connections>
                             </popUpButton>
                         </subviews>
@@ -222,6 +218,5 @@ DQ
             </view>
             <point key="canvasLocation" x="20" y="110"/>
         </window>
-        <arrayController id="uZb-UL-bSs" userLabel="Formats"/>
     </objects>
 </document>

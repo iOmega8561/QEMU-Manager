@@ -130,6 +130,13 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
             return
         }
         
+        guard disk.disk.url == nil else {
+            self.vm.config.removeDisk( disk.disk )
+            try? self.vm.save()
+            self.reloadDisks()
+            return
+        }
+        
         let alert             = NSAlert()
         alert.messageText     = "Delete Disk"
         alert.informativeText = "Are you sure you want to delete the selected disk? All data will be permanently lost."
@@ -168,8 +175,7 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
         self.disks.add( contentsOf: self.vm.disks )
     }
     
-    @IBAction private func chooseImage( _ sender: Any? )
-    {
+    @IBAction func importDisk(_ sender: Any) {
         guard let window = self.view.window else
         {
             NSSound.beep()
@@ -177,19 +183,25 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
             return
         }
         
+        let accessoryView             = DiskAccessoryViewController()
         let panel                     = NSOpenPanel()
         panel.canChooseFiles          = true
         panel.canChooseDirectories    = false
         panel.allowsMultipleSelection = false
+        panel.accessoryView           = accessoryView.view
         
         panel.beginSheetModal( for: window )
         {
-            r in if r != .OK
+            r in guard r == .OK, let url = panel.url else
             {
                 return
             }
             
-            self.vm.config.cdImage = panel.url
+            self.vm.config.addDisk(
+                .init(url: url, type: accessoryView.mediaType)
+            )
+            
+            self.reloadDisks()
         }
     }
     
@@ -203,10 +215,5 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
         }
         
         NSWorkspace.shared.selectFile( disk.url.path, inFileViewerRootedAtPath: "" )
-    }
-    
-    @IBAction private func removeCDImage( _ sender: Any? )
-    {
-        self.vm.config.cdImage = nil
     }
 }

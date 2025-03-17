@@ -17,31 +17,41 @@
 
 import Foundation
 
-final class Device: InfoValue {
+protocol StringCodable: CaseIterable, Codable, CustomStringConvertible, RawRepresentable where RawValue == Int {
+    init?(string: String)
+}
+
+enum StringCodableError: Error {
+    case invalidArchitecture
+}
+
+extension StringCodable {
     
-    static let allValues: [Architecture: [Device]] = {
+    func encode(to encoder: any Encoder) throws {
         
-        var values: [Architecture: [Device]] = [:]
+        var container = encoder.singleValueContainer()
         
-        Architecture.allCases.forEach { arch in
-            
-            values[arch] = QEMU.System(arch: arch).help()
-        }
-                
-        return values
-    }()
-    
-    @objc private(set) dynamic var category: String
-    @objc private(set) dynamic var bus:      String?
-    
-    init(name: String, category: String, title: String? = nil, bus: String? = nil) {
-        self.category = category
-        self.bus = bus
-        
-        super.init(name: name, title: title)
+        try container.encode(self.description)
     }
     
-    required init(name: String, title: String? = nil, sorting: Int = 0) {
-        fatalError("init(name:title:sorting:) cannot be used for Device")
+    init(from decoder: any Decoder) throws {
+        
+        let container = try decoder.singleValueContainer()
+
+        let value = try container.decode(String.self)
+        
+        guard let decodedValue = Self(string: value) else {
+            throw StringCodableError.invalidArchitecture
+        }
+        
+        self = decodedValue
+    }
+    
+    init?(string: String) {
+        guard let value = Self.allCases.first(where: { $0.description == string }) else {
+            return nil
+        }
+        
+        self = value
     }
 }

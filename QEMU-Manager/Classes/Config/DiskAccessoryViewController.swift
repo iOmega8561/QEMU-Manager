@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,17 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Foundation
+import Cocoa
 
-final class ImageFormat: InfoValue {
+final class DiskAccessoryViewController: NSViewController {
     
-    static let all: [ImageFormat] = [
+    @objc private dynamic var selectedIndex = 0
+    
+    var mediaType: Disk.MediaType {
         
-        ImageFormat(name: "qcow2", title: "QCOW2 (KVM, Xen)", sorting: 0),
-        ImageFormat(name: "qed",   title: "QED (KVM)",        sorting: 1),
-        ImageFormat(name: "raw",   title: "Raw",              sorting: 2),
-        ImageFormat(name: "vdi",   title: "VDI (VirtualBox)", sorting: 3),
-        ImageFormat(name: "vpc",   title: "VHD (Hyper-V)",    sorting: 4),
-        ImageFormat(name: "vmdk",  title: "VMDK (VMware)",    sorting: 5),
-    ]
+        switch self.selectedIndex {
+        case 1:  .cdrom
+        default: .disk
+        }
+    }
+    
+    override var nibName: NSNib.Name? {
+        "DiskAccessoryViewController"
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }

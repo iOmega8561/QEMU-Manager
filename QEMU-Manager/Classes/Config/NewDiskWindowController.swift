@@ -25,10 +25,9 @@ public class NewDiskWindowController: NSWindowController
     @objc public private( set ) dynamic var min:     UInt64
     @objc public private( set ) dynamic var max:     UInt64
     @objc public private( set ) dynamic var loading: Bool
-    @objc        private( set ) dynamic var format:  ImageFormat?
+    @objc        private( set ) dynamic var format:  Int
     
     @IBOutlet private var formatter: SizeFormatter!
-    @IBOutlet private var formats:   NSArrayController!
     
     public init( vm: VirtualMachine )
     {
@@ -38,6 +37,7 @@ public class NewDiskWindowController: NSWindowController
         self.min     = 1024 * 1024
         self.max     = 1024 * 1024 * 1024 * 500
         self.loading = false
+        self.format  = 0
         
         super.init( window: nil )
     }
@@ -58,17 +58,6 @@ public class NewDiskWindowController: NSWindowController
         
         self.formatter.min = self.min
         self.formatter.max = self.max
-        
-        self.formats.sortDescriptors = [
-            NSSortDescriptor( key: "sorting", ascending: true ),
-            NSSortDescriptor( key: "title",   ascending: true ),
-            NSSortDescriptor( key: "name",    ascending: true ),
-        ]
-        
-        let formats = ImageFormat.all
-        self.format = formats.first
-        
-        self.formats.add( contentsOf: formats )
     }
     
     @IBAction private func cancel( _ sender: Any? )
@@ -106,14 +95,13 @@ public class NewDiskWindowController: NSWindowController
         
         DispatchQueue.global( qos: .userInitiated ).async
         {
-            let disk    = Disk()
-            disk.format = self.format?.name ?? "qcow2"
-            disk.label  = self.label
-            let path    = url.appendingPathComponent( disk.uuid.uuidString ).appendingPathExtension( disk.format ).path
+            let format  = Disk.ImageFormat(rawValue: self.format) ?? .qcow2
+            let disk    = Disk(label: self.label, format: format)
+            let path    = url.appendingPathComponent( disk.uuid.uuidString ).appendingPathExtension( format.description ).path
             
             do
             {
-                try QEMU.Img().create( url: URL( fileURLWithPath: path ), size: self.size, format: disk.format )
+                try QEMU.Img().create( url: URL( fileURLWithPath: path ), size: self.size, format: format.description )
                 self.vm.config.addDisk( disk )
                 try self.vm.save()
                 

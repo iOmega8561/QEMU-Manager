@@ -28,7 +28,7 @@ extension QEMU {
         
         init(arch: Architecture) {
             self.architecture = arch
-            self.qemu = QEMU(executableName: "qemu-system-\(arch.stringRawValue)")
+            self.qemu = QEMU(executableName: "qemu-system-\(arch.description)")
         }
     }
 }
@@ -40,98 +40,84 @@ extension QEMU.System {
         
         var arguments: [String] = []
         
-        arguments.append( "-m" )
+        arguments.append("-m")
         arguments.append(SizeFormatter().string(from: NSNumber(value: vm.config.memory), style: .qemu))
         
         if let machine = vm.config.machine, machine.count > 0 {
-            arguments.append(contentsOf: ["-M", machine])
+            arguments += ["-M", machine]
         }
         
         if let cpu = vm.config.cpu, cpu.count > 0 {
-            arguments.append(contentsOf: ["-cpu", cpu])
+            arguments += ["-cpu", cpu]
         }
-        
-        arguments.append("-smp")
-        arguments.append(vm.config.cores > 0 ? "\(vm.config.cores)" : "1")
-        
-        if let accel = vm.config.accel {
-            arguments.append(contentsOf: ["-accel", accel])
-        }
-        
-        arguments.append(contentsOf: vm.config.arguments)
-        
-        var boot = vm.config.boot
-        
-        if architecture.isARM {
-            arguments.append(contentsOf: ["-device", "qemu-xhci,id=xhci0"])
-        }
-        
-        if let cd = vm.config.cdImage,
-           FileManager.default.fileExists(atPath: cd.path) {
-            
-            let cdromParam = architecture.isARM ? ",if=none,id=cd0":""
-            
-            arguments.append("-drive")
-            arguments.append("file=\(cd.path),media=cdrom\(cdromParam)")
-            
-            if architecture.isARM {
-                arguments.append(contentsOf: ["-device", "usb-storage,drive=cd0"])
-            }
-            
-        } else if boot == "d" { boot = "c" }
-        
-        arguments.append(contentsOf: ["-boot", boot])
-        
-        var diskCount: Int = 0
-        
-        vm.disks.forEach {
-            
-            let diskParam = architecture.isARM ? ",if=none,id=disk\(diskCount)" : ""
-            
-            arguments.append("-drive")
-            arguments.append("file=\($0.url.path),format=\( $0.disk.format ),media=disk\(diskParam)")
-            
-            if architecture.isARM {
-                
-                arguments.append("-device")
-                arguments.append("nvme,drive=disk\(diskCount),id=nvme\(diskCount),serial=\($0.url.lastPathComponent)")
-            }
-            
-            diskCount += 1
-        }
-        
-        vm.config.sharedFolders.forEach {
-            
-            arguments.append("-drive")
-            
-            arguments.append("file=fat\($0.kind == .floppy ? ":floppy" : ""):rw:\($0.url.path),format=raw,media=disk")
-        }
-        
-        arguments.append(contentsOf: ["-audio", "driver=coreaudio"])
         
         if let vga = vm.config.vga {
-            arguments.append(contentsOf: ["-vga", vga])
+            arguments += ["-vga", vga]
         }
         
-        if vm.config.architecture.isARM {
-            arguments.append(contentsOf: ["-device", "usb-tablet"])
-            arguments.append(contentsOf: ["-device", "usb-kbd"])
+        if vm.config.cores > 0 {
+            arguments += ["-smp", "\(vm.config.cores)"]
         }
         
-        if vm.config.enableUEFI,
-           let firmware = vm.config.architecture.edkFirmwarePath,
-           FileManager.default.fileExists(atPath: firmware) {
+        if let accel = vm.config.emulation.accel {
+            arguments += ["-accel", accel]
+        }
+        
+        if let bios = vm.config.emulation.bios {
+            arguments += ["-bios", bios.path]
+        }
+        
+        if let kernel = vm.config.emulation.kernel {
+            arguments += ["-kernel", kernel.path]
+        }
+        
+        if let initrd = vm.config.emulation.initrd {
+            arguments += ["-initrd", initrd.path]
+        }
+        
+        if let dbt = vm.config.emulation.dbt {
+            arguments += ["-accel", dbt.path]
+        }
+        
+        if vm.config.emulation.uefi, architecture.supportsUEFI,
+           let firmware = vm.config.architecture.edkFirmwarePath {
             
-            arguments.append("-drive")
-            arguments.append("if=pflash,format=raw,readonly=on,file=\(firmware)")
+            arguments += ["-drive", "if=pflash,format=raw,readonly=on,file=\(firmware)"]
         }
         
-        if architecture.supportsPCI {
-            arguments.append(contentsOf: ["-nic", "user"])
+        arguments += ["-audio",   "driver=coreaudio"]
+        arguments += ["-nic",     "user"]
+        arguments += ["-display", "cocoa"]
+        arguments += ["-name",    vm.config.title]
+        arguments += vm.config.arguments
+        arguments += ["-boot", vm.config.boot]
+                
+        vm.disks.forEach { diskDrive in
+                        
+            var driveParams = [
+                "file="   + diskDrive.url.path,
+                "format=" + diskDrive.disk.format.description,
+                "media="  + diskDrive.disk.type.description,
+                "id="     + diskDrive.disk.uuid.uuidString
+            ]
+            
+            if !diskDrive.disk.auto {
+                driveParams.append("if=none")
+            }
+            
+            arguments += ["-drive", driveParams.joined(separator: ",")]
         }
         
-        arguments.append(contentsOf: ["-display", "cocoa"])
-        arguments.append(contentsOf: ["-name", vm.config.title])
+        vm.config.sharedFolders.forEach { dirShare in
+                        
+            let shareParams = [
+                "file=" + dirShare.kind.description + ":rw:" + dirShare.url.path,
+                "format=raw",
+                "media=disk"
+            ]
+            
+            arguments += ["-drive", shareParams.joined(separator: ",")]
+        }
         
         try qemu.execute(arguments: arguments)
     }
