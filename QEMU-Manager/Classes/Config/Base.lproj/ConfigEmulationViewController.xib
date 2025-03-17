@@ -124,7 +124,7 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="epw-mh-wbd">
-                            <rect key="frame" x="17" y="118" width="38" height="16"/>
+                            <rect key="frame" x="17" y="118" width="37" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" title="Label" id="k6k-RX-Ct9">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -316,7 +316,6 @@
                         <constraint firstItem="Lhl-1M-FzD" firstAttribute="leading" secondItem="9PR-HR-f4c" secondAttribute="leading" id="d1U-aD-2KN"/>
                         <constraint firstItem="NHG-nk-ANa" firstAttribute="leading" secondItem="4EH-u9-qfD" secondAttribute="leading" id="dSA-fy-qCY"/>
                         <constraint firstItem="ldm-Tr-LZo" firstAttribute="top" secondItem="RC4-xj-5mt" secondAttribute="bottom" constant="20" id="dSP-5y-WV8"/>
-                        <constraint firstItem="epw-mh-wbd" firstAttribute="centerX" secondItem="NHG-nk-ANa" secondAttribute="centerX" id="dXo-eU-8g8"/>
                         <constraint firstItem="4EH-u9-qfD" firstAttribute="top" secondItem="b5y-BP-Uhc" secondAttribute="top" id="fHY-di-qJA"/>
                         <constraint firstItem="dWz-i0-RTS" firstAttribute="leading" secondItem="RC4-xj-5mt" secondAttribute="leading" id="fpc-fX-DHN"/>
                         <constraint firstItem="UVK-NE-uWh" firstAttribute="top" secondItem="9PR-HR-f4c" secondAttribute="top" id="gNK-sT-Njo"/>
