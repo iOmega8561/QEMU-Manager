@@ -238,14 +238,9 @@
                                 <binding destination="-2" name="selectedObject" keyPath="self.boot" previousBinding="yB9-bv-Ya6" id="OUr-zZ-U6T"/>
                             </connections>
                         </popUpButton>
-                        <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="e0Q-Zp-4RM">
-                            <rect key="frame" x="20" y="82" width="460" height="5"/>
-                        </box>
                     </subviews>
                     <constraints>
                         <constraint firstItem="fZK-rn-GHg" firstAttribute="top" secondItem="Eu9-bk-wnH" secondAttribute="bottom" constant="8" symbolic="YES" id="0s6-YN-bRE"/>
-                        <constraint firstItem="M5v-30-SM4" firstAttribute="trailing" secondItem="e0Q-Zp-4RM" secondAttribute="trailing" id="3Vq-uX-b3S"/>
-                        <constraint firstItem="e0Q-Zp-4RM" firstAttribute="top" secondItem="nIx-4E-XDy" secondAttribute="bottom" constant="20" symbolic="YES" id="4UR-Be-4qm"/>
                         <constraint firstItem="M5v-30-SM4" firstAttribute="leading" secondItem="Haf-nc-Pvg" secondAttribute="leading" id="5Nx-e2-p3m"/>
                         <constraint firstItem="WsS-dK-tem" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="8DC-IM-o2o"/>
                         <constraint firstItem="WsS-dK-tem" firstAttribute="top" secondItem="M5v-30-SM4" secondAttribute="bottom" constant="8" symbolic="YES" id="Bap-Y5-o58"/>
@@ -264,7 +259,6 @@
                         <constraint firstItem="nIx-4E-XDy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WsS-dK-tem" secondAttribute="trailing" constant="8" symbolic="YES" id="wVZ-lJ-WJO"/>
                         <constraint firstItem="Haf-nc-Pvg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="x2b-dr-jUZ"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WsS-dK-tem" secondAttribute="trailing" constant="20" symbolic="YES" id="yAD-2V-vC9"/>
-                        <constraint firstItem="M5v-30-SM4" firstAttribute="leading" secondItem="e0Q-Zp-4RM" secondAttribute="leading" id="yFA-a2-zZ4"/>
                         <constraint firstItem="Eu9-bk-wnH" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="zer-jj-m8L"/>
                     </constraints>
                 </customView>
@@ -279,9 +273,9 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="16"/>
-        <image name="NSRemoveTemplate" width="18" height="4"/>
-        <image name="NSRevealFreestandingTemplate" width="19" height="19"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSRemoveTemplate" width="18" height="5"/>
+        <image name="NSRevealFreestandingTemplate" width="20" height="20"/>
         <image name="plus.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>
