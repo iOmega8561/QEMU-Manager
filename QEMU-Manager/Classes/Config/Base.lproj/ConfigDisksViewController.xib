@@ -18,14 +18,14 @@
         <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="dK7-9m-3QF" userLabel="Disks"/>
         <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="4Ld-AO-e1h" userLabel="Boot Orders"/>
         <customView id="f1a-O6-Rbu">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="395"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="374"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
-                    <rect key="frame" x="0.0" y="0.0" width="500" height="395"/>
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="374"/>
                     <subviews>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Haf-nc-Pvg">
-                            <rect key="frame" x="18" y="339" width="41" height="16"/>
+                            <rect key="frame" x="18" y="318" width="41" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Disks:" id="caa-Rc-8md">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -33,7 +33,7 @@
                             </textFieldCell>
                         </textField>
                         <scrollView autoresizesSubviews="NO" borderType="line" autohidesScrollers="YES" horizontalLineScroll="50" horizontalPageScroll="10" verticalLineScroll="50" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5v-30-SM4">
-                            <rect key="frame" x="20" y="133" width="460" height="200"/>
+                            <rect key="frame" x="20" y="112" width="460" height="200"/>
                             <clipView key="contentView" autoresizesSubviews="NO" id="w1k-tr-y3w">
                                 <rect key="frame" x="1" y="1" width="458" height="198"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -190,7 +190,7 @@
                             </scroller>
                         </scrollView>
                         <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WsS-dK-tem">
-                            <rect key="frame" x="17" y="103" width="71" height="24"/>
+                            <rect key="frame" x="17" y="82" width="71" height="24"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="5cl-I6-v44">
                                 <font key="font" metaFont="system"/>
                                 <segments>
@@ -203,7 +203,7 @@
                             </connections>
                         </segmentedControl>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nIx-4E-XDy" userLabel="Import Disk">
-                            <rect key="frame" x="366" y="98" width="121" height="32"/>
+                            <rect key="frame" x="366" y="77" width="121" height="32"/>
                             <buttonCell key="cell" type="push" title="Import Disk" bezelStyle="rounded" image="plus.circle.fill" catalog="system" imagePosition="trailing" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pmr-CR-eCI" userLabel="Import Disk">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -246,7 +246,7 @@
                         <constraint firstItem="WsS-dK-tem" firstAttribute="top" secondItem="M5v-30-SM4" secondAttribute="bottom" constant="8" symbolic="YES" id="Bap-Y5-o58"/>
                         <constraint firstItem="fZK-rn-GHg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="D1P-Jm-7LV"/>
                         <constraint firstAttribute="bottom" secondItem="fZK-rn-GHg" secondAttribute="bottom" constant="20" id="E2S-ei-FhV"/>
-                        <constraint firstAttribute="bottom" secondItem="M5v-30-SM4" secondAttribute="bottom" constant="133" id="J5n-Te-4Ce"/>
+                        <constraint firstAttribute="bottom" secondItem="M5v-30-SM4" secondAttribute="bottom" constant="112" id="J5n-Te-4Ce"/>
                         <constraint firstItem="M5v-30-SM4" firstAttribute="top" secondItem="Haf-nc-Pvg" secondAttribute="bottom" constant="6" id="Kip-lM-DWm"/>
                         <constraint firstItem="M5v-30-SM4" firstAttribute="trailing" secondItem="nIx-4E-XDy" secondAttribute="trailing" id="NV3-Fy-i31"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fZK-rn-GHg" secondAttribute="trailing" constant="20" symbolic="YES" id="c2X-RI-6ro"/>
@@ -269,13 +269,13 @@
                 <constraint firstAttribute="trailing" secondItem="c22-O7-iKe" secondAttribute="trailing" id="d5h-qH-Zei"/>
                 <constraint firstItem="c22-O7-iKe" firstAttribute="leading" secondItem="f1a-O6-Rbu" secondAttribute="leading" id="foe-Y1-zip"/>
             </constraints>
-            <point key="canvasLocation" x="-379" y="356"/>
+            <point key="canvasLocation" x="-379" y="345"/>
         </customView>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="17"/>
-        <image name="NSRemoveTemplate" width="18" height="5"/>
-        <image name="NSRevealFreestandingTemplate" width="20" height="20"/>
+        <image name="NSAddTemplate" width="18" height="16"/>
+        <image name="NSRemoveTemplate" width="18" height="4"/>
+        <image name="NSRevealFreestandingTemplate" width="19" height="19"/>
         <image name="plus.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>
