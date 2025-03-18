@@ -37,10 +37,31 @@ final class ConfigEmulationViewController: ConfigViewController {
         
         enableUEFI   = vm.config.emulation.uefi
         supportsUEFI = vm.config.architecture.supportsUEFI
+        
+        self.updateWindow(height: vm.config.emulation.kernel == nil ? 374:448)
     }
     
-    override func viewDidLoad() { super.viewDidLoad() }
+    override func viewDidLoad() {
+        self.updateWindow(height: vm.config.emulation.kernel == nil ? 374:448)
+        super.viewDidLoad()
+    }
         
+    private func updateWindow(height: CGFloat) {
+        
+        guard let window = self.view.window else {
+            return
+        }
+        
+        window.setFrame(
+            .init(x: window.frame.origin.x,
+                  y: window.frame.origin.y - (height - window.frame.height),
+                  width: window.frame.width,
+                  height: height
+            ),
+            display: true, animate: true
+        )
+    }
+    
     @IBAction private func chooseFile(_ sender: NSButton) {
         
         guard let window = self.view.window else {
@@ -59,7 +80,10 @@ final class ConfigEmulationViewController: ConfigViewController {
             }
 
             switch sender.tag {
-            case 0: self?.vm.config.emulation.kernel = url
+            case 0:
+                self?.vm.config.emulation.kernel = url
+                self?.updateWindow(height: 448)
+                
             case 1: self?.vm.config.emulation.initrd = url
             case 2: self?.vm.config.emulation.bios   = url
             case 3: self?.vm.config.emulation.dbt    = url
@@ -70,7 +94,12 @@ final class ConfigEmulationViewController: ConfigViewController {
     
     @IBAction func removeAttachment(_ sender: NSButton) {
         switch sender.tag {
-        case 0: vm.config.emulation.kernel = nil
+        case 0:
+            vm.config.emulation.kernel = nil
+            vm.config.emulation.append = nil
+            vm.config.emulation.initrd = nil
+            self.updateWindow(height: 375)
+            
         case 1: vm.config.emulation.initrd = nil
         case 2: vm.config.emulation.bios   = nil
         case 3: vm.config.emulation.dbt    = nil

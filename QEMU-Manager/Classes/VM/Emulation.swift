@@ -19,10 +19,14 @@ import Foundation
 
 final class Emulation: NSObject, Codable {
     
-    @objc dynamic var accel:  String? = nil
-    @objc dynamic var uefi:   Bool    = false
-    @objc dynamic var bios:   URL?    = nil
-    @objc dynamic var kernel: URL?    = nil
-    @objc dynamic var initrd: URL?    = nil
-    @objc dynamic var dbt:    URL?    = nil
+    @objc dynamic var accel:   String? = nil
+    @objc dynamic var uefi:    Bool    = false
+    @objc dynamic var rng:     Bool    = false
+    @objc dynamic var balloon: Bool    = false
+    @objc dynamic var ehci:    Bool    = false
+    @objc dynamic var bios:    URL?    = nil
+    @objc dynamic var kernel:  URL?    = nil
+    @objc dynamic var initrd:  URL?    = nil
+    @objc dynamic var dbt:     URL?    = nil
+    @objc dynamic var append:  String? = nil
 }

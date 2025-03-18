@@ -55,12 +55,30 @@ extension QEMU.System {
             arguments += ["-kernel", kernel.path]
         }
         
+        if let kernelAppend = vm.config.emulation.append {
+            arguments += ["-append", kernelAppend]
+        }
+        
         if let initrd = vm.config.emulation.initrd {
             arguments += ["-initrd", initrd.path]
         }
         
         if let dbt = vm.config.emulation.dbt {
             arguments += ["-accel", dbt.path]
+        }
+        
+        if vm.config.emulation.rng {
+            arguments += ["-device", "virtio-rng-pci"]
+        }
+        
+        if vm.config.emulation.balloon {
+            arguments += ["-device", "virtio-balloon-pci"]
+        }
+        
+        if vm.config.emulation.ehci {
+            arguments += ["-device", "usb-ehci",
+                          "-device", "usb-kbd",
+                          "-device", "usb-tablet"]
         }
         
         if vm.config.emulation.uefi, architecture.supportsUEFI,
