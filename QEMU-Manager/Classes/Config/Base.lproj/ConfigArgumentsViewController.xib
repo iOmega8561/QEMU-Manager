@@ -16,14 +16,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="YHU-sT-dA8">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="312"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="332"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="EJb-hE-XAM">
-                    <rect key="frame" x="0.0" y="0.0" width="500" height="312"/>
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="332"/>
                     <subviews>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="06d-g8-UeM">
-                            <rect key="frame" x="18" y="256" width="199" height="16"/>
+                            <rect key="frame" x="18" y="276" width="199" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Additional arguments for QEMU:" id="R2n-qB-eDK">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -31,13 +31,13 @@
                             </textFieldCell>
                         </textField>
                         <scrollView autoresizesSubviews="NO" borderType="line" autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gva-kx-yBJ">
-                            <rect key="frame" x="20" y="48" width="460" height="200"/>
+                            <rect key="frame" x="20" y="48" width="460" height="220"/>
                             <clipView key="contentView" autoresizesSubviews="NO" id="3Dq-ZO-1ME">
-                                <rect key="frame" x="1" y="1" width="458" height="198"/>
+                                <rect key="frame" x="1" y="1" width="458" height="218"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="Lii-mE-9se">
-                                        <rect key="frame" x="0.0" y="0.0" width="458" height="198"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="458" height="218"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -158,8 +158,8 @@
         </button>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="17"/>
-        <image name="NSRemoveTemplate" width="18" height="5"/>
+        <image name="NSAddTemplate" width="18" height="16"/>
+        <image name="NSRemoveTemplate" width="18" height="4"/>
         <image name="plus.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>
