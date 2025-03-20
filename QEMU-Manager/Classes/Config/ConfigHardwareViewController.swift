@@ -24,13 +24,13 @@ final class ConfigHardwareViewController: ConfigViewController {
     @IBOutlet private var machines:      NSArrayController!
     @IBOutlet private var cpus:          NSArrayController!
     @IBOutlet private var vgas:          NSArrayController!
-    @IBOutlet private var cores:         NSArrayController!
     
     @objc private dynamic var minCores:  UInt64
     @objc private dynamic var maxCores:  UInt64
     @objc private dynamic var minMemory: UInt64
     @objc private dynamic var maxMemory: UInt64
     @objc private dynamic var vm:        VirtualMachine
+    @objc private dynamic var supportsUEFI: Bool
     
     @objc private dynamic var machine: Machine? { didSet { machine.set(to: &vm.config.machine) } }
     @objc private dynamic var cpu: CPU?         { didSet { cpu.set(to:     &vm.config.cpu) } }
@@ -56,13 +56,44 @@ final class ConfigHardwareViewController: ConfigViewController {
         self.machines.sortDescriptors = sortDescriptors
         self.cpus.sortDescriptors = sortDescriptors
         self.update()
+    }
+    
+    @IBAction private func chooseFile(_ sender: NSButton) {
         
-        for i in self.minCores ..< self.maxCores {
-            self.cores.addObject(i)
+        guard let window = self.view.window else {
+            return NSSound.beep()
+        }
+        
+        let panel                     = NSOpenPanel()
+        panel.canChooseFiles          = true
+        panel.canChooseDirectories    = false
+        panel.allowsMultipleSelection = false
+        
+        panel.beginSheetModal(for: window) { [weak self] result in
+            
+            guard result == .OK, let url = panel.url else {
+                return
+            }
+
+            switch sender.tag {
+            case 0: self?.vm.config.emulation.bios = url
+            case 1: self?.vm.config.emulation.dbt  = url
+            default: return
+            }
+        }
+    }
+    
+    @IBAction func removeAttachment(_ sender: NSButton) {
+        switch sender.tag {
+        case 0: vm.config.emulation.bios = nil
+        case 1: vm.config.emulation.dbt  = nil
+        default: return
         }
     }
     
     private func update() {
+        supportsUEFI = vm.config.architecture.supportsUEFI
+        
         (machines.content, machine) = Machine.fetchValues(for: architecture, vm.config.machine)
         (cpus.content, cpu)         = CPU.fetchValues(for: architecture, vm.config.cpu)
         (vgas.content, vga)         = VGA.fetchValues(for: architecture, vm.config.vga)
@@ -75,6 +106,7 @@ final class ConfigHardwareViewController: ConfigViewController {
         self.maxMemory    = ProcessInfo().physicalMemory / 2
         self.vm           = vm
         self.architecture = vm.config.architecture.rawValue
+        self.supportsUEFI = vm.config.architecture.supportsUEFI
         
         super.init(title: "Hardware", icon: NSImage(named: "HardwareTemplate"), sorting: sorting)
     }
