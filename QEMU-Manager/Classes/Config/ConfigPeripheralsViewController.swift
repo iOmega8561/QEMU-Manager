@@ -1,0 +1,63 @@
+/*******************************************************************************
+ * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
+import Cocoa
+
+final class ConfigPeripheralsViewController: ConfigViewController {
+    
+    @IBOutlet private var networks: NSArrayController!
+    @IBOutlet private var sounds: NSArrayController!
+    @IBOutlet private var videos: NSArrayController!
+    
+    
+    @objc private dynamic var vm:        VirtualMachine
+    
+    @objc private dynamic var sound:   Sound?   { didSet { sound.set(to:   &vm.config.emulation.sound) } }
+    @objc private dynamic var video:   Video?   { didSet { video.set(to:   &vm.config.emulation.video) } }
+    @objc private dynamic var network: Network? { didSet { network.set(to: &vm.config.emulation.network) } }
+    
+    override var nibName: NSNib.Name? { "ConfigPeripheralsViewController" }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let sortDescriptors = [
+            NSSortDescriptor(key: "sorting", ascending: true),
+            NSSortDescriptor(key: "name",    ascending: true),
+            NSSortDescriptor(key: "title",   ascending: true)
+        ]
+        
+        self.sounds.sortDescriptors   = sortDescriptors
+        self.videos.sortDescriptors   = sortDescriptors
+        self.networks.sortDescriptors = sortDescriptors
+        self.update()
+    }
+    
+    private func update() {
+        (sounds.content, sound)     = Sound.fetchValues(for:   vm.config.architecture.rawValue, vm.config.emulation.sound)
+        (videos.content, video)     = Video.fetchValues(for:   vm.config.architecture.rawValue, vm.config.emulation.video)
+        (networks.content, network) = Network.fetchValues(for: vm.config.architecture.rawValue, vm.config.emulation.network)
+    }
+    
+    init(vm: VirtualMachine, sorting: Int) {
+        self.vm = vm
+        super.init(title: "Peripherals", icon: NSImage(named: "PeripheralsTemplate"), sorting: sorting)
+    }
+    
+    required init?(coder: NSCoder) { nil }
+}

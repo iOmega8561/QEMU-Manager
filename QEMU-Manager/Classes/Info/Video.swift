@@ -17,20 +17,34 @@
 
 import Foundation
 
-final class Emulation: NSObject, Codable {
+final class Video: InfoValue, SpecializedDefaultable {
     
-    @objc dynamic var accel:   String? = nil
-    @objc dynamic var uefi:    Bool    = false
-    @objc dynamic var rng:     Bool    = false
-    @objc dynamic var balloon: Bool    = false
-    @objc dynamic var ehci:    Bool    = false
-    @objc dynamic var bios:    URL?    = nil
-    @objc dynamic var kernel:  URL?    = nil
-    @objc dynamic var initrd:  URL?    = nil
-    @objc dynamic var dbt:     URL?    = nil
-    @objc dynamic var append:  String? = nil
-    @objc dynamic var network: String? = nil
-    @objc dynamic var usernet: Bool    = false
-    @objc dynamic var sound:   String? = nil
-    @objc dynamic var video:   String? = nil
+    static var defaultValue: Video {
+        Video(
+            name: "Default",
+            title: "Unspecified Video",
+            sorting: -1
+        )
+    }
+    
+    static let allValues: [Architecture: [Video]] = {
+        
+        var values: [Architecture: [Video]] = [:]
+        
+        Architecture.allCases.forEach { arch in
+            
+            values[arch] = [.defaultValue]
+            
+            guard let devices = Device.allValues[arch] else {
+                return
+            }
+            
+            values[arch]?.append(
+                contentsOf: devices.filter { $0.category == "Display" }
+                    .map { .init(name: $0.name, title: $0.title, sorting: $0.sorting) }
+            )
+        }
+        
+        return values
+    }()
 }
