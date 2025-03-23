@@ -17,11 +17,11 @@
 
 import Cocoa
 
-public class SharedFolderAccessoryViewController: NSViewController
+public class ShareAccessoryViewController: NSViewController
 {
     @objc private dynamic var selectedIndex = 0
     
-    var sharedFolderKind: Config.Share.Kind
+    var shareKind: Config.Share.Kind
     {
         switch self.selectedIndex
         {
@@ -32,7 +32,7 @@ public class SharedFolderAccessoryViewController: NSViewController
     
     public override var nibName: NSNib.Name?
     {
-        "SharedFolderAccessoryViewController"
+        "ShareAccessoryViewController"
     }
     
     public override func viewDidLoad()

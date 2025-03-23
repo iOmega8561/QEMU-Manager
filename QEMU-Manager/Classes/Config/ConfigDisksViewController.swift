@@ -60,21 +60,7 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
     
     @IBAction private func chooseFile(_ sender: NSButton) {
         
-        guard let window = self.view.window else {
-            return NSSound.beep()
-        }
-        
-        let panel                     = NSOpenPanel()
-        panel.canChooseFiles          = true
-        panel.canChooseDirectories    = false
-        panel.allowsMultipleSelection = false
-        
-        panel.beginSheetModal(for: window) { [weak self] result in
-            
-            guard result == .OK, let url = panel.url else {
-                return
-            }
-
+        NSOpenPanel.filePicker(self) { [weak self] url in
             switch sender.tag {
             case 0: self?.vm.config.boot.kernel = url
             case 1: self?.vm.config.boot.initrd = url
@@ -198,32 +184,18 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
     }
     
     @IBAction func importDisk(_ sender: Any) {
-        guard let window = self.view.window else
-        {
-            NSSound.beep()
-            
-            return
-        }
         
-        let accessoryView             = DiskAccessoryViewController()
-        let panel                     = NSOpenPanel()
-        panel.canChooseFiles          = true
-        panel.canChooseDirectories    = false
-        panel.allowsMultipleSelection = false
-        panel.accessoryView           = accessoryView.view
-        
-        panel.beginSheetModal( for: window )
-        {
-            r in guard r == .OK, let url = panel.url else
-            {
-                return
-            }
+        NSOpenPanel.filePickerWithAccessoryView(
+            self,
+            controllerType: DiskAccessoryViewController.self
             
-            self.vm.config.addDisk(
-                .init(url: url, type: accessoryView.mediaType)
+        ) { [weak self] url, accessoryViewController in
+            
+            self?.vm.config.addDisk(
+                .init(url: url, type: accessoryViewController.mediaType)
             )
             
-            self.reloadDisks()
+            self?.reloadDisks()
         }
     }
     

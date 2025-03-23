@@ -77,44 +77,18 @@ public class ConfigSharingViewController: ConfigViewController, NSTableViewDataS
     
     @IBAction private func addFolder( _ sender: Any? )
     {
-        guard let window = self.view.window else
-        {
-            NSSound.beep()
-            
-            return
-        }
+        NSOpenPanel.filePickerWithAccessoryView(
+            self,
+            controllerType: ShareAccessoryViewController.self
         
-        let accessoryView             = SharedFolderAccessoryViewController()
-        let panel                     = NSOpenPanel()
-        panel.canChooseFiles          = false
-        panel.canChooseDirectories    = true
-        panel.allowsMultipleSelection = false
-        panel.accessoryView           = accessoryView.view
-        
-        panel.beginSheetModal( for: window )
-        {
-            if $0 != .OK
-            {
-                return
-            }
+        ) { [weak self] url, accessoryViewController in
             
-            guard let url = panel.url else
-            {
-                return
-            }
+            let folder = Config.Share(url: url, kind: accessoryViewController.shareKind)
             
-            do
-            {
-                let folder = Config.Share( url: url, kind: accessoryView.sharedFolderKind )
-                
-                self.folders.addObject( folder )
-                self.vm.config.addSharedFolder( folder )
-                try self.vm.save()
-            }
-            catch let error
-            {
-                NSAlert( error: error ).beginSheetModal( for: window, completionHandler: nil )
-            }
+            self?.folders.addObject(folder)
+            self?.vm.config.addSharedFolder(folder)
+            
+            try self?.vm.save()
         }
     }
     

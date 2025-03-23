@@ -52,21 +52,8 @@ final class ConfigSystemViewController: ConfigViewController {
     
     @IBAction private func chooseFile(_ sender: NSButton) {
         
-        guard let window = self.view.window else {
-            return NSSound.beep()
-        }
-        
-        let panel                     = NSOpenPanel()
-        panel.canChooseFiles          = true
-        panel.canChooseDirectories    = false
-        panel.allowsMultipleSelection = false
-        
-        panel.beginSheetModal(for: window) { [weak self] result in
+        NSOpenPanel.filePicker(self) { [weak self] url in
             
-            guard result == .OK, let url = panel.url else {
-                return
-            }
-
             switch sender.tag {
             case 0: self?.vm.config.system.bios = url
             case 1: self?.vm.config.system.dbt  = url
