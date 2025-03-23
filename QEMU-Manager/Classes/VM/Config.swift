@@ -20,22 +20,22 @@ import Foundation
 
 final class Config: NSObject, Codable {
     
-    @objc private(set) dynamic var version:       UInt64       = 0
-    @objc private(set) dynamic var uuid:          UUID         = .init()
-    @objc              dynamic var title:         String       = "Untitled"
-    @objc              dynamic var icon:          String?      = nil
-    @objc private(set) dynamic var architecture:  Architecture = .aarch64
-    @objc private(set) dynamic var system:        System       = .init()
-    @objc private(set) dynamic var network:       Network      = .init()
-    @objc              dynamic var usbDev:        String?      = nil
-    @objc              dynamic var usbInput:      Bool         = false
-    @objc              dynamic var soundDev:      String?      = nil
-    @objc              dynamic var videoDev:      String?      = nil
-    @objc private(set) dynamic var disks:         [Disk]       = []
-    @objc private(set) dynamic var tweaks:        Tweaks       = .init()
-    @objc private(set) dynamic var boot:          Boot         = .init()
-    @objc private(set) dynamic var shares:        [Share]      = []
-    @objc private(set) dynamic var arguments:     [String]     = []
+    @objc private(set) dynamic var version:      UInt64       = 0
+    @objc private(set) dynamic var uuid:         UUID         = .init()
+    @objc              dynamic var title:        String       = "Untitled"
+    @objc              dynamic var icon:         String?      = nil
+    @objc private(set) dynamic var architecture: Architecture = .aarch64
+    @objc private(set) dynamic var system:       System       = .init()
+    @objc private(set) dynamic var network:      Network      = .init()
+    @objc              dynamic var usbDev:       String?      = nil
+    @objc              dynamic var usbInput:     Bool         = false
+    @objc              dynamic var soundDev:     String?      = nil
+    @objc              dynamic var videoDev:     String?      = nil
+    @objc private(set) dynamic var disks:        [Disk]       = []
+    @objc private(set) dynamic var tweaks:       Tweaks       = .init()
+    @objc private(set) dynamic var boot:         Boot         = .init()
+    @objc private(set) dynamic var shares:       [Share]      = []
+    @objc private(set) dynamic var arguments:    [String]     = []
     
     func setArchitecture(_ arch: Architecture.RawValue) {
         

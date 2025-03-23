@@ -22,7 +22,6 @@ extension Config {
     final class Tweaks: NSObject, Codable {
         
         @objc dynamic var accel:     String? = nil
-        @objc dynamic var cache:     String? = nil
         @objc dynamic var defaults:  Bool    = true
         @objc dynamic var rng:       Bool    = false
         @objc dynamic var balloon:   Bool    = false
