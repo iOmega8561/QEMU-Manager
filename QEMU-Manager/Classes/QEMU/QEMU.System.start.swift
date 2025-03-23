@@ -87,12 +87,12 @@ extension QEMU.System {
         }
         
         if let ctrl = vm.config.peripherals.usbctrl {
-            arguments += ["-device", ctrl]
+            arguments += ["-device", ctrl + ",id=usb0"]
         }
         
         if vm.config.peripherals.usbdevs {
-            arguments += ["-device", "usb-kbd",
-                          "-device", "usb-tablet"]
+            arguments += ["-device", "usb-kbd,bus=usb0.0",
+                          "-device", "usb-tablet,bus=usb0.0"]
         }
         
         if let video = vm.config.peripherals.video {
