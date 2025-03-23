@@ -22,7 +22,7 @@ import Foundation
     
     override func transformEnum(from intValue: Int) -> String? {
         
-        guard let arch = Disk.ImageFormat(rawValue: intValue) else {
+        guard let arch = Config.Disk.ImageFormat(rawValue: intValue) else {
             return nil
         }
         

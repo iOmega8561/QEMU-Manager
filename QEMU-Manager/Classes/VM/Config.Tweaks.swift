@@ -17,12 +17,15 @@
 
 import Foundation
 
-final class Peripherals: NSObject, Codable {
+extension Config {
     
-    @objc dynamic var usbctrl: String? = nil
-    @objc dynamic var usbdevs: Bool    = false
-    @objc dynamic var network: String? = nil
-    @objc dynamic var usernic: Bool    = false
-    @objc dynamic var sound:   String? = nil
-    @objc dynamic var video:   String? = nil
+    final class Tweaks: NSObject, Codable {
+        
+        @objc dynamic var accel:     String? = nil
+        @objc dynamic var cache:     String? = nil
+        @objc dynamic var defaults:  Bool    = true
+        @objc dynamic var rng:       Bool    = false
+        @objc dynamic var balloon:   Bool    = false
+        @objc dynamic var localtime: Bool    = false
+    }
 }

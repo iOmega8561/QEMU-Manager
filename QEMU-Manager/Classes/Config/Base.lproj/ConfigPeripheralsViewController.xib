@@ -204,7 +204,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.peripherals.usbdevs" id="Lkl-El-zVv"/>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.usbInput" id="WsQ-Xo-DKv"/>
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SqZ-jm-cQu">

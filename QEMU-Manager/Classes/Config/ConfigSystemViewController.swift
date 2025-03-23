@@ -18,7 +18,7 @@
 
 import Cocoa
 
-final class ConfigHardwareViewController: ConfigViewController {
+final class ConfigSystemViewController: ConfigViewController {
     
     @IBOutlet private var sizeFormatter: SizeFormatter!
     @IBOutlet private var machines:      NSArrayController!
@@ -38,7 +38,7 @@ final class ConfigHardwareViewController: ConfigViewController {
         didSet { vm.config.setArchitecture(architecture); update() }
     }
     
-    override var nibName: NSNib.Name? { "ConfigHardwareViewController" }
+    override var nibName: NSNib.Name? { "ConfigSystemViewController" }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +99,7 @@ final class ConfigHardwareViewController: ConfigViewController {
         self.architecture = vm.config.architecture.rawValue
         self.supportsUEFI = vm.config.architecture.supportsUEFI
         
-        super.init(title: "Hardware", icon: NSImage(named: "HardwareTemplate"), sorting: sorting)
+        super.init(title: "System", icon: NSImage(named: "HardwareTemplate"), sorting: sorting)
     }
     
     required init?(coder: NSCoder) { nil }

@@ -17,28 +17,31 @@
 
 import Foundation
 
-final class Boot: NSObject, Codable {
+extension Config {
     
-    @objc enum Priority: Int, StringCodable {
-        case disk
-        case cdrom
-        case network
+    final class Boot: NSObject, Codable {
         
-        var description: String {
-            switch self {
-            case .disk:    "c"
-            case .cdrom:   "d"
-            case .network: "n"
+        @objc enum Priority: Int, StringCodable {
+            case disk
+            case cdrom
+            case network
+            
+            var description: String {
+                switch self {
+                case .disk:    "c"
+                case .cdrom:   "d"
+                case .network: "n"
+                }
             }
         }
+        
+        @objc dynamic var priority: Priority = .disk
+        
+        @objc dynamic var kernel:   URL?     = nil {
+            didSet { kernel == nil ? (append, initrd) = (nil, nil) : () }
+        }
+        
+        @objc dynamic var append:   String?  = nil
+        @objc dynamic var initrd:   URL?     = nil
     }
-    
-    @objc dynamic var priority: Priority = .disk
-    
-    @objc dynamic var kernel:   URL?     = nil {
-        didSet { kernel == nil ? (append, initrd) = (nil, nil) : () }
-    }
-    
-    @objc dynamic var append:   String?  = nil
-    @objc dynamic var initrd:   URL?     = nil
 }

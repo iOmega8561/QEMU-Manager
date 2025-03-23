@@ -17,12 +17,23 @@
 
 import Foundation
 
-final class Extra: NSObject, Codable {
+extension Config {
     
-    @objc dynamic var accel:     String? = nil
-    //    dynamic var cache:     Int?    = nil
-    @objc dynamic var defaults:  Bool    = true
-    @objc dynamic var rng:       Bool    = false
-    @objc dynamic var balloon:   Bool    = false
-    @objc dynamic var localtime: Bool    = false
+    final class System: NSObject, Codable {
+        
+        @objc dynamic var machine: String? = nil   {
+            didSet { machine == nil ? params = nil : () }
+        }
+        @objc dynamic var bios:    URL?    = nil   {
+            didSet { bios != nil ? uefi = false : () }
+        }
+        @objc dynamic var uefi:    Bool    = false {
+            didSet { uefi ? bios = nil : () }
+        }
+        @objc dynamic var params:  String? = nil
+        @objc dynamic var dbt:     URL?    = nil
+        @objc dynamic var cpu:     String? = nil
+        @objc dynamic var cores:   UInt64  = 1
+        @objc dynamic var memory:  UInt64  = 2147483648
+    }
 }

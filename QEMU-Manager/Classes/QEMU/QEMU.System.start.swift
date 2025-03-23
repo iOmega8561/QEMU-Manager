@@ -24,7 +24,7 @@ extension QEMU.System {
         
         var arguments: [String] = []
             
-        if !vm.config.extra.defaults {
+        if !vm.config.tweaks.defaults {
             arguments += ["-nodefaults"]
         }
         
@@ -50,11 +50,11 @@ extension QEMU.System {
             arguments += ["-smp", vm.config.system.cores.description]
         }
         
-        if let accel = vm.config.extra.accel {
+        if let accel = vm.config.tweaks.accel {
             arguments += ["-accel", accel]
         }
         
-        if vm.config.extra.localtime {
+        if vm.config.tweaks.localtime {
             arguments += ["-rtc", "base=localtime"]
         }
         
@@ -78,28 +78,28 @@ extension QEMU.System {
             arguments += ["-dbt", dbt.path]
         }
         
-        if vm.config.extra.rng {
+        if vm.config.tweaks.rng {
             arguments += ["-device", "virtio-rng-pci"]
         }
         
-        if vm.config.extra.balloon {
+        if vm.config.tweaks.balloon {
             arguments += ["-device", "virtio-balloon-pci"]
         }
         
-        if let ctrl = vm.config.peripherals.usbctrl {
+        if let ctrl = vm.config.usbDev {
             arguments += ["-device", ctrl + ",id=usb0"]
         }
         
-        if vm.config.peripherals.usbdevs {
+        if vm.config.usbInput {
             arguments += ["-device", "usb-kbd,bus=usb0.0",
                           "-device", "usb-tablet,bus=usb0.0"]
         }
         
-        if let video = vm.config.peripherals.video {
+        if let video = vm.config.videoDev {
             arguments += ["-vga", "none", "-device", video]
         }
         
-        if let sound = vm.config.peripherals.sound {
+        if let sound = vm.config.soundDev {
             arguments += ["-device", sound]
             
             if sound.contains("hda") { arguments += ["-device", "hda-duplex"] }
@@ -125,8 +125,9 @@ extension QEMU.System {
         arguments += ["-audio",   "driver=coreaudio"]
         arguments += ["-display", "cocoa"]
         arguments += ["-name",    vm.config.title]
+        arguments += ["-boot",    vm.config.boot.priority.description]
+        
         arguments += vm.config.arguments
-        arguments += ["-boot", vm.config.boot.priority.description]
                 
         vm.disks.forEach { diskDrive in
                         
@@ -144,10 +145,10 @@ extension QEMU.System {
             arguments += ["-drive", driveParams.joined(separator: ",")]
         }
         
-        vm.config.sharedFolders.forEach { dirShare in
+        vm.config.shares.forEach { share in
                         
             let shareParams = [
-                "file=" + dirShare.kind.description + ":rw:" + dirShare.url.path,
+                "file=" + share.kind.description + ":rw:" + share.url.path,
                 "format=raw",
                 "media=disk"
             ]

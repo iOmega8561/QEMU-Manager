@@ -48,7 +48,7 @@ public class ConfigSharingViewController: ConfigViewController, NSTableViewDataS
     
     @IBAction private func revealFolder( _ sender: Any? )
     {
-        guard let folder = sender as? SharedFolder else
+        guard let folder = sender as? Config.Share else
         {
             NSSound.beep()
             
@@ -105,7 +105,7 @@ public class ConfigSharingViewController: ConfigViewController, NSTableViewDataS
             
             do
             {
-                let folder = SharedFolder( url: url, kind: accessoryView.sharedFolderKind )
+                let folder = Config.Share( url: url, kind: accessoryView.sharedFolderKind )
                 
                 self.folders.addObject( folder )
                 self.vm.config.addSharedFolder( folder )
@@ -120,7 +120,7 @@ public class ConfigSharingViewController: ConfigViewController, NSTableViewDataS
     
     @IBAction private func removeFolder( _ sender: Any? )
     {
-        guard let folder = self.folders.selectedObjects.first as? SharedFolder else
+        guard let folder = self.folders.selectedObjects.first as? Config.Share else
         {
             NSSound.beep()
             
@@ -141,11 +141,11 @@ public class ConfigSharingViewController: ConfigViewController, NSTableViewDataS
     
     private func reloadFolders()
     {
-        if let existing = self.folders.content as? [ SharedFolder ]
+        if let existing = self.folders.content as? [ Config.Share ]
         {
             existing.forEach { self.folders.removeObject( $0 ) }
         }
         
-        self.folders.add( contentsOf: self.vm.config.sharedFolders )
+        self.folders.add( contentsOf: self.vm.config.shares )
     }
 }

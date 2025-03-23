@@ -17,14 +17,17 @@
 
 import Foundation
 
-@objc(SharedFolderKindToString) final class SharedFolderKindToString: StringCodableValueTransformer {
+@objc(ShareKindToString) final class ShareKindToString: StringCodableValueTransformer {
     
     override func transformEnum(from intValue: Int) -> String? {
         
-        guard let kind = SharedFolder.Kind(rawValue: intValue) else {
+        guard let kind = Config.Share.Kind(rawValue: intValue) else {
             return nil
         }
         
-        return kind.displayName
+        switch kind {
+        case .fat:    return "FAT"
+        case .floppy: return "FAT Floppy"
+        }
     }
 }

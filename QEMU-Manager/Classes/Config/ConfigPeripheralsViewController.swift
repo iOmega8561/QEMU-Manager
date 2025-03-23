@@ -29,9 +29,9 @@ final class ConfigPeripheralsViewController: ConfigViewController {
     
     @objc private dynamic var vm:        VirtualMachine
     
-    @objc private dynamic var usbctrl: USB?     { didSet { usbctrl.set(to: &vm.config.peripherals.usbctrl) } }
-    @objc private dynamic var sound:   Sound?   { didSet { sound.set(to:   &vm.config.peripherals.sound) } }
-    @objc private dynamic var video:   Video?   { didSet { video.set(to:   &vm.config.peripherals.video) } }
+    @objc private dynamic var usbctrl: USB?     { didSet { usbctrl.set(to: &vm.config.usbDev) } }
+    @objc private dynamic var sound:   Sound?   { didSet { sound.set(to:   &vm.config.soundDev) } }
+    @objc private dynamic var video:   Video?   { didSet { video.set(to:   &vm.config.videoDev) } }
     @objc private dynamic var network: Network? { didSet { network.set(to: &vm.config.network.controller) } }
     
     @IBAction func randomMAC(_ sender: Any) {
@@ -54,9 +54,9 @@ final class ConfigPeripheralsViewController: ConfigViewController {
     }
     
     private func update() {
-        (usbctrls.content, usbctrl) = USB.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.usbctrl)
-        (sounds.content, sound)     = Sound.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.sound)
-        (videos.content, video)     = Video.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.video)
+        (usbctrls.content, usbctrl) = USB.fetchValues(for:   vm.config.architecture.rawValue, vm.config.usbDev)
+        (sounds.content, sound)     = Sound.fetchValues(for:   vm.config.architecture.rawValue, vm.config.soundDev)
+        (videos.content, video)     = Video.fetchValues(for:   vm.config.architecture.rawValue, vm.config.videoDev)
         (networks.content, network) = Network.fetchValues(for: vm.config.architecture.rawValue, vm.config.network.controller)
     }
     

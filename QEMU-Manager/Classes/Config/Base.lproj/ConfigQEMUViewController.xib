@@ -153,7 +153,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.extra.defaults" id="kiV-EG-icP"/>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.tweaks.defaults" id="TiM-jm-IFg"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yyL-xL-FGm">
@@ -163,7 +163,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.extra.rng" id="scV-eX-IhO"/>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.tweaks.rng" id="duT-ag-NbL"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WYb-Tb-RHL">
@@ -173,7 +173,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.extra.balloon" id="Apb-xr-xWZ"/>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.tweaks.balloon" id="vQh-YZ-Z4N"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DfB-ZK-Yaj">
@@ -183,7 +183,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.extra.localtime" id="EPM-rd-oOU"/>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.tweaks.localtime" id="bvS-8g-t0I"/>
                             </connections>
                         </button>
                     </subviews>

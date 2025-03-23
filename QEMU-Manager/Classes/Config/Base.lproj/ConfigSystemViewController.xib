@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="ConfigHardwareViewController" customModule="QEMU_Manager" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="ConfigSystemViewController" customModule="QEMU_Manager" customModuleProvider="target">
             <connections>
                 <outlet property="cpus" destination="eQD-Mg-cN5" id="bQa-kA-9Z9"/>
                 <outlet property="machines" destination="sm1-Cj-47c" id="M5D-Iz-UyC"/>
@@ -41,28 +41,28 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QB1-pu-A82">
+                        <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QB1-pu-A82" userLabel="Architecture">
                             <rect key="frame" x="100" y="333" width="384" height="25"/>
-                            <popUpButtonCell key="cell" type="push" title="ARM 64-bits - aarch64" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="6rg-aR-yT1" id="FRP-mc-1bY">
+                            <popUpButtonCell key="cell" type="push" title="ARM 64-bits (aarch64)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="6rg-aR-yT1" id="FRP-mc-1bY" userLabel="Architecture">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
                                 <menu key="menu" id="9SE-Wp-zqp">
                                     <items>
-                                        <menuItem title="ARM 64-bits - aarch64" state="on" id="6rg-aR-yT1"/>
-                                        <menuItem title="ARM 32-bits - arm" id="e7D-Na-RrR"/>
-                                        <menuItem title="Intel 64-bits - x86_64" id="s2N-NO-ATd"/>
-                                        <menuItem title="Intel 32-bits - i386" id="Ymc-kA-Hij"/>
-                                        <menuItem title="PPC 64-bits - ppc64" id="7eU-S8-4Xu"/>
-                                        <menuItem title="PPC 32-bits - ppc" id="os7-U2-4gb"/>
-                                        <menuItem title="RISC-V 64-bits - riscv64" id="jAZ-LQ-jBF"/>
-                                        <menuItem title="RISC-V 32-bits - riscv32" id="ELP-mn-6iQ"/>
-                                        <menuItem title="SPARC 64-bits - sparc64" id="HBm-Pe-QVB" userLabel="SPARC 64-bits - sparc64"/>
-                                        <menuItem title="SPARC 32-bits - sparc" id="RhM-l6-89a" userLabel="SPARC 32-bits - sparc"/>
-                                        <menuItem title="MIPS 64-bits - mips64" id="sN2-p2-k0U" userLabel="MIPS 64-bits - mips64"/>
-                                        <menuItem title="MIPS 32-bits - mips" id="hLw-EP-dw0" userLabel="MIPS 32-bits - mips"/>
-                                        <menuItem title="MIPS 64-bits (Little-Endian) - mips64el" id="Svf-gA-21G" userLabel="MIPS 64-bits (Little-Endian) - mips64el"/>
-                                        <menuItem title="MIPS 32-bits (Little-Endian) - mipsel" id="FQc-Qf-iHq" userLabel="MIPS 32-bits (Little-Endian) - mipsel"/>
-                                        <menuItem title="Motorola 68k - m68k" id="z8X-Cz-1vm"/>
+                                        <menuItem title="ARM 64-bits (aarch64)" state="on" id="6rg-aR-yT1"/>
+                                        <menuItem title="ARM 32-bits (arm)" id="e7D-Na-RrR"/>
+                                        <menuItem title="Intel 64-bits (x86_64)" id="s2N-NO-ATd"/>
+                                        <menuItem title="Intel 32-bits (i386)" id="Ymc-kA-Hij"/>
+                                        <menuItem title="PPC 64-bits (ppc64)" id="7eU-S8-4Xu"/>
+                                        <menuItem title="PPC 32-bits (ppc)" id="os7-U2-4gb"/>
+                                        <menuItem title="RISC-V 64-bits (riscv64)" id="jAZ-LQ-jBF"/>
+                                        <menuItem title="RISC-V 32-bits (riscv32)" id="ELP-mn-6iQ"/>
+                                        <menuItem title="SPARC 64-bits (sparc64)" id="HBm-Pe-QVB"/>
+                                        <menuItem title="SPARC 32-bits (sparc)" id="RhM-l6-89a"/>
+                                        <menuItem title="MIPS 64-bits (mips64)" id="sN2-p2-k0U"/>
+                                        <menuItem title="MIPS 32-bits (mips)" id="hLw-EP-dw0"/>
+                                        <menuItem title="MIPS 64-bits (Little-Endian) (mips64el)" id="Svf-gA-21G"/>
+                                        <menuItem title="MIPS 32-bits (Little-Endian) (mipsel)" id="FQc-Qf-iHq"/>
+                                        <menuItem title="Motorola 68k (m68k)" id="z8X-Cz-1vm"/>
                                     </items>
                                 </menu>
                             </popUpButtonCell>

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Giuseppe Rocco
+ * Copyright (c) 2021 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,29 @@
 
 import Foundation
 
-final class System: NSObject, Codable {
+extension Config {
     
-    @objc dynamic var machine: String? = nil   {
-        didSet { machine == nil ? params = nil : () }
+    final class Share: NSObject, Codable {
+        
+        @objc enum Kind: Int, StringCodable {
+            case fat
+            case floppy
+            
+            var description: String {
+                switch self {
+                case .fat:    "fat"
+                case .floppy: "fat:floppy"
+                }
+            }
+        }
+        
+        @objc private(set) dynamic var uuid: UUID = .init()
+        @objc private(set) dynamic var url:  URL
+        @objc private(set) dynamic var kind: Kind
+        
+        init(url: URL, kind: Kind) {
+            self.url  = url
+            self.kind = kind
+        }
     }
-    
-    @objc dynamic var bios:    URL?    = nil   {
-        didSet { bios != nil ? uefi = false : () }
-    }
-    
-    @objc dynamic var uefi:    Bool    = false {
-        didSet { uefi ? bios = nil : () }
-    }
-    
-    @objc dynamic var params:  String? = nil
-    @objc dynamic var dbt:     URL?    = nil
-    @objc dynamic var cpu:     String? = nil
-    @objc dynamic var cores:   UInt64  = 1
-    @objc dynamic var memory:  UInt64  = 2147483648
 }

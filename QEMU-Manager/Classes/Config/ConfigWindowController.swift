@@ -38,7 +38,7 @@ public class ConfigWindowController: NSWindowController, NSTableViewDelegate
         let _ = self.window
         
         self.addController( ConfigGeneralViewController(     vm: vm, sorting: 0 ) )
-        self.addController( ConfigHardwareViewController(    vm: vm, sorting: 1 ) )
+        self.addController( ConfigSystemViewController(      vm: vm, sorting: 1 ) )
         self.addController( ConfigPeripheralsViewController( vm: vm, sorting: 2 ) )
         self.addController( ConfigDisksViewController(       vm: vm, sorting: 3 ) )
         self.addController( ConfigSharingViewController(     vm: vm, sorting: 4 ) )

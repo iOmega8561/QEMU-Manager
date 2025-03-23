@@ -25,7 +25,23 @@ import Foundation
             return nil
         }
         
-        return arch.displayName
+        switch arch {
+        case .aarch64:  return "ARM 64-bits"
+        case .arm:      return "ARM 32-bits"
+        case .x86_64:   return "Intel 64-bits"
+        case .i386:     return "Intel 32-bits"
+        case .ppc64:    return "PowerPC 64-bits"
+        case .ppc:      return "PowerPC 32-bits"
+        case .riscv64:  return "RISC-V 64-bits"
+        case .riscv32:  return "RISC-V 32-bits"
+        case .sparc64:  return "SPARC 64-bits"
+        case .sparc:    return "SPARC 32-bits"
+        case .mips64:   return "MIPS 64-bits"
+        case .mips:     return "MIPS 32-bits"
+        case .mips64el: return "MIPS 64-bits (Little-Endian)"
+        case .mipsel:   return "MIPS 32-bits (Little-Endian)"
+        case .m68k:     return "Motorola 68k"
+        }
     }
 }
 

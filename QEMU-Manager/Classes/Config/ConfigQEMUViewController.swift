@@ -27,7 +27,7 @@ final class ConfigQEMUViewController: ConfigViewController {
     @IBOutlet private var tableView: NSTableView!
     
     @objc private dynamic var vm:    VirtualMachine
-    @objc private dynamic var accel: Accel? { didSet { accel.set(to: &vm.config.extra.accel) } }
+    @objc private dynamic var accel: Accel? { didSet { accel.set(to: &vm.config.tweaks.accel) } }
     @objc private dynamic var uefiEnabled: Bool
     
     override var nibName: NSNib.Name? { "ConfigQEMUViewController" }
@@ -37,7 +37,7 @@ final class ConfigQEMUViewController: ConfigViewController {
         
         (accels.content, accel) = Accel.fetchValues(
             for: vm.config.architecture.rawValue,
-            vm.config.extra.accel
+            vm.config.tweaks.accel
         )
     }
     

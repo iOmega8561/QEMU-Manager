@@ -21,7 +21,7 @@ public class SharedFolderAccessoryViewController: NSViewController
 {
     @objc private dynamic var selectedIndex = 0
     
-    var sharedFolderKind: SharedFolder.Kind
+    var sharedFolderKind: Config.Share.Kind
     {
         switch self.selectedIndex
         {

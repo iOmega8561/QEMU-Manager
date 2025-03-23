@@ -21,7 +21,7 @@ final class DiskAccessoryViewController: NSViewController {
     
     @objc private dynamic var selectedIndex = 0
     
-    var mediaType: Disk.MediaType {
+    var mediaType: Config.Disk.MediaType {
         
         switch self.selectedIndex {
         case 1:  .cdrom
