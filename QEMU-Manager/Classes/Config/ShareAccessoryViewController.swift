@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Giuseppe Rocco
+ * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,26 @@
 
 import Cocoa
 
-final class DiskAccessoryViewController: NSViewController {
-    
+public class ShareAccessoryViewController: NSViewController
+{
     @objc private dynamic var selectedIndex = 0
     
-    var mediaType: Config.Disk.MediaType {
-        
-        switch self.selectedIndex {
-        case 1:  .cdrom
-        default: .disk
+    var shareKind: Config.Share.Kind
+    {
+        switch self.selectedIndex
+        {
+            case 1:  return .floppy
+            default: return .fat
         }
     }
     
-    override var nibName: NSNib.Name? {
-        "DiskAccessoryViewController"
+    public override var nibName: NSNib.Name?
+    {
+        "ShareAccessoryViewController"
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad()
+    {
         super.viewDidLoad()
     }
 }

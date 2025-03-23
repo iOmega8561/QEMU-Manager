@@ -88,9 +88,9 @@
                                                                     <font key="font" metaFont="cellTitle"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <binding destination="8eW-qs-IoC" name="title" keyPath="objectValue.kind" id="qOi-zk-ADy">
+                                                                    <binding destination="8eW-qs-IoC" name="title" keyPath="objectValue.kind" id="bRO-fB-89y">
                                                                         <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">SharedFolderKindToString</string>
+                                                                            <string key="NSValueTransformerName">ShareKindToString</string>
                                                                         </dictionary>
                                                                     </binding>
                                                                 </connections>
@@ -184,8 +184,8 @@
         <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="NDe-Qw-Avo" userLabel="Folders"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="16"/>
-        <image name="NSRemoveTemplate" width="18" height="4"/>
-        <image name="NSRevealFreestandingTemplate" width="19" height="19"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSRemoveTemplate" width="18" height="5"/>
+        <image name="NSRevealFreestandingTemplate" width="20" height="20"/>
     </resources>
 </document>

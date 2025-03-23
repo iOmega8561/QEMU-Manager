@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Giuseppe Rocco
+ * Copyright (c) 2021 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,25 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-final class DiskAccessoryViewController: NSViewController {
+extension Config {
     
-    @objc private dynamic var selectedIndex = 0
-    
-    var mediaType: Config.Disk.MediaType {
+    final class Share: NSObject, Codable {
         
-        switch self.selectedIndex {
-        case 1:  .cdrom
-        default: .disk
+        @objc enum Kind: Int, StringCodable {
+            case fat
+            case floppy
+            
+            var description: String {
+                switch self {
+                case .fat:    "fat"
+                case .floppy: "fat:floppy"
+                }
+            }
         }
-    }
-    
-    override var nibName: NSNib.Name? {
-        "DiskAccessoryViewController"
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        
+        @objc private(set) dynamic var uuid: UUID = .init()
+        @objc private(set) dynamic var url:  URL
+        @objc private(set) dynamic var kind: Kind
+        
+        init(url: URL, kind: Kind) {
+            self.url  = url
+            self.kind = kind
+        }
     }
 }

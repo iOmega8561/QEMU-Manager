@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Giuseppe Rocco
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,33 +17,31 @@
 
 import Foundation
 
-final class SharedFolder: NSObject, Codable {
+extension Config {
     
-    @objc enum Kind: Int, StringCodable {
-        case fat
-        case floppy
+    final class Boot: NSObject, Codable {
         
-        var description: String {
-            switch self {
-            case .fat:    "fat"
-            case .floppy: "fat:floppy"
+        @objc enum Priority: Int, StringCodable {
+            case disk
+            case cdrom
+            case network
+            
+            var description: String {
+                switch self {
+                case .disk:    "c"
+                case .cdrom:   "d"
+                case .network: "n"
+                }
             }
         }
         
-        var displayName: String {
-            switch self {
-            case .fat:    "FAT"
-            case .floppy: "FAT Floppy"
-            }
+        @objc dynamic var priority: Priority = .disk
+        
+        @objc dynamic var kernel:   URL?     = nil {
+            didSet { kernel == nil ? (append, initrd) = (nil, nil) : () }
         }
-    }
-    
-    @objc private(set) dynamic var uuid: UUID = .init()
-    @objc private(set) dynamic var url:  URL
-    @objc private(set) dynamic var kind: Kind
-    
-    init(url: URL, kind: Kind) {
-        self.url  = url
-        self.kind = kind
+        
+        @objc dynamic var append:   String?  = nil
+        @objc dynamic var initrd:   URL?     = nil
     }
 }

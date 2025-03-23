@@ -15,25 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-final class DiskAccessoryViewController: NSViewController {
+final class USB: InfoValue, SpecializedDefaultable {
     
-    @objc private dynamic var selectedIndex = 0
+    static var defaultValue: USB {
+        USB(
+            name: "Default",
+            title: "Unspecified USB Controller",
+            sorting: -1
+        )
+    }
     
-    var mediaType: Config.Disk.MediaType {
+    static let allValues: [Architecture : [USB]] = {
         
-        switch self.selectedIndex {
-        case 1:  .cdrom
-        default: .disk
+        var values: [Architecture : [USB]] = [:]
+        
+        Architecture.allCases.forEach { arch in
+            
+            values[arch] = [.defaultValue]
+            
+            guard let devices = Device.allValues[arch] else {
+                return
+            }
+    
+            values[arch]?.append(
+                contentsOf: devices.filter { $0.category == "USB" }
+                    .map { .init(name: $0.name, title: $0.title) }
+            )
         }
-    }
-    
-    override var nibName: NSNib.Name? {
-        "DiskAccessoryViewController"
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+        
+        return values
+    }()
 }

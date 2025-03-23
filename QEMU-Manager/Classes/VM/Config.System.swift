@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,28 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-public class SharedFolderAccessoryViewController: NSViewController
-{
-    @objc private dynamic var selectedIndex = 0
+extension Config {
     
-    var sharedFolderKind: SharedFolder.Kind
-    {
-        switch self.selectedIndex
-        {
-            case 1:  return .floppy
-            default: return .fat
+    final class System: NSObject, Codable {
+        
+        @objc dynamic var machine: String? = nil   {
+            didSet { machine == nil ? params = nil : () }
         }
-    }
-    
-    public override var nibName: NSNib.Name?
-    {
-        "SharedFolderAccessoryViewController"
-    }
-    
-    public override func viewDidLoad()
-    {
-        super.viewDidLoad()
+        @objc dynamic var bios:    URL?    = nil   {
+            didSet { bios != nil ? uefi = false : () }
+        }
+        @objc dynamic var uefi:    Bool    = false {
+            didSet { uefi ? bios = nil : () }
+        }
+        @objc dynamic var params:  String? = nil
+        @objc dynamic var dbt:     URL?    = nil
+        @objc dynamic var cpu:     String? = nil
+        @objc dynamic var cores:   UInt64  = 1
+        @objc dynamic var memory:  UInt64  = 2147483648
     }
 }

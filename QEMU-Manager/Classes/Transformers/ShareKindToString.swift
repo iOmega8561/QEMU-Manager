@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2025 Giuseppe Rocco
+ * Copyright (c) 2021 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,17 @@
 
 import Foundation
 
-final class Emulation: NSObject, Codable {
+@objc(ShareKindToString) final class ShareKindToString: StringCodableValueTransformer {
     
-    @objc dynamic var accel:   String? = nil
-    @objc dynamic var uefi:    Bool    = false
-    @objc dynamic var rng:     Bool    = false
-    @objc dynamic var balloon: Bool    = false
-    @objc dynamic var ehci:    Bool    = false
-    @objc dynamic var bios:    URL?    = nil
-    @objc dynamic var kernel:  URL?    = nil
-    @objc dynamic var initrd:  URL?    = nil
-    @objc dynamic var dbt:     URL?    = nil
-    @objc dynamic var append:  String? = nil
+    override func transformEnum(from intValue: Int) -> String? {
+        
+        guard let kind = Config.Share.Kind(rawValue: intValue) else {
+            return nil
+        }
+        
+        switch kind {
+        case .fat:    return "FAT"
+        case .floppy: return "FAT Floppy"
+        }
+    }
 }

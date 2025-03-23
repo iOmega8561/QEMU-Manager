@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,34 +17,34 @@
 
 import Foundation
 
-final class VGA: InfoValue, SpecializedDefaultable {
+final class Network: InfoValue, SpecializedDefaultable {
     
-    static var defaultValue: VGA {
-        VGA(
+    static var defaultValue: Network {
+        Network(
             name: "Default",
-            title: "Unspecified VGA",
+            title: "Unspecified Network Card",
             sorting: -1
         )
     }
     
-    static let allValues: [Architecture: [VGA]] = {
+    static let allValues: [Architecture: [Network]] = {
         
-        var values: [Architecture: [VGA]] = [:]
+        var values: [Architecture: [Network]] = [:]
         
         Architecture.allCases.forEach { arch in
             
             values[arch] = [.defaultValue]
             
+            guard let devices = Device.allValues[arch] else {
+                return
+            }
+            
             values[arch]?.append(
-                contentsOf: QEMU.System(arch: arch).vga()
+                contentsOf: devices.filter { $0.category == "Network" }
+                    .map { .init(name: $0.name, title: $0.title) }
             )
         }
         
         return values
     }()
-}
-
-fileprivate extension QEMU.System {
-    
-    func vga() -> [VGA] { self.help(command: "vga") }
 }

@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,11 +17,26 @@
 
 import Foundation
 
-final class Boot: InfoValue {
+import Virtualization
+
+extension Config {
     
-    static let all: [Boot] = [
-        Boot(name: "d", title: "CD (if available)", sorting: 0),
-        Boot(name: "c", title: "Disk",              sorting: 1),
-        Boot(name: "n", title: "Network",           sorting: 2),
-    ]
+    final class Network: NSObject, Codable {
+        
+        @objc enum Kind: Int, StringCodable {
+            case host
+            case shared
+            
+            var description: String {
+                switch self {
+                case .host:   "host"
+                case .shared: "shared"
+                }
+            }
+        }
+        
+        @objc dynamic var kind:       Kind    = .host
+        @objc dynamic var controller: String? = nil
+        @objc dynamic var macAddress: String  = VZMACAddress.randomLocallyAdministered().string
+    }
 }

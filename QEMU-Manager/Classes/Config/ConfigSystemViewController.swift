@@ -18,54 +18,63 @@
 
 import Cocoa
 
-final class ConfigHardwareViewController: ConfigViewController {
+final class ConfigSystemViewController: ConfigViewController {
     
     @IBOutlet private var sizeFormatter: SizeFormatter!
     @IBOutlet private var machines:      NSArrayController!
     @IBOutlet private var cpus:          NSArrayController!
-    @IBOutlet private var vgas:          NSArrayController!
-    @IBOutlet private var cores:         NSArrayController!
     
     @objc private dynamic var minCores:  UInt64
     @objc private dynamic var maxCores:  UInt64
     @objc private dynamic var minMemory: UInt64
     @objc private dynamic var maxMemory: UInt64
     @objc private dynamic var vm:        VirtualMachine
+    @objc private dynamic var supportsUEFI: Bool
     
-    @objc private dynamic var machine: Machine? { didSet { machine.set(to: &vm.config.machine) } }
-    @objc private dynamic var cpu: CPU?         { didSet { cpu.set(to:     &vm.config.cpu) } }
-    @objc private dynamic var vga: VGA?         { didSet { vga.set(to:     &vm.config.vga) } }
+    @objc private dynamic var machine: Machine? { didSet { machine.set(to: &vm.config.system.machine) } }
+    @objc private dynamic var cpu: CPU?         { didSet { cpu.set(to:     &vm.config.system.cpu) } }
     
     @objc private dynamic var architecture: Int {
         didSet { vm.config.setArchitecture(architecture); update() }
     }
     
-    override var nibName: NSNib.Name? { "ConfigHardwareViewController" }
+    override var nibName: NSNib.Name? { "ConfigSystemViewController" }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sortDescriptors = [
-            NSSortDescriptor(key: "sorting", ascending: true),
-            NSSortDescriptor(key: "name",    ascending: true),
-            NSSortDescriptor(key: "title",   ascending: true)
-        ]
-        
         self.sizeFormatter.min = self.minMemory
         self.sizeFormatter.max = self.maxMemory
-        self.machines.sortDescriptors = sortDescriptors
-        self.cpus.sortDescriptors = sortDescriptors
+        self.machines.sortDescriptors = InfoValue.sortDescriptors
+        self.cpus.sortDescriptors = InfoValue.sortDescriptors
         self.update()
+    }
+    
+    @IBAction private func chooseFile(_ sender: NSButton) {
         
-        for i in self.minCores ..< self.maxCores {
-            self.cores.addObject(i)
+        NSOpenPanel.filePicker(self) { [weak self] url in
+            
+            switch sender.tag {
+            case 0: self?.vm.config.system.bios = url
+            case 1: self?.vm.config.system.dbt  = url
+            default: return
+            }
+        }
+    }
+    
+    @IBAction func removeAttachment(_ sender: NSButton) {
+        switch sender.tag {
+        case 0: vm.config.system.bios = nil
+        case 1: vm.config.system.dbt  = nil
+        default: return
         }
     }
     
     private func update() {
-        (machines.content, machine) = Machine.fetchValues(for: architecture, vm.config.machine)
-        (cpus.content, cpu)         = CPU.fetchValues(for: architecture, vm.config.cpu)
-        (vgas.content, vga)         = VGA.fetchValues(for: architecture, vm.config.vga)
+        supportsUEFI = vm.config.architecture.supportsUEFI
+        
+        (machines.content, machine) = Machine.fetchValues(for: architecture, vm.config.system.machine)
+        (cpus.content, cpu)         = CPU.fetchValues(for: architecture, vm.config.system.cpu)
     }
     
     init(vm: VirtualMachine, sorting: Int) {
@@ -75,8 +84,9 @@ final class ConfigHardwareViewController: ConfigViewController {
         self.maxMemory    = ProcessInfo().physicalMemory / 2
         self.vm           = vm
         self.architecture = vm.config.architecture.rawValue
+        self.supportsUEFI = vm.config.architecture.supportsUEFI
         
-        super.init(title: "Hardware", icon: NSImage(named: "HardwareTemplate"), sorting: sorting)
+        super.init(title: "System", icon: NSImage(named: "HardwareTemplate"), sorting: sorting)
     }
     
     required init?(coder: NSCoder) { nil }

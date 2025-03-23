@@ -55,7 +55,8 @@ extension QEMU.System {
                 
                 let key   = String(parts[0])
                 let value = String(parts[1]).trimmingCharacters(in: .whitespaces)
-                values.append(.init(name: key, title: value))
+                
+                values.append(value.starts(with: "(") ? .init(name: key) : .init(name: key, title: value))
                 
             } else { values.append(.init(name: line)) }
         }
