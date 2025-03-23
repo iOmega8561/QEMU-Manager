@@ -105,12 +105,16 @@ extension QEMU.System {
             if sound.contains("hda") { arguments += ["-device", "hda-duplex"] }
         }
         
-        if vm.config.peripherals.usernic,
-           let network = vm.config.peripherals.network {
-            
-            arguments += ["-nic", "user,model=" + network]
-            
-        } else if vm.config.peripherals.usernic { arguments += ["-nic", "user"] }
+        if let network = vm.config.network.controller {
+            arguments += ["-device", network +
+                                     ",mac=\(vm.config.network.macAddress)" +
+                                     ",netdev=net0"]
+        }
+        
+        switch vm.config.network.kind {
+        case .host:   arguments += ["-netdev", "user,restrict=yes,id=net0"]
+        case .shared: arguments += ["-netdev", "user,id=net0"]
+        }
         
         if vm.config.system.uefi, architecture.supportsUEFI,
            let firmwarePath = vm.config.architecture.edkFirmwarePath {

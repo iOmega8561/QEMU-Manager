@@ -18,6 +18,8 @@
 
 import Cocoa
 
+import Virtualization
+
 final class ConfigPeripheralsViewController: ConfigViewController {
     
     @IBOutlet private var usbctrls: NSArrayController!
@@ -30,7 +32,15 @@ final class ConfigPeripheralsViewController: ConfigViewController {
     @objc private dynamic var usbctrl: USB?     { didSet { usbctrl.set(to: &vm.config.peripherals.usbctrl) } }
     @objc private dynamic var sound:   Sound?   { didSet { sound.set(to:   &vm.config.peripherals.sound) } }
     @objc private dynamic var video:   Video?   { didSet { video.set(to:   &vm.config.peripherals.video) } }
-    @objc private dynamic var network: Network? { didSet { network.set(to: &vm.config.peripherals.network) } }
+    @objc private dynamic var network: Network? { didSet { network.set(to: &vm.config.network.controller) } }
+    
+    @IBAction func randomMAC(_ sender: Any) {
+        vm.config.network.macAddress = VZMACAddress.randomLocallyAdministered().string
+    }
+    
+    @objc private dynamic var selectedNetworkIndex: Int {
+        didSet { vm.config.network.kind = .init(rawValue: selectedNetworkIndex) ?? .host }
+    }
     
     override var nibName: NSNib.Name? { "ConfigPeripheralsViewController" }
     
@@ -47,11 +57,12 @@ final class ConfigPeripheralsViewController: ConfigViewController {
         (usbctrls.content, usbctrl) = USB.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.usbctrl)
         (sounds.content, sound)     = Sound.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.sound)
         (videos.content, video)     = Video.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.video)
-        (networks.content, network) = Network.fetchValues(for: vm.config.architecture.rawValue, vm.config.peripherals.network)
+        (networks.content, network) = Network.fetchValues(for: vm.config.architecture.rawValue, vm.config.network.controller)
     }
     
     init(vm: VirtualMachine, sorting: Int) {
         self.vm = vm
+        self.selectedNetworkIndex = vm.config.network.kind.rawValue
         super.init(title: "Peripherals", icon: NSImage(named: "PeripheralsTemplate"), sorting: sorting)
     }
     
