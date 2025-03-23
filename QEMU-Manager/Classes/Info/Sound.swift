@@ -22,7 +22,7 @@ final class Sound: InfoValue, SpecializedDefaultable {
     static var defaultValue: Sound {
         Sound(
             name: "Default",
-            title: "Unspecified Sound",
+            title: "Unspecified Sound Card",
             sorting: -1
         )
     }
@@ -41,7 +41,7 @@ final class Sound: InfoValue, SpecializedDefaultable {
             
             values[arch]?.append(
                 contentsOf: devices.filter { $0.category == "Sound" && !$0.name.starts(with: "hda") }
-                    .map { .init(name: $0.name, title: $0.title, sorting: $0.sorting) }
+                    .map { .init(name: $0.name, title: $0.title) }
             )
         }
         

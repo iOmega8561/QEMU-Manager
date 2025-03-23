@@ -17,34 +17,23 @@
 
 import Foundation
 
-final class Network: InfoValue, SpecializedDefaultable {
+final class System: NSObject, Codable {
     
-    static var defaultValue: Network {
-        Network(
-            name: "Default",
-            title: "Unspecified Network Card",
-            sorting: -1
-        )
+    @objc dynamic var machine: String? = nil   {
+        didSet { machine == nil ? params = nil : () }
     }
     
-    static let allValues: [Architecture: [Network]] = {
-        
-        var values: [Architecture: [Network]] = [:]
-        
-        Architecture.allCases.forEach { arch in
-            
-            values[arch] = [.defaultValue]
-            
-            guard let devices = Device.allValues[arch] else {
-                return
-            }
-            
-            values[arch]?.append(
-                contentsOf: devices.filter { $0.category == "Network" }
-                    .map { .init(name: $0.name, title: $0.title) }
-            )
-        }
-        
-        return values
-    }()
+    @objc dynamic var bios:    URL?    = nil   {
+        didSet { bios != nil ? uefi = false : () }
+    }
+    
+    @objc dynamic var uefi:    Bool    = false {
+        didSet { uefi ? bios = nil : () }
+    }
+    
+    @objc dynamic var params:  String? = nil
+    @objc dynamic var dbt:     URL?    = nil
+    @objc dynamic var cpu:     String? = nil
+    @objc dynamic var cores:   UInt64  = 1
+    @objc dynamic var memory:  UInt64  = 2147483648
 }

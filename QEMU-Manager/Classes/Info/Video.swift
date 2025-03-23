@@ -22,7 +22,7 @@ final class Video: InfoValue, SpecializedDefaultable {
     static var defaultValue: Video {
         Video(
             name: "Default",
-            title: "Unspecified Video",
+            title: "Unspecified Video Card",
             sorting: -1
         )
     }
@@ -41,7 +41,7 @@ final class Video: InfoValue, SpecializedDefaultable {
             
             values[arch]?.append(
                 contentsOf: devices.filter { $0.category == "Display" }
-                    .map { .init(name: $0.name, title: $0.title, sorting: $0.sorting) }
+                    .map { .init(name: $0.name, title: $0.title) }
             )
         }
         

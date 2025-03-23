@@ -31,8 +31,8 @@ final class ConfigHardwareViewController: ConfigViewController {
     @objc private dynamic var vm:        VirtualMachine
     @objc private dynamic var supportsUEFI: Bool
     
-    @objc private dynamic var machine: Machine? { didSet { machine.set(to: &vm.config.machine) } }
-    @objc private dynamic var cpu: CPU?         { didSet { cpu.set(to:     &vm.config.cpu) } }
+    @objc private dynamic var machine: Machine? { didSet { machine.set(to: &vm.config.system.machine) } }
+    @objc private dynamic var cpu: CPU?         { didSet { cpu.set(to:     &vm.config.system.cpu) } }
     
     @objc private dynamic var architecture: Int {
         didSet { vm.config.setArchitecture(architecture); update() }
@@ -43,16 +43,10 @@ final class ConfigHardwareViewController: ConfigViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sortDescriptors = [
-            NSSortDescriptor(key: "sorting", ascending: true),
-            NSSortDescriptor(key: "name",    ascending: true),
-            NSSortDescriptor(key: "title",   ascending: true)
-        ]
-        
         self.sizeFormatter.min = self.minMemory
         self.sizeFormatter.max = self.maxMemory
-        self.machines.sortDescriptors = sortDescriptors
-        self.cpus.sortDescriptors = sortDescriptors
+        self.machines.sortDescriptors = InfoValue.sortDescriptors
+        self.cpus.sortDescriptors = InfoValue.sortDescriptors
         self.update()
     }
     
@@ -74,8 +68,8 @@ final class ConfigHardwareViewController: ConfigViewController {
             }
 
             switch sender.tag {
-            case 0: self?.vm.config.emulation.bios = url
-            case 1: self?.vm.config.emulation.dbt  = url
+            case 0: self?.vm.config.system.bios = url
+            case 1: self?.vm.config.system.dbt  = url
             default: return
             }
         }
@@ -83,8 +77,8 @@ final class ConfigHardwareViewController: ConfigViewController {
     
     @IBAction func removeAttachment(_ sender: NSButton) {
         switch sender.tag {
-        case 0: vm.config.emulation.bios = nil
-        case 1: vm.config.emulation.dbt  = nil
+        case 0: vm.config.system.bios = nil
+        case 1: vm.config.system.dbt  = nil
         default: return
         }
     }
@@ -92,8 +86,8 @@ final class ConfigHardwareViewController: ConfigViewController {
     private func update() {
         supportsUEFI = vm.config.architecture.supportsUEFI
         
-        (machines.content, machine) = Machine.fetchValues(for: architecture, vm.config.machine)
-        (cpus.content, cpu)         = CPU.fetchValues(for: architecture, vm.config.cpu)
+        (machines.content, machine) = Machine.fetchValues(for: architecture, vm.config.system.machine)
+        (cpus.content, cpu)         = CPU.fetchValues(for: architecture, vm.config.system.cpu)
     }
     
     init(vm: VirtualMachine, sorting: Int) {

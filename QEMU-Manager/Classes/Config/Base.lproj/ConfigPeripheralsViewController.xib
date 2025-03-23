@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="networks" destination="vmv-NP-yVS" id="brS-2o-5R8"/>
                 <outlet property="sounds" destination="HEs-ae-rv8" id="Hqi-j7-Izj"/>
+                <outlet property="usbctrls" destination="Wu1-YQ-xth" id="827-Np-6RT"/>
                 <outlet property="videos" destination="NES-Rm-jaH" id="Kgg-ec-2Sb"/>
                 <outlet property="view" destination="MVG-o1-Qus" id="FUv-Y4-LHV"/>
             </connections>
@@ -43,7 +44,7 @@
                             <rect key="frame" x="150" y="256" width="334" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="rx6-zL-Kdu" id="Cgc-Tw-CPT">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" id="GIs-89-iLq">
                                     <items>
                                         <menuItem title="Item 1" state="on" id="rx6-zL-Kdu"/>
@@ -52,6 +53,10 @@
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <connections>
+                                <binding destination="Wu1-YQ-xth" name="content" keyPath="arrangedObjects" id="XuU-CJ-axL"/>
+                                <binding destination="-2" name="selectedObject" keyPath="self.usbctrl" previousBinding="XuU-CJ-axL" id="yLa-ta-mc7"/>
+                            </connections>
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y80-OT-cSQ">
                             <rect key="frame" x="151" y="235" width="159" height="18"/>
@@ -59,6 +64,9 @@
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.peripherals.usbdevs" id="Lkl-El-zVv"/>
+                            </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nFr-ns-X2a">
                             <rect key="frame" x="151" y="136" width="43" height="16"/>
@@ -72,7 +80,7 @@
                             <rect key="frame" x="150" y="104" width="334" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="coR-tb-oEi" id="NsV-Xs-UKC">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" id="DQK-9y-pQy">
                                     <items>
                                         <menuItem title="Item 1" state="on" id="coR-tb-oEi"/>
@@ -106,7 +114,7 @@
                             <rect key="frame" x="150" y="168" width="334" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4wB-Rz-WOS" id="BhR-F9-kzY">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" id="kTG-9X-tcI">
                                     <items>
                                         <menuItem title="Item 1" state="on" id="4wB-Rz-WOS"/>
@@ -140,7 +148,7 @@
                             <rect key="frame" x="150" y="40" width="334" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="9J0-9n-ypM" id="kAZ-dX-Ybn">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" id="vLR-qn-oQj">
                                     <items>
                                         <menuItem title="Item 1" state="on" id="9J0-9n-ypM"/>
@@ -160,6 +168,9 @@
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.peripherals.usernic" id="Smv-aF-Fbf"/>
+                            </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iNv-1k-Vh3">
                             <rect key="frame" x="30" y="110" width="117" height="16"/>
@@ -226,5 +237,6 @@
         <arrayController id="vmv-NP-yVS" userLabel="Networks"/>
         <arrayController id="HEs-ae-rv8" userLabel="Sounds"/>
         <arrayController id="NES-Rm-jaH" userLabel="Videos"/>
+        <arrayController id="Wu1-YQ-xth" userLabel="USB Controllers"/>
     </objects>
 </document>

@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,11 +17,12 @@
 
 import Foundation
 
-final class Boot: InfoValue {
+final class Extra: NSObject, Codable {
     
-    static let all: [Boot] = [
-        Boot(name: "d", title: "CD (if available)", sorting: 0),
-        Boot(name: "c", title: "Disk",              sorting: 1),
-        Boot(name: "n", title: "Network",           sorting: 2),
-    ]
+    @objc dynamic var accel:     String? = nil
+    //    dynamic var cache:     Int?    = nil
+    @objc dynamic var defaults:  Bool    = true
+    @objc dynamic var rng:       Bool    = false
+    @objc dynamic var balloon:   Bool    = false
+    @objc dynamic var localtime: Bool    = false
 }

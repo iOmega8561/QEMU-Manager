@@ -17,20 +17,28 @@
 
 import Foundation
 
-final class Emulation: NSObject, Codable {
+final class Boot: NSObject, Codable {
     
-    @objc dynamic var accel:   String? = nil
-    @objc dynamic var uefi:    Bool    = false
-    @objc dynamic var rng:     Bool    = false
-    @objc dynamic var balloon: Bool    = false
-    @objc dynamic var ehci:    Bool    = false
-    @objc dynamic var bios:    URL?    = nil
-    @objc dynamic var kernel:  URL?    = nil
-    @objc dynamic var initrd:  URL?    = nil
-    @objc dynamic var dbt:     URL?    = nil
-    @objc dynamic var append:  String? = nil
-    @objc dynamic var network: String? = nil
-    @objc dynamic var usernet: Bool    = false
-    @objc dynamic var sound:   String? = nil
-    @objc dynamic var video:   String? = nil
+    @objc enum Priority: Int, StringCodable {
+        case disk
+        case cdrom
+        case network
+        
+        var description: String {
+            switch self {
+            case .disk:    "c"
+            case .cdrom:   "d"
+            case .network: "n"
+            }
+        }
+    }
+    
+    @objc dynamic var priority: Priority = .disk
+    
+    @objc dynamic var kernel:   URL?     = nil {
+        didSet { kernel == nil ? (append, initrd) = (nil, nil) : () }
+    }
+    
+    @objc dynamic var append:   String?  = nil
+    @objc dynamic var initrd:   URL?     = nil
 }

@@ -31,11 +31,7 @@ final class ConfigGeneralViewController: ConfigViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.machineIcons.sortDescriptors = [
-            NSSortDescriptor(key: "sorting", ascending: true),
-            NSSortDescriptor(key: "name",    ascending: true),
-            NSSortDescriptor(key: "title",   ascending: true)
-        ]
+        self.machineIcons.sortDescriptors = InfoValue.sortDescriptors
         
         (machineIcons.content, machineIcon) = Icon.fetchValues(vm.config.icon)
     }

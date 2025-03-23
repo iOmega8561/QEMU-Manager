@@ -20,38 +20,34 @@ import Cocoa
 
 final class ConfigPeripheralsViewController: ConfigViewController {
     
+    @IBOutlet private var usbctrls: NSArrayController!
     @IBOutlet private var networks: NSArrayController!
-    @IBOutlet private var sounds: NSArrayController!
-    @IBOutlet private var videos: NSArrayController!
-    
+    @IBOutlet private var sounds:   NSArrayController!
+    @IBOutlet private var videos:   NSArrayController!
     
     @objc private dynamic var vm:        VirtualMachine
     
-    @objc private dynamic var sound:   Sound?   { didSet { sound.set(to:   &vm.config.emulation.sound) } }
-    @objc private dynamic var video:   Video?   { didSet { video.set(to:   &vm.config.emulation.video) } }
-    @objc private dynamic var network: Network? { didSet { network.set(to: &vm.config.emulation.network) } }
+    @objc private dynamic var usbctrl: USB?     { didSet { usbctrl.set(to: &vm.config.peripherals.usbctrl) } }
+    @objc private dynamic var sound:   Sound?   { didSet { sound.set(to:   &vm.config.peripherals.sound) } }
+    @objc private dynamic var video:   Video?   { didSet { video.set(to:   &vm.config.peripherals.video) } }
+    @objc private dynamic var network: Network? { didSet { network.set(to: &vm.config.peripherals.network) } }
     
     override var nibName: NSNib.Name? { "ConfigPeripheralsViewController" }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sortDescriptors = [
-            NSSortDescriptor(key: "sorting", ascending: true),
-            NSSortDescriptor(key: "name",    ascending: true),
-            NSSortDescriptor(key: "title",   ascending: true)
-        ]
-        
-        self.sounds.sortDescriptors   = sortDescriptors
-        self.videos.sortDescriptors   = sortDescriptors
-        self.networks.sortDescriptors = sortDescriptors
+        self.sounds.sortDescriptors   = InfoValue.sortDescriptors
+        self.videos.sortDescriptors   = InfoValue.sortDescriptors
+        self.networks.sortDescriptors = InfoValue.sortDescriptors
         self.update()
     }
     
     private func update() {
-        (sounds.content, sound)     = Sound.fetchValues(for:   vm.config.architecture.rawValue, vm.config.emulation.sound)
-        (videos.content, video)     = Video.fetchValues(for:   vm.config.architecture.rawValue, vm.config.emulation.video)
-        (networks.content, network) = Network.fetchValues(for: vm.config.architecture.rawValue, vm.config.emulation.network)
+        (usbctrls.content, usbctrl) = USB.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.usbctrl)
+        (sounds.content, sound)     = Sound.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.sound)
+        (videos.content, video)     = Video.fetchValues(for:   vm.config.architecture.rawValue, vm.config.peripherals.video)
+        (networks.content, network) = Network.fetchValues(for: vm.config.architecture.rawValue, vm.config.peripherals.network)
     }
     
     init(vm: VirtualMachine, sorting: Int) {

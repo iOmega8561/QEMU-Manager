@@ -17,19 +17,19 @@
 
 import Foundation
 
-final class Network: InfoValue, SpecializedDefaultable {
+final class USB: InfoValue, SpecializedDefaultable {
     
-    static var defaultValue: Network {
-        Network(
+    static var defaultValue: USB {
+        USB(
             name: "Default",
-            title: "Unspecified Network Card",
+            title: "Unspecified USB Controller",
             sorting: -1
         )
     }
     
-    static let allValues: [Architecture: [Network]] = {
+    static let allValues: [Architecture : [USB]] = {
         
-        var values: [Architecture: [Network]] = [:]
+        var values: [Architecture : [USB]] = [:]
         
         Architecture.allCases.forEach { arch in
             
@@ -38,9 +38,9 @@ final class Network: InfoValue, SpecializedDefaultable {
             guard let devices = Device.allValues[arch] else {
                 return
             }
-            
+    
             values[arch]?.append(
-                contentsOf: devices.filter { $0.category == "Network" }
+                contentsOf: devices.filter { $0.category == "USB" }
                     .map { .init(name: $0.name, title: $0.title) }
             )
         }

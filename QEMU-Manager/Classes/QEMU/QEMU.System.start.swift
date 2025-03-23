@@ -23,76 +23,106 @@ extension QEMU.System {
     func start(vm: VirtualMachine) throws {
         
         var arguments: [String] = []
-        
-        arguments.append("-m")
-        arguments.append(SizeFormatter().string(from: NSNumber(value: vm.config.memory), style: .qemu))
-        
-        if let machine = vm.config.machine, machine.count > 0 {
-            arguments += ["-M", machine]
+            
+        if !vm.config.extra.defaults {
+            arguments += ["-nodefaults"]
         }
         
-        if let cpu = vm.config.cpu, cpu.count > 0 {
+        arguments.append("-m")
+        arguments.append(SizeFormatter().string(from: NSNumber(value: vm.config.system.memory), style: .qemu))
+        
+        if let machine = vm.config.system.machine, machine.count > 0 {
+            
+            var machineParams = [ machine ]
+            
+            if let params = vm.config.system.params, params.count > 0 {
+                machineParams.append(params)
+            }
+            
+            arguments += ["-M", machineParams.joined(separator: ",")]
+        }
+        
+        if let cpu = vm.config.system.cpu, cpu.count > 0 {
             arguments += ["-cpu", cpu]
         }
         
-        if let vga = vm.config.vga {
-            arguments += ["-vga", vga]
+        if vm.config.system.cores > 0 {
+            arguments += ["-smp", vm.config.system.cores.description]
         }
         
-        if vm.config.cores > 0 {
-            arguments += ["-smp", vm.config.cores.description]
-        }
-        
-        if let accel = vm.config.emulation.accel {
+        if let accel = vm.config.extra.accel {
             arguments += ["-accel", accel]
         }
         
-        if let bios = vm.config.emulation.bios {
+        if vm.config.extra.localtime {
+            arguments += ["-rtc", "base=localtime"]
+        }
+        
+        if let bios = vm.config.system.bios {
             arguments += ["-bios", bios.path]
         }
         
-        if let kernel = vm.config.emulation.kernel {
+        if let kernel = vm.config.boot.kernel {
             arguments += ["-kernel", kernel.path]
+            
+            if let kernelAppend = vm.config.boot.append {
+                arguments += ["-append", kernelAppend]
+            }
+            
+            if let initrd = vm.config.boot.initrd {
+                arguments += ["-initrd", initrd.path]
+            }
         }
         
-        if let kernelAppend = vm.config.emulation.append {
-            arguments += ["-append", kernelAppend]
+        if let dbt = vm.config.system.dbt {
+            arguments += ["-dbt", dbt.path]
         }
         
-        if let initrd = vm.config.emulation.initrd {
-            arguments += ["-initrd", initrd.path]
-        }
-        
-        if let dbt = vm.config.emulation.dbt {
-            arguments += ["-accel", dbt.path]
-        }
-        
-        if vm.config.emulation.rng {
+        if vm.config.extra.rng {
             arguments += ["-device", "virtio-rng-pci"]
         }
         
-        if vm.config.emulation.balloon {
+        if vm.config.extra.balloon {
             arguments += ["-device", "virtio-balloon-pci"]
         }
         
-        if vm.config.emulation.ehci {
-            arguments += ["-device", "usb-ehci",
-                          "-device", "usb-kbd",
+        if let ctrl = vm.config.peripherals.usbctrl {
+            arguments += ["-device", ctrl]
+        }
+        
+        if vm.config.peripherals.usbdevs {
+            arguments += ["-device", "usb-kbd",
                           "-device", "usb-tablet"]
         }
         
-        if vm.config.emulation.uefi, architecture.supportsUEFI,
+        if let video = vm.config.peripherals.video {
+            arguments += ["-vga", "none", "-device", video]
+        }
+        
+        if let sound = vm.config.peripherals.sound {
+            arguments += ["-device", sound]
+            
+            if sound.contains("hda") { arguments += ["-device", "hda-duplex"] }
+        }
+        
+        if vm.config.peripherals.usernic,
+           let network = vm.config.peripherals.network {
+            
+            arguments += ["-nic", "user,model=" + network]
+            
+        } else if vm.config.peripherals.usernic { arguments += ["-nic", "user"] }
+        
+        if vm.config.system.uefi, architecture.supportsUEFI,
            let firmwarePath = vm.config.architecture.edkFirmwarePath {
             
             arguments += ["-drive", "if=pflash,format=raw,readonly=on,file=" + firmwarePath]
         }
         
         arguments += ["-audio",   "driver=coreaudio"]
-        arguments += ["-nic",     "user"]
         arguments += ["-display", "cocoa"]
         arguments += ["-name",    vm.config.title]
         arguments += vm.config.arguments
-        arguments += ["-boot", vm.config.boot]
+        arguments += ["-boot", vm.config.boot.priority.description]
                 
         vm.disks.forEach { diskDrive in
                         
