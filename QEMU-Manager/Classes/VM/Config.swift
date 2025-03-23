@@ -20,21 +20,22 @@ import Foundation
 
 final class Config: NSObject, Codable {
     
-    @objc private(set) dynamic var version:       UInt64           = 0
-    @objc private(set) dynamic var uuid:          UUID             = UUID()
-    @objc private(set) dynamic var architecture:  Architecture     = .aarch64
-    @objc              dynamic var machine:       String?          = nil
-    @objc              dynamic var cpu:           String?          = nil
-    @objc              dynamic var vga:           String?          = nil
-    @objc              dynamic var cores:         UInt64           = 1
-    @objc              dynamic var memory:        UInt64           = 2147483648
-    @objc              dynamic var title:         String           = "Untitled"
-    @objc              dynamic var icon:          String?          = nil
-    @objc private(set) dynamic var disks:         [Disk]           = []
-    @objc private(set) dynamic var emulation:     Emulation        = .init()
-    @objc              dynamic var boot:          String           = "d"
-    @objc private(set) dynamic var sharedFolders: [SharedFolder]   = []
-    @objc private(set) dynamic var arguments:     [String]         = []
+    @objc private(set) dynamic var version:      UInt64       = 0
+    @objc private(set) dynamic var uuid:         UUID         = .init()
+    @objc              dynamic var title:        String       = "Untitled"
+    @objc              dynamic var icon:         String?      = nil
+    @objc private(set) dynamic var architecture: Architecture = .aarch64
+    @objc private(set) dynamic var system:       System       = .init()
+    @objc private(set) dynamic var network:      Network      = .init()
+    @objc              dynamic var usbDev:       String?      = nil
+    @objc              dynamic var usbInput:     Bool         = false
+    @objc              dynamic var soundDev:     String?      = nil
+    @objc              dynamic var videoDev:     String?      = nil
+    @objc private(set) dynamic var disks:        [Disk]       = []
+    @objc private(set) dynamic var tweaks:       Tweaks       = .init()
+    @objc private(set) dynamic var boot:         Boot         = .init()
+    @objc private(set) dynamic var shares:       [Share]      = []
+    @objc private(set) dynamic var arguments:    [String]     = []
     
     func setArchitecture(_ arch: Architecture.RawValue) {
         
@@ -42,8 +43,8 @@ final class Config: NSObject, Codable {
             return
         }
         
-        self.architecture   = arch
-        self.emulation.uefi = self.emulation.uefi && arch.supportsUEFI
+        self.architecture = arch
+        self.system.uefi  = self.system.uefi && arch.supportsUEFI
     }
     
     func setArguments(_ args: [Argument]?) {
@@ -58,11 +59,11 @@ final class Config: NSObject, Codable {
         self.disks.removeAll { $0.uuid == disk.uuid }
     }
     
-    func addSharedFolder(_ folder: SharedFolder) {
-        self.sharedFolders.append( folder )
+    func addSharedFolder(_ folder: Share) {
+        self.shares.append( folder )
     }
     
-    func removeSharedFolder(_ folder: SharedFolder) {
-        self.sharedFolders.removeAll { $0.uuid == folder.uuid }
+    func removeSharedFolder(_ folder: Share) {
+        self.shares.removeAll { $0.uuid == folder.uuid }
     }
 }

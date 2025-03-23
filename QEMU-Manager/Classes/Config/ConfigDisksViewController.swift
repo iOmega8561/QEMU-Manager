@@ -19,17 +19,17 @@ import Cocoa
 
 public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSource, NSTableViewDelegate
 {
-    @objc private dynamic var vm: VirtualMachine
     
     @IBOutlet private var disks: NSArrayController!
-    @IBOutlet private var boots: NSArrayController!
+ 
+    @objc private dynamic var vm: VirtualMachine
     
-    @objc private dynamic var boot: Boot?
-    {
-        didSet
-        {
-            self.vm.config.boot = self.boot?.name ?? "d"
-        }
+    @objc private dynamic var bootKernel: Bool {
+        didSet { bootKernel == false ? vm.config.boot.kernel = nil : () }
+    }
+    
+    @objc private dynamic var bootPriority: Int {
+        didSet { vm.config.boot.priority = .init(rawValue: bootPriority) ?? .disk }
     }
     
     private var newDiskWindowController: NewDiskWindowController?
@@ -37,7 +37,8 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
     public init( vm: VirtualMachine, sorting: Int )
     {
         self.vm = vm
-        
+        self.bootKernel = vm.config.boot.kernel != nil
+        self.bootPriority = vm.config.boot.priority.rawValue
         super.init( title: "Disks", icon: NSImage( named: "DiskTemplate" ), sorting: sorting )
     }
     
@@ -55,18 +56,25 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
     {
         super.viewDidLoad()
         self.reloadDisks()
+    }
+    
+    @IBAction private func chooseFile(_ sender: NSButton) {
         
-        let boots = Boot.all
-        
-        self.boots.add( contentsOf: boots )
-        
-        self.boot = boots.first { $0.name == self.vm.config.boot } ?? boots.first
-        
-        self.boots.sortDescriptors = [
-            NSSortDescriptor( key: "sorting", ascending: true ),
-            NSSortDescriptor( key: "name",    ascending: true ),
-            NSSortDescriptor( key: "title",   ascending: true ),
-        ]
+        NSOpenPanel.filePicker(self) { [weak self] url in
+            switch sender.tag {
+            case 0: self?.vm.config.boot.kernel = url
+            case 1: self?.vm.config.boot.initrd = url
+            default: return
+            }
+        }
+    }
+    
+    @IBAction func removeAttachment(_ sender: NSButton) {
+        switch sender.tag {
+        case 0: vm.config.boot.kernel = nil
+        case 1: vm.config.boot.initrd = nil
+        default: return
+        }
     }
     
     @IBAction private func addRemoveDisk( _ sender: Any? )
@@ -176,32 +184,18 @@ public class ConfigDisksViewController: ConfigViewController, NSTableViewDataSou
     }
     
     @IBAction func importDisk(_ sender: Any) {
-        guard let window = self.view.window else
-        {
-            NSSound.beep()
-            
-            return
-        }
         
-        let accessoryView             = DiskAccessoryViewController()
-        let panel                     = NSOpenPanel()
-        panel.canChooseFiles          = true
-        panel.canChooseDirectories    = false
-        panel.allowsMultipleSelection = false
-        panel.accessoryView           = accessoryView.view
-        
-        panel.beginSheetModal( for: window )
-        {
-            r in guard r == .OK, let url = panel.url else
-            {
-                return
-            }
+        NSOpenPanel.filePickerWithAccessoryView(
+            self,
+            controllerType: DiskAccessoryViewController.self
             
-            self.vm.config.addDisk(
-                .init(url: url, type: accessoryView.mediaType)
+        ) { [weak self] url, accessoryViewController in
+            
+            self?.vm.config.addDisk(
+                .init(url: url, type: accessoryViewController.mediaType)
             )
             
-            self.reloadDisks()
+            self?.reloadDisks()
         }
     }
     

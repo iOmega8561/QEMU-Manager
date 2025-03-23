@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ConfigDisksViewController" customModule="QEMU_Manager" customModuleProvider="target">
             <connections>
-                <outlet property="boots" destination="4Ld-AO-e1h" id="I8C-pT-W3Y"/>
                 <outlet property="disks" destination="dK7-9m-3QF" id="dmi-BA-7e8"/>
                 <outlet property="view" destination="f1a-O6-Rbu" id="KAd-Vn-2Wc"/>
             </connections>
@@ -16,24 +15,23 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="dK7-9m-3QF" userLabel="Disks"/>
-        <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="4Ld-AO-e1h" userLabel="Boot Orders"/>
         <customView id="f1a-O6-Rbu">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="395"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="453"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
-                    <rect key="frame" x="0.0" y="0.0" width="500" height="395"/>
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="453"/>
                     <subviews>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Haf-nc-Pvg">
-                            <rect key="frame" x="18" y="339" width="41" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Disks:" id="caa-Rc-8md">
+                            <rect key="frame" x="18" y="397" width="37" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Disks" id="caa-Rc-8md">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
                         <scrollView autoresizesSubviews="NO" borderType="line" autohidesScrollers="YES" horizontalLineScroll="50" horizontalPageScroll="10" verticalLineScroll="50" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5v-30-SM4">
-                            <rect key="frame" x="20" y="133" width="460" height="200"/>
+                            <rect key="frame" x="20" y="189" width="460" height="200"/>
                             <clipView key="contentView" autoresizesSubviews="NO" id="w1k-tr-y3w">
                                 <rect key="frame" x="1" y="1" width="458" height="198"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -190,7 +188,7 @@
                             </scroller>
                         </scrollView>
                         <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WsS-dK-tem">
-                            <rect key="frame" x="17" y="103" width="71" height="24"/>
+                            <rect key="frame" x="17" y="159" width="71" height="24"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="5cl-I6-v44">
                                 <font key="font" metaFont="system"/>
                                 <segments>
@@ -203,7 +201,7 @@
                             </connections>
                         </segmentedControl>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nIx-4E-XDy" userLabel="Import Disk">
-                            <rect key="frame" x="366" y="98" width="121" height="32"/>
+                            <rect key="frame" x="366" y="154" width="121" height="32"/>
                             <buttonCell key="cell" type="push" title="Import Disk" bezelStyle="rounded" image="plus.circle.fill" catalog="system" imagePosition="trailing" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pmr-CR-eCI" userLabel="Import Disk">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -213,59 +211,211 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eu9-bk-wnH">
-                            <rect key="frame" x="18" y="48" width="71" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Boot From:" id="MnZ-oD-ZKS">
+                            <rect key="frame" x="18" y="125" width="80" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Boot Priority" id="MnZ-oD-ZKS">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fZK-rn-GHg">
-                            <rect key="frame" x="17" y="16" width="78" height="25"/>
-                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="L69-RG-xvE" id="xDf-Xk-xrE">
+                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3X0-TJ-ElP">
+                            <rect key="frame" x="101" y="119" width="383" height="25"/>
+                            <popUpButtonCell key="cell" type="push" title="Disk" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ULV-bt-JMU" id="QMV-rw-2HU">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="message"/>
-                                <menu key="menu" id="7hp-rO-yKK">
+                                <font key="font" metaFont="menu"/>
+                                <menu key="menu" id="rg7-gQ-Yvc">
                                     <items>
-                                        <menuItem title="Item 1" state="on" id="L69-RG-xvE"/>
-                                        <menuItem title="Item 2" id="AYb-4S-bKh"/>
-                                        <menuItem title="Item 3" id="ams-jc-uGW"/>
+                                        <menuItem title="Disk" state="on" id="ULV-bt-JMU"/>
+                                        <menuItem title="CD (if available)" id="VwD-Nh-KhP"/>
+                                        <menuItem title="Network" id="fNu-mp-ak1" userLabel="Network"/>
                                     </items>
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="4Ld-AO-e1h" name="content" keyPath="arrangedObjects" id="yB9-bv-Ya6"/>
-                                <binding destination="-2" name="selectedObject" keyPath="self.boot" previousBinding="yB9-bv-Ya6" id="OUr-zZ-U6T"/>
+                                <binding destination="-2" name="selectedIndex" keyPath="self.bootPriority" id="SH8-YN-fZP"/>
                             </connections>
                         </popUpButton>
-                        <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="e0Q-Zp-4RM">
-                            <rect key="frame" x="20" y="82" width="460" height="5"/>
-                        </box>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zwv-9e-YT4">
+                            <rect key="frame" x="102" y="98" width="133" height="18"/>
+                            <buttonCell key="cell" type="check" title="Boot Linux Kernel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kMb-0q-0cV">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.bootKernel" id="cp7-Ik-onO"/>
+                            </connections>
+                        </button>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ExN-Ln-2d5">
+                            <rect key="frame" x="55" y="75" width="43" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Kernel" id="wQ9-lD-S9o">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="kMM-st-Ymv">
+                            <rect key="frame" x="102" y="75" width="37" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" title="Label" id="I2w-Jc-lwY">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.boot.kernel.path" id="bVW-zF-Pxz">
+                                    <dictionary key="options">
+                                        <string key="NSNullPlaceholder">No File Selected</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="GmK-y8-36d">
+                            <rect key="frame" x="394" y="72" width="16" height="22"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSStopProgressFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="dTN-Bz-3GQ">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="16" id="RJU-GE-5yb"/>
+                            </constraints>
+                            <connections>
+                                <action selector="removeAttachment:" target="-2" id="d5Z-jO-jnD"/>
+                                <binding destination="-2" name="hidden" keyPath="self.vm.config.boot.kernel.path" id="eYd-A2-POI">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSIsNil</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cZR-q9-Fbw">
+                            <rect key="frame" x="418" y="73" width="57" height="19"/>
+                            <buttonCell key="cell" type="roundRect" title="Choose" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gSj-tO-jRh">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="cellTitle"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="chooseFile:" target="-2" id="4iE-i8-Ecw"/>
+                                <binding destination="-2" name="enabled" keyPath="self.bootKernel" id="XZg-cS-nQf"/>
+                            </connections>
+                        </button>
+                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hle-0d-fQC">
+                            <rect key="frame" x="102" y="20" width="373" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="373" id="tf4-lQ-KCp"/>
+                            </constraints>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="3Ql-7z-Ycw">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.bootKernel" id="uCo-Ds-1QV"/>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.boot.append" id="h4c-fg-Eb9">
+                                    <dictionary key="options">
+                                        <string key="NSNullPlaceholder">Additional kernel parameters passed using "-append"</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lHn-9d-IYH">
+                            <rect key="frame" x="418" y="48" width="57" height="19"/>
+                            <buttonCell key="cell" type="roundRect" title="Choose" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yg0-d6-hbp">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="cellTitle"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="chooseFile:" target="-2" id="IRu-wc-04E"/>
+                                <binding destination="-2" name="enabled" keyPath="self.bootKernel" id="ZJ7-7C-KSG"/>
+                            </connections>
+                        </button>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="M4w-oa-pVF">
+                            <rect key="frame" x="102" y="51" width="37" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingMiddle" title="Label" id="Y98-yI-Uxz">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.boot.initrd.path" id="7l7-yr-Mvg">
+                                    <dictionary key="options">
+                                        <string key="NSNullPlaceholder">No File Selected</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <button tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Srr-Qj-fNB">
+                            <rect key="frame" x="394" y="47" width="16" height="22"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSStopProgressFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jv0-Z4-92i">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="16" id="Zd9-iW-KwM"/>
+                            </constraints>
+                            <connections>
+                                <action selector="removeAttachment:" target="-2" id="QMt-ZM-wsD"/>
+                                <binding destination="-2" name="hidden" keyPath="self.vm.config.boot.initrd.path" id="Gtf-MH-fdI">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSIsNil</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </button>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vb2-JZ-yUy">
+                            <rect key="frame" x="39" y="51" width="59" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="RAMDisk" id="BCa-eI-6X7">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="fZK-rn-GHg" firstAttribute="top" secondItem="Eu9-bk-wnH" secondAttribute="bottom" constant="8" symbolic="YES" id="0s6-YN-bRE"/>
-                        <constraint firstItem="M5v-30-SM4" firstAttribute="trailing" secondItem="e0Q-Zp-4RM" secondAttribute="trailing" id="3Vq-uX-b3S"/>
-                        <constraint firstItem="e0Q-Zp-4RM" firstAttribute="top" secondItem="nIx-4E-XDy" secondAttribute="bottom" constant="20" symbolic="YES" id="4UR-Be-4qm"/>
+                        <constraint firstItem="cZR-q9-Fbw" firstAttribute="leading" secondItem="GmK-y8-36d" secondAttribute="trailing" constant="8" symbolic="YES" id="2im-4h-59f"/>
+                        <constraint firstItem="M4w-oa-pVF" firstAttribute="top" secondItem="Srr-Qj-fNB" secondAttribute="top" constant="-1" id="3XO-hm-o1n"/>
                         <constraint firstItem="M5v-30-SM4" firstAttribute="leading" secondItem="Haf-nc-Pvg" secondAttribute="leading" id="5Nx-e2-p3m"/>
+                        <constraint firstItem="Eu9-bk-wnH" firstAttribute="trailing" secondItem="Vb2-JZ-yUy" secondAttribute="trailing" id="5g6-q1-0BH"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zwv-9e-YT4" secondAttribute="trailing" constant="20" symbolic="YES" id="7Cw-Uc-ONK"/>
                         <constraint firstItem="WsS-dK-tem" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="8DC-IM-o2o"/>
+                        <constraint firstItem="3X0-TJ-ElP" firstAttribute="centerY" secondItem="Eu9-bk-wnH" secondAttribute="centerY" id="927-dn-vak"/>
+                        <constraint firstItem="M4w-oa-pVF" firstAttribute="centerY" secondItem="lHn-9d-IYH" secondAttribute="centerY" constant="-1" id="BGN-th-uQo"/>
                         <constraint firstItem="WsS-dK-tem" firstAttribute="top" secondItem="M5v-30-SM4" secondAttribute="bottom" constant="8" symbolic="YES" id="Bap-Y5-o58"/>
-                        <constraint firstItem="fZK-rn-GHg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="D1P-Jm-7LV"/>
-                        <constraint firstAttribute="bottom" secondItem="fZK-rn-GHg" secondAttribute="bottom" constant="20" id="E2S-ei-FhV"/>
-                        <constraint firstAttribute="bottom" secondItem="M5v-30-SM4" secondAttribute="bottom" constant="133" id="J5n-Te-4Ce"/>
-                        <constraint firstItem="M5v-30-SM4" firstAttribute="top" secondItem="Haf-nc-Pvg" secondAttribute="bottom" constant="6" id="Kip-lM-DWm"/>
+                        <constraint firstItem="M4w-oa-pVF" firstAttribute="top" secondItem="hle-0d-fQC" secondAttribute="bottom" constant="-47" id="CBe-5a-BCN"/>
+                        <constraint firstItem="3X0-TJ-ElP" firstAttribute="trailing" secondItem="nIx-4E-XDy" secondAttribute="trailing" id="E3J-0d-IYU"/>
+                        <constraint firstItem="Srr-Qj-fNB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="M4w-oa-pVF" secondAttribute="trailing" constant="8" symbolic="YES" id="G54-nv-zap"/>
+                        <constraint firstAttribute="bottom" secondItem="M5v-30-SM4" secondAttribute="bottom" constant="189" id="J5n-Te-4Ce"/>
+                        <constraint firstItem="zwv-9e-YT4" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="104" id="JWh-9u-nk2"/>
+                        <constraint firstItem="M5v-30-SM4" firstAttribute="top" secondItem="Haf-nc-Pvg" secondAttribute="bottom" constant="8" id="Kip-lM-DWm"/>
+                        <constraint firstItem="3X0-TJ-ElP" firstAttribute="leading" secondItem="zwv-9e-YT4" secondAttribute="leading" id="Mn0-tO-dOM"/>
+                        <constraint firstAttribute="trailing" secondItem="cZR-q9-Fbw" secondAttribute="trailing" constant="25" id="N2h-ER-eg5"/>
                         <constraint firstItem="M5v-30-SM4" firstAttribute="trailing" secondItem="nIx-4E-XDy" secondAttribute="trailing" id="NV3-Fy-i31"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fZK-rn-GHg" secondAttribute="trailing" constant="20" symbolic="YES" id="c2X-RI-6ro"/>
+                        <constraint firstItem="zwv-9e-YT4" firstAttribute="top" secondItem="3X0-TJ-ElP" secondAttribute="bottom" constant="8" symbolic="YES" id="NaB-AL-qhp"/>
+                        <constraint firstItem="kMM-st-Ymv" firstAttribute="top" secondItem="zwv-9e-YT4" secondAttribute="bottom" constant="8" id="Oyc-3F-c63"/>
+                        <constraint firstItem="hle-0d-fQC" firstAttribute="top" secondItem="kMM-st-Ymv" secondAttribute="bottom" constant="34" id="QpE-hf-udy"/>
+                        <constraint firstItem="hle-0d-fQC" firstAttribute="trailing" secondItem="cZR-q9-Fbw" secondAttribute="trailing" id="SjA-ef-kbz"/>
+                        <constraint firstItem="kMM-st-Ymv" firstAttribute="top" secondItem="ExN-Ln-2d5" secondAttribute="bottom" constant="-16" id="TR2-FJ-ut8"/>
                         <constraint firstItem="Haf-nc-Pvg" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="40" id="e47-4B-Utc"/>
+                        <constraint firstItem="kMM-st-Ymv" firstAttribute="leading" secondItem="ExN-Ln-2d5" secondAttribute="leading" constant="47" id="eyl-Y3-I1D"/>
+                        <constraint firstItem="kMM-st-Ymv" firstAttribute="bottom" secondItem="GmK-y8-36d" secondAttribute="bottom" id="gCw-oj-SYx"/>
                         <constraint firstAttribute="trailing" secondItem="M5v-30-SM4" secondAttribute="trailing" constant="20" symbolic="YES" id="gJl-In-ac8"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Haf-nc-Pvg" secondAttribute="trailing" constant="20" symbolic="YES" id="gwM-HJ-hgi"/>
+                        <constraint firstItem="Eu9-bk-wnH" firstAttribute="trailing" secondItem="ExN-Ln-2d5" secondAttribute="trailing" id="hnu-Ar-JLl"/>
+                        <constraint firstItem="M4w-oa-pVF" firstAttribute="leading" secondItem="Vb2-JZ-yUy" secondAttribute="leading" constant="63" id="hvu-Yp-akt"/>
+                        <constraint firstItem="GmK-y8-36d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kMM-st-Ymv" secondAttribute="trailing" constant="8" symbolic="YES" id="hyD-dW-gt0"/>
                         <constraint firstItem="nIx-4E-XDy" firstAttribute="baseline" secondItem="WsS-dK-tem" secondAttribute="baseline" id="iuh-D2-PJk"/>
+                        <constraint firstAttribute="bottom" secondItem="zwv-9e-YT4" secondAttribute="bottom" constant="99" id="kva-t7-WZM"/>
+                        <constraint firstItem="M4w-oa-pVF" firstAttribute="top" secondItem="Vb2-JZ-yUy" secondAttribute="bottom" constant="-16" id="nWb-wY-2vD"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Eu9-bk-wnH" secondAttribute="trailing" constant="20" symbolic="YES" id="o7e-2r-TI8"/>
+                        <constraint firstItem="M4w-oa-pVF" firstAttribute="bottom" secondItem="Srr-Qj-fNB" secondAttribute="bottom" constant="-1" id="qga-wY-vrG"/>
                         <constraint firstAttribute="width" constant="500" id="rVE-wo-XMr"/>
+                        <constraint firstItem="GmK-y8-36d" firstAttribute="leading" secondItem="Srr-Qj-fNB" secondAttribute="leading" id="skg-4I-QuB"/>
+                        <constraint firstAttribute="trailing" secondItem="lHn-9d-IYH" secondAttribute="trailing" constant="25" id="uPl-pn-U2o"/>
+                        <constraint firstItem="lHn-9d-IYH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Srr-Qj-fNB" secondAttribute="trailing" constant="8" symbolic="YES" id="ukm-OA-7Zx"/>
+                        <constraint firstItem="kMM-st-Ymv" firstAttribute="top" secondItem="GmK-y8-36d" secondAttribute="top" id="v1y-UC-NSJ"/>
                         <constraint firstItem="nIx-4E-XDy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WsS-dK-tem" secondAttribute="trailing" constant="8" symbolic="YES" id="wVZ-lJ-WJO"/>
                         <constraint firstItem="Haf-nc-Pvg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="x2b-dr-jUZ"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WsS-dK-tem" secondAttribute="trailing" constant="20" symbolic="YES" id="yAD-2V-vC9"/>
-                        <constraint firstItem="M5v-30-SM4" firstAttribute="leading" secondItem="e0Q-Zp-4RM" secondAttribute="leading" id="yFA-a2-zZ4"/>
                         <constraint firstItem="Eu9-bk-wnH" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="zer-jj-m8L"/>
+                        <constraint firstItem="kMM-st-Ymv" firstAttribute="centerY" secondItem="cZR-q9-Fbw" secondAttribute="centerY" id="zud-tQ-Ikc"/>
                     </constraints>
                 </customView>
             </subviews>
@@ -275,13 +425,14 @@
                 <constraint firstAttribute="trailing" secondItem="c22-O7-iKe" secondAttribute="trailing" id="d5h-qH-Zei"/>
                 <constraint firstItem="c22-O7-iKe" firstAttribute="leading" secondItem="f1a-O6-Rbu" secondAttribute="leading" id="foe-Y1-zip"/>
             </constraints>
-            <point key="canvasLocation" x="-379" y="356"/>
+            <point key="canvasLocation" x="-379" y="384.5"/>
         </customView>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="16"/>
-        <image name="NSRemoveTemplate" width="18" height="4"/>
-        <image name="NSRevealFreestandingTemplate" width="19" height="19"/>
+        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSRemoveTemplate" width="18" height="5"/>
+        <image name="NSRevealFreestandingTemplate" width="20" height="20"/>
+        <image name="NSStopProgressFreestandingTemplate" width="20" height="20"/>
         <image name="plus.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>

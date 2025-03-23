@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
  * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,34 +17,23 @@
 
 import Foundation
 
-final class VGA: InfoValue, SpecializedDefaultable {
+extension Config {
     
-    static var defaultValue: VGA {
-        VGA(
-            name: "Default",
-            title: "Unspecified VGA",
-            sorting: -1
-        )
-    }
-    
-    static let allValues: [Architecture: [VGA]] = {
+    final class System: NSObject, Codable {
         
-        var values: [Architecture: [VGA]] = [:]
-        
-        Architecture.allCases.forEach { arch in
-            
-            values[arch] = [.defaultValue]
-            
-            values[arch]?.append(
-                contentsOf: QEMU.System(arch: arch).vga()
-            )
+        @objc dynamic var machine: String? = nil   {
+            didSet { machine == nil ? params = nil : () }
         }
-        
-        return values
-    }()
-}
-
-fileprivate extension QEMU.System {
-    
-    func vga() -> [VGA] { self.help(command: "vga") }
+        @objc dynamic var bios:    URL?    = nil   {
+            didSet { bios != nil ? uefi = false : () }
+        }
+        @objc dynamic var uefi:    Bool    = false {
+            didSet { uefi ? bios = nil : () }
+        }
+        @objc dynamic var params:  String? = nil
+        @objc dynamic var dbt:     URL?    = nil
+        @objc dynamic var cpu:     String? = nil
+        @objc dynamic var cores:   UInt64  = 1
+        @objc dynamic var memory:  UInt64  = 2147483648
+    }
 }

@@ -18,21 +18,30 @@
 
 import Cocoa
 
-final class ConfigArgumentsViewController: ConfigViewController {
+final class ConfigQEMUViewController: ConfigViewController {
     
     static let pasteboardType: NSPasteboard.PasteboardType = .init(rawValue: "qemu.argument")
     
-    @IBOutlet         var arguments:    NSArrayController!
-    @IBOutlet private var tableView:    NSTableView!
+    @IBOutlet         var arguments: NSArrayController!
+    @IBOutlet private var accels:    NSArrayController!
+    @IBOutlet private var tableView: NSTableView!
     
-    @objc private dynamic var vm: VirtualMachine
+    @objc private dynamic var vm:    VirtualMachine
+    @objc private dynamic var accel: Accel? { didSet { accel.set(to: &vm.config.tweaks.accel) } }
+    @objc private dynamic var uefiEnabled: Bool
     
-    private var newDeviceArgWindowController: NewDeviceArgWindowController?
+    override var nibName: NSNib.Name? { "ConfigQEMUViewController" }
     
-    override var nibName: NSNib.Name? { "ConfigArgumentsViewController" }
+    override func viewDidAppear() {
+        uefiEnabled = vm.config.architecture.supportsUEFI
+        
+        (accels.content, accel) = Accel.fetchValues(
+            for: vm.config.architecture.rawValue,
+            vm.config.tweaks.accel
+        )
+    }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
 
         let arguments: [Argument] = vm.config.arguments.map {
@@ -40,7 +49,6 @@ final class ConfigArgumentsViewController: ConfigViewController {
         }
         
         registerObservers(for: arguments)
-        
         tableView.registerForDraggedTypes([Self.pasteboardType])
     }
     
@@ -69,28 +77,6 @@ final class ConfigArgumentsViewController: ConfigViewController {
         vm.config.setArguments(arguments.content as? [Argument])
     }
     
-    @IBAction private func addDeviceArgument(_ sender: Any?) {
-        
-        guard self.newDeviceArgWindowController == nil else {
-            return NSSound.beep()
-        }
-        
-        let controller = NewDeviceArgWindowController(
-            vm: self.vm,
-            completionHandler: { [weak self] arguments in
-                self?.registerObservers(for: arguments)
-                self?.vm.config.setArguments(self?.arguments.content as? [Argument])
-            }
-        )
-        
-        guard let window = self.view.window,
-              let sheet  = controller.window else { return NSSound.beep() }
-        
-        self.newDeviceArgWindowController = controller
-        
-        window.beginSheet(sheet) { _ in self.newDeviceArgWindowController = nil }
-    }
-    
     private func registerObservers(for arguments: [Argument]?) {
         
         self.arguments.add(contentsOf: arguments ?? [])
@@ -110,9 +96,9 @@ final class ConfigArgumentsViewController: ConfigViewController {
     }
         
     init(vm: VirtualMachine, sorting: Int) {
-        
-        self.vm           = vm
-        super.init(title: "Arguments", icon: NSImage(named: "TerminalTemplate"), sorting: sorting)
+        self.vm = vm
+        self.uefiEnabled = vm.config.architecture.supportsUEFI
+        super.init(title: "QEMU", icon: NSImage(named: "TerminalTemplate"), sorting: sorting)
     }
     
     required init?(coder: NSCoder) { nil }

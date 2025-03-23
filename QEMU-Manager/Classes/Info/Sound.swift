@@ -15,25 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-final class DiskAccessoryViewController: NSViewController {
+final class Sound: InfoValue, SpecializedDefaultable {
     
-    @objc private dynamic var selectedIndex = 0
+    static var defaultValue: Sound {
+        Sound(
+            name: "Default",
+            title: "Unspecified Sound Card",
+            sorting: -1
+        )
+    }
     
-    var mediaType: Config.Disk.MediaType {
+    static let allValues: [Architecture: [Sound]] = {
         
-        switch self.selectedIndex {
-        case 1:  .cdrom
-        default: .disk
+        var values: [Architecture: [Sound]] = [:]
+        
+        Architecture.allCases.forEach { arch in
+            
+            values[arch] = [.defaultValue]
+            
+            guard let devices = Device.allValues[arch] else {
+                return
+            }
+            
+            values[arch]?.append(
+                contentsOf: devices.filter { $0.category == "Sound" && !$0.name.starts(with: "hda") }
+                    .map { .init(name: $0.name, title: $0.title) }
+            )
         }
-    }
-    
-    override var nibName: NSNib.Name? {
-        "DiskAccessoryViewController"
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+        
+        return values
+    }()
 }

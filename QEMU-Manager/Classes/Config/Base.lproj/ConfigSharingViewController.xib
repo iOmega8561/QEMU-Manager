@@ -15,14 +15,27 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="cCc-g0-qnp">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="312"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="332"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
-                    <rect key="frame" x="0.0" y="0.0" width="500" height="312"/>
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="332"/>
                     <subviews>
+                        <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7at-9P-7NT">
+                            <rect key="frame" x="17" y="18" width="71" height="24"/>
+                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="Yu2-Og-scq">
+                                <font key="font" metaFont="system"/>
+                                <segments>
+                                    <segment image="NSAddTemplate" width="32"/>
+                                    <segment image="NSRemoveTemplate" width="32" tag="1"/>
+                                </segments>
+                            </segmentedCell>
+                            <connections>
+                                <action selector="addRemoveFolder:" target="-2" id="GJA-sG-V0I"/>
+                            </connections>
+                        </segmentedControl>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mAr-3k-EeO">
-                            <rect key="frame" x="18" y="256" width="100" height="16"/>
+                            <rect key="frame" x="18" y="276" width="100" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Shared Folders:" id="4V6-ku-hZl">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -30,13 +43,13 @@
                             </textFieldCell>
                         </textField>
                         <scrollView autoresizesSubviews="NO" borderType="line" autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcW-et-Szj">
-                            <rect key="frame" x="20" y="48" width="460" height="200"/>
+                            <rect key="frame" x="20" y="48" width="460" height="220"/>
                             <clipView key="contentView" autoresizesSubviews="NO" id="oFj-HB-YRO">
-                                <rect key="frame" x="1" y="1" width="458" height="198"/>
+                                <rect key="frame" x="1" y="1" width="458" height="218"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="3zH-TJ-7cn">
-                                        <rect key="frame" x="0.0" y="0.0" width="458" height="198"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="458" height="218"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -75,9 +88,9 @@
                                                                     <font key="font" metaFont="cellTitle"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <binding destination="8eW-qs-IoC" name="title" keyPath="objectValue.kind" id="qOi-zk-ADy">
+                                                                    <binding destination="8eW-qs-IoC" name="title" keyPath="objectValue.kind" id="bRO-fB-89y">
                                                                         <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">SharedFolderKindToString</string>
+                                                                            <string key="NSValueTransformerName">ShareKindToString</string>
                                                                         </dictionary>
                                                                     </binding>
                                                                 </connections>
@@ -133,7 +146,7 @@
                                 </subviews>
                             </clipView>
                             <constraints>
-                                <constraint firstAttribute="height" constant="200" id="V3R-Ud-BVF"/>
+                                <constraint firstAttribute="height" constant="220" id="V3R-Ud-BVF"/>
                             </constraints>
                             <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="T6A-ol-Mvw">
                                 <rect key="frame" x="1" y="133" width="329" height="16"/>
@@ -144,19 +157,6 @@
                                 <autoresizingMask key="autoresizingMask"/>
                             </scroller>
                         </scrollView>
-                        <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7at-9P-7NT">
-                            <rect key="frame" x="17" y="18" width="71" height="24"/>
-                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="Yu2-Og-scq">
-                                <font key="font" metaFont="system"/>
-                                <segments>
-                                    <segment image="NSAddTemplate" width="32"/>
-                                    <segment image="NSRemoveTemplate" width="32" tag="1"/>
-                                </segments>
-                            </segmentedCell>
-                            <connections>
-                                <action selector="addRemoveFolder:" target="-2" id="GJA-sG-V0I"/>
-                            </connections>
-                        </segmentedControl>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="kcW-et-Szj" secondAttribute="trailing" constant="20" symbolic="YES" id="1Cl-LP-8cj"/>
@@ -179,7 +179,7 @@
                 <constraint firstAttribute="bottom" secondItem="c22-O7-iKe" secondAttribute="bottom" id="O9Q-pf-ATi"/>
                 <constraint firstItem="c22-O7-iKe" firstAttribute="top" secondItem="cCc-g0-qnp" secondAttribute="top" id="esg-VI-6nD"/>
             </constraints>
-            <point key="canvasLocation" x="-159" y="51"/>
+            <point key="canvasLocation" x="-159" y="64"/>
         </customView>
         <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="NDe-Qw-Avo" userLabel="Folders"/>
     </objects>

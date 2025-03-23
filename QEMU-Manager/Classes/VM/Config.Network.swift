@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  ******************************************************************************/
 
-import Cocoa
+import Foundation
 
-public class SharedFolderAccessoryViewController: NSViewController
-{
-    @objc private dynamic var selectedIndex = 0
+import Virtualization
+
+extension Config {
     
-    var sharedFolderKind: SharedFolder.Kind
-    {
-        switch self.selectedIndex
-        {
-            case 1:  return .floppy
-            default: return .fat
+    final class Network: NSObject, Codable {
+        
+        @objc enum Kind: Int, StringCodable {
+            case host
+            case shared
+            
+            var description: String {
+                switch self {
+                case .host:   "host"
+                case .shared: "shared"
+                }
+            }
         }
-    }
-    
-    public override var nibName: NSNib.Name?
-    {
-        "SharedFolderAccessoryViewController"
-    }
-    
-    public override func viewDidLoad()
-    {
-        super.viewDidLoad()
+        
+        @objc dynamic var kind:       Kind    = .host
+        @objc dynamic var controller: String? = nil
+        @objc dynamic var macAddress: String  = VZMACAddress.randomLocallyAdministered().string
     }
 }

@@ -18,42 +18,37 @@
 
 import Foundation
 
-final class Disk: NSObject, Codable {
-
-    @objc private(set) dynamic var uuid: UUID = {
-        var uuid: UUID = .init()
+extension Config {
+    
+    final class Disk: NSObject, Codable {
         
-        while uuid.uuidString.prefix(1).rangeOfCharacter(from: .letters) == nil {
-            uuid = .init()
+        @objc private(set) dynamic var uuid:   UUID = .init()
+        @objc private(set) dynamic var url:    URL?
+        @objc private(set) dynamic var type:   MediaType
+        @objc private(set) dynamic var format: ImageFormat
+        @objc              dynamic var label:  String
+        @objc              dynamic var auto:   Bool = true
+        
+        init(label: String, format: ImageFormat) {
+            self.label  = label
+            self.format = format
+            self.url    = nil
+            self.type   = .disk
         }
-        return uuid
-    }()
-    
-    @objc private(set) dynamic var url:    URL?
-    @objc private(set) dynamic var type:   MediaType
-    @objc private(set) dynamic var format: ImageFormat
-    @objc              dynamic var label:  String
-    @objc              dynamic var auto:   Bool = true
-    
-    init(label: String, format: ImageFormat) {
-        self.label  = label
-        self.format = format
-        self.url    = nil
-        self.type   = .disk
-    }
-    
-    init(url: URL, type: MediaType) {
-        self.url    = url
-        self.type   = type
-        self.label  = url.lastPathComponent
         
-        let stringFormat = try? QEMU.Img().format(url: url)
-        
-        self.format = .init(string: stringFormat ?? "raw") ?? .raw
+        init(url: URL, type: MediaType) {
+            self.url    = url
+            self.type   = type
+            self.label  = url.lastPathComponent
+            
+            let stringFormat = try? QEMU.Img().format(url: url)
+            
+            self.format = .init(string: stringFormat ?? "raw") ?? .raw
+        }
     }
 }
 
-extension Disk {
+extension Config.Disk {
     
     @objc enum MediaType: Int, StringCodable {
         case disk
@@ -68,7 +63,7 @@ extension Disk {
     }
 }
 
-extension Disk {
+extension Config.Disk {
     
     @objc enum ImageFormat: Int, StringCodable {
         case qcow2

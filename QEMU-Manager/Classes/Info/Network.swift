@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Giuseppe Rocco
+ * Copyright (c) 2025 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,33 +17,34 @@
 
 import Foundation
 
-final class SharedFolder: NSObject, Codable {
+final class Network: InfoValue, SpecializedDefaultable {
     
-    @objc enum Kind: Int, StringCodable {
-        case fat
-        case floppy
-        
-        var description: String {
-            switch self {
-            case .fat:    "fat"
-            case .floppy: "fat:floppy"
-            }
-        }
-        
-        var displayName: String {
-            switch self {
-            case .fat:    "FAT"
-            case .floppy: "FAT Floppy"
-            }
-        }
+    static var defaultValue: Network {
+        Network(
+            name: "Default",
+            title: "Unspecified Network Card",
+            sorting: -1
+        )
     }
     
-    @objc private(set) dynamic var uuid: UUID = .init()
-    @objc private(set) dynamic var url:  URL
-    @objc private(set) dynamic var kind: Kind
-    
-    init(url: URL, kind: Kind) {
-        self.url  = url
-        self.kind = kind
-    }
+    static let allValues: [Architecture: [Network]] = {
+        
+        var values: [Architecture: [Network]] = [:]
+        
+        Architecture.allCases.forEach { arch in
+            
+            values[arch] = [.defaultValue]
+            
+            guard let devices = Device.allValues[arch] else {
+                return
+            }
+            
+            values[arch]?.append(
+                contentsOf: devices.filter { $0.category == "Network" }
+                    .map { .init(name: $0.name, title: $0.title) }
+            )
+        }
+        
+        return values
+    }()
 }

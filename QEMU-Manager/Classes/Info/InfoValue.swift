@@ -23,6 +23,12 @@ public class InfoValue: NSObject
     @objc public private( set ) dynamic var title:   String?
     @objc public private( set ) dynamic var sorting: Int
     
+    static let sortDescriptors = [
+        NSSortDescriptor(key: "sorting", ascending: true),
+        NSSortDescriptor(key: "title",   ascending: true),
+        NSSortDescriptor(key: "name",    ascending: true)
+    ]
+    
     public required init( name: String, title: String? = nil, sorting: Int = 0 )
     {
         self.name    = name
@@ -34,7 +40,7 @@ public class InfoValue: NSObject
     {
         if let title = self.title, title.count > 0
         {
-            return "\( self.name ) - \( title )"
+            return "\( title ) (\( self.name ))"
         }
         
         return self.name

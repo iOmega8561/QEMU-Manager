@@ -72,24 +72,4 @@ import Foundation
         case .m68k:     "m68k"
         }
     }
-
-    var displayName: String {
-        switch self {
-        case .aarch64:  "ARM 64-bits"
-        case .arm:      "ARM 32-bits"
-        case .x86_64:   "Intel 64-bits"
-        case .i386:     "Intel 32-bits"
-        case .ppc64:    "PowerPC 64-bits"
-        case .ppc:      "PowerPC 32-bits"
-        case .riscv64:  "RISC-V 64-bits"
-        case .riscv32:  "RISC-V 32-bits"
-        case .sparc64:  "SPARC 64-bits"
-        case .sparc:    "SPARC 32-bits"
-        case .mips64:   "MIPS 64-bits"
-        case .mips:     "MIPS 32-bits"
-        case .mips64el: "MIPS 64-bits (Little-Endian)"
-        case .mipsel:   "MIPS 32-bits (Little-Endian)"
-        case .m68k:     "Motorola 68k"
-        }
-    }
 }

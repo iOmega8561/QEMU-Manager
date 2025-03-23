@@ -1,6 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2021 Jean-David Gadina - www.xs-labs.com
- * Copyright (c) 2025 Giuseppe Rocco
+ * Copyright (c) 2021 Giuseppe Rocco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +17,17 @@
 
 import Foundation
 
-final class Boot: InfoValue {
+@objc(ShareKindToString) final class ShareKindToString: StringCodableValueTransformer {
     
-    static let all: [Boot] = [
-        Boot(name: "d", title: "CD (if available)", sorting: 0),
-        Boot(name: "c", title: "Disk",              sorting: 1),
-        Boot(name: "n", title: "Network",           sorting: 2),
-    ]
+    override func transformEnum(from intValue: Int) -> String? {
+        
+        guard let kind = Config.Share.Kind(rawValue: intValue) else {
+            return nil
+        }
+        
+        switch kind {
+        case .fat:    return "FAT"
+        case .floppy: return "FAT Floppy"
+        }
+    }
 }

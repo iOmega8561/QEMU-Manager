@@ -95,8 +95,8 @@ public class NewDiskWindowController: NSWindowController
         
         DispatchQueue.global( qos: .userInitiated ).async
         {
-            let format  = Disk.ImageFormat(rawValue: self.format) ?? .qcow2
-            let disk    = Disk(label: self.label, format: format)
+            let format  = Config.Disk.ImageFormat(rawValue: self.format) ?? .qcow2
+            let disk    = Config.Disk(label: self.label, format: format)
             let path    = url.appendingPathComponent( disk.uuid.uuidString ).appendingPathExtension( format.description ).path
             
             do

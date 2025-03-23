@@ -20,11 +20,11 @@ import Foundation
 public class DiskInfo: NSObject
 {
     @objc public private( set ) dynamic var vm:      VirtualMachine
-    @objc        private( set ) dynamic var disk:    Disk
+    @objc        private( set ) dynamic var disk:    Config.Disk
     @objc public private( set ) dynamic var url:     URL
     @objc public private( set ) dynamic var size:    UInt64
     
-    init?( vm: VirtualMachine, disk: Disk )
+    init?( vm: VirtualMachine, disk: Config.Disk )
     {
         guard let url = vm.url else
         {
