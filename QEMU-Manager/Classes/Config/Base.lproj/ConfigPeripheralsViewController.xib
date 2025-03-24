@@ -28,7 +28,7 @@
                             <rect key="frame" x="150" y="257" width="334" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Host Only" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="KCN-sD-2fD" id="ICn-Mj-4na">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" id="EP0-Ch-RNG">
                                     <items>
                                         <menuItem title="Host Only" state="on" id="KCN-sD-2fD" userLabel="Host Only"/>
@@ -90,6 +90,11 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.vm.config.network.controller" id="CN5-aj-Big">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                    </dictionary>
+                                </binding>
                                 <binding destination="-2" name="value" keyPath="self.vm.config.network.macAddress" id="xeS-uy-fac"/>
                             </connections>
                         </textField>
@@ -101,6 +106,11 @@
                             </buttonCell>
                             <connections>
                                 <action selector="randomMAC:" target="-2" id="uFA-Tm-SpH"/>
+                                <binding destination="-2" name="enabled" keyPath="self.vm.config.network.controller" id="KuJ-Vm-8hm">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">NSIsNotNil</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cQq-3e-FvX">
