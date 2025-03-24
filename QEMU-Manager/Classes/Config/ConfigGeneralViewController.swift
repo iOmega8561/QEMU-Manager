@@ -19,22 +19,17 @@
 import Cocoa
 
 final class ConfigGeneralViewController: ConfigViewController {
+        
+    @objc private dynamic var vm:   VirtualMachine
+    @objc private dynamic var path: String
     
-    @IBOutlet private var machineIcons: NSArrayController!
-    
-    @objc private dynamic var vm:          VirtualMachine
-    @objc private dynamic var path:        String
-    @objc private dynamic var machineIcon: Icon? { didSet { machineIcon.set(to: &vm.config.icon) } }
+    @objc private dynamic var selectedIconIndex: Int {
+        didSet { vm.config.icon = .init(rawValue: selectedIconIndex) ?? .generic }
+    }
     
     override var nibName: NSNib.Name? { "ConfigGeneralViewController" }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.machineIcons.sortDescriptors = InfoValue.sortDescriptors
-        
-        (machineIcons.content, machineIcon) = Icon.fetchValues(vm.config.icon)
-    }
+    override func viewDidLoad() { super.viewDidLoad() }
     
     @IBAction private func revealInFinder(_ sender: Any) {
         
@@ -46,9 +41,9 @@ final class ConfigGeneralViewController: ConfigViewController {
     }
     
     init(vm: VirtualMachine, sorting: Int) {
-        self.vm   = vm
-        self.path = vm.url?.path ?? "--"
-        
+        self.vm                = vm
+        self.path              = vm.url?.path ?? "--"
+        self.selectedIconIndex = vm.config.icon.rawValue
         super.init(title: "General", icon: NSImage(named: "InfoTemplate"), sorting: sorting)
     }
     

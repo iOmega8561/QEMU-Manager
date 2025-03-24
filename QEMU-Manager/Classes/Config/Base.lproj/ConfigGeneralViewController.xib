@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ConfigGeneralViewController" customModule="QEMU_Manager" customModuleProvider="target">
             <connections>
-                <outlet property="machineIcons" destination="NDe-Qw-Avo" id="r9x-FP-42E"/>
                 <outlet property="view" destination="cCc-g0-qnp" id="fgY-Ru-Q5K"/>
             </connections>
         </customObject>
@@ -21,9 +20,9 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
                     <rect key="frame" x="0.0" y="0.0" width="500" height="290"/>
                     <subviews>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VaJ-zf-9yA">
-                            <rect key="frame" x="18" y="234" width="35" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Title:" id="3o7-Fo-aRP">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VaJ-zf-9yA" userLabel="Title">
+                            <rect key="frame" x="18" y="234" width="31" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Title" id="3o7-Fo-aRP">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -44,41 +43,46 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Dj-bm-mRG">
-                            <rect key="frame" x="18" y="169" width="34" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Icon:" id="EtD-Y5-7Fr">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Dj-bm-mRG" userLabel="Icon">
+                            <rect key="frame" x="18" y="169" width="30" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Icon" id="EtD-Y5-7Fr">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C58-6P-0ID">
-                            <rect key="frame" x="17" y="137" width="78" height="25"/>
-                            <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zhv-FF-QDN" id="Aqb-MS-xUg">
+                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C58-6P-0ID" userLabel="Icon">
+                            <rect key="frame" x="17" y="137" width="141" height="25"/>
+                            <popUpButtonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="zhv-FF-QDN" id="Aqb-MS-xUg">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
                                 <menu key="menu" id="cvE-cU-cgT">
                                     <items>
-                                        <menuItem title="Item 1" state="on" id="zhv-FF-QDN"/>
-                                        <menuItem title="Item 2" id="BFD-cb-0Do"/>
-                                        <menuItem title="Item 3" id="TeT-Ty-6On"/>
+                                        <menuItem title="Default" state="on" id="zhv-FF-QDN"/>
+                                        <menuItem title="Apple" id="BFD-cb-0Do"/>
+                                        <menuItem title="Apple Legacy" id="TeT-Ty-6On"/>
+                                        <menuItem title="MacOS" id="ZsS-yK-Vqf" userLabel="MacOS"/>
+                                        <menuItem title="Windows 11" id="Jsb-zy-KfX" userLabel="Windows 11"/>
+                                        <menuItem title="Windows" id="q9A-4x-9hV" userLabel="Windows"/>
+                                        <menuItem title="Windows Legacy" id="8xt-dt-1iI" userLabel="Windows Legacy"/>
+                                        <menuItem title="Windows 9X" id="2bR-Y9-k7p" userLabel="Windows 9X"/>
+                                        <menuItem title="Linux" id="Len-HK-mBR" userLabel="Linux"/>
+                                        <menuItem title="Fedora" id="E32-u2-4G2" userLabel="Fedora"/>
+                                        <menuItem title="Ubuntu" id="69g-kp-qnG" userLabel="Ubuntu"/>
+                                        <menuItem title="FreeBSD" id="pb7-g9-v0p" userLabel="FreeBSD"/>
                                     </items>
                                 </menu>
-                                <connections>
-                                    <binding destination="-2" name="selectedObject" keyPath="self.machineIcon" id="qFm-Zk-DIu"/>
-                                </connections>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="NDe-Qw-Avo" name="content" keyPath="arrangedObjects" id="AXV-OZ-NFA"/>
-                                <binding destination="-2" name="selectedObject" keyPath="self.machineIcon" previousBinding="AXV-OZ-NFA" id="69E-ah-vs6"/>
+                                <binding destination="-2" name="selectedIndex" keyPath="self.selectedIconIndex" id="GQX-QG-33q"/>
                             </connections>
                         </popUpButton>
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="aP2-uG-b6Y">
                             <rect key="frame" x="20" y="118" width="460" height="5"/>
                         </box>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1D4-QU-aRq">
-                            <rect key="frame" x="18" y="84" width="36" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="clipping" title="Path:" id="Rql-71-RA6">
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1D4-QU-aRq" userLabel="Path">
+                            <rect key="frame" x="18" y="84" width="32" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Path" id="Rql-71-RA6">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -144,7 +148,6 @@
             </constraints>
             <point key="canvasLocation" x="-159" y="51"/>
         </customView>
-        <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="NDe-Qw-Avo" userLabel="Icons"/>
     </objects>
     <resources>
         <image name="NSRevealFreestandingTemplate" width="20" height="20"/>

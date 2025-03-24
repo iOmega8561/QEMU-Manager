@@ -71,7 +71,7 @@ public class VirtualMachine: NSObject
     
     private func updateIcon()
     {
-        self.icon = NSImage( named: self.config.icon ?? "Generic" )
+        self.icon = NSImage( named: self.config.icon.description )
         
         if self.icon == nil
         {
