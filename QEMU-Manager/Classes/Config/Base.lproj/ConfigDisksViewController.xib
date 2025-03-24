@@ -36,7 +36,7 @@
                                 <rect key="frame" x="1" y="1" width="458" height="198"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="Xzx-oi-cDx">
+                                    <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="50" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="Xzx-oi-cDx">
                                         <rect key="frame" x="0.0" y="0.0" width="458" height="198"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -222,7 +222,7 @@
                             <rect key="frame" x="101" y="119" width="383" height="25"/>
                             <popUpButtonCell key="cell" type="push" title="Disk" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ULV-bt-JMU" id="QMV-rw-2HU">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="menu"/>
+                                <font key="font" metaFont="message"/>
                                 <menu key="menu" id="rg7-gQ-Yvc">
                                     <items>
                                         <menuItem title="Disk" state="on" id="ULV-bt-JMU"/>
