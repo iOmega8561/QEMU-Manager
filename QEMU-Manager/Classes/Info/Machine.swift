@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class Machine: InfoValue, SpecializedDefaultable {
+final class Machine: InfoValue, Defaultable {
     
     static var defaultValue: Machine {
         Machine(

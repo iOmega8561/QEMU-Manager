@@ -21,10 +21,28 @@ protocol Defaultable: InfoValue {
         
     static var defaultValue: Self { get }
     
+    static var allValues: [Architecture: [Self]] { get }
+    
+    static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self)
+    
     func set(to value: inout String?)
 }
 
 extension Defaultable {
+    
+    static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self) {
+        
+        let architecture: Architecture? = .init(rawValue: archRaw)
+        
+        guard let architecture else {
+            return ([.defaultValue], .defaultValue)
+        }
+        
+        let values:    [Self] = Self.allValues[architecture] ?? [.defaultValue]
+        let selection: Self   = values.first { $0.name == current } ?? .defaultValue
+        
+        return (values, selection)
+    }
     
     func set(to value: inout String?)  {
         
@@ -41,47 +59,5 @@ extension Optional where Wrapped: Defaultable {
         }
         
         self.set(to: &value)
-    }
-}
-
-protocol GenericDefaultable: Defaultable {
-    
-    static var allValues: [Self] { get }
-    
-    static func fetchValues(_ current: String?) -> ([Self], Self)
-}
-
-extension GenericDefaultable {
-    
-    static func fetchValues(_ current: String?) -> ([Self], Self) {
-        
-        let values:    [Self] = Self.allValues
-        let selection: Self   = values.first { $0.name == current } ?? .defaultValue
-        
-        return (values, selection)
-    }
-}
-
-protocol SpecializedDefaultable: Defaultable {
-    
-    static var allValues: [Architecture: [Self]] { get }
-    
-    static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self)
-}
-
-extension SpecializedDefaultable {
-    
-    static func fetchValues(for archRaw: Architecture.RawValue, _ current: String?) -> ([Self], Self) {
-        
-        let architecture: Architecture? = .init(rawValue: archRaw)
-        
-        guard let architecture else {
-            return ([.defaultValue], .defaultValue)
-        }
-        
-        let values:    [Self] = Self.allValues[architecture] ?? [.defaultValue]
-        let selection: Self   = values.first { $0.name == current } ?? .defaultValue
-        
-        return (values, selection)
     }
 }

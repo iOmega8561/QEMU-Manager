@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class CPU: InfoValue, SpecializedDefaultable {
+final class CPU: InfoValue, Defaultable {
     
     static var defaultValue: CPU {
         CPU(

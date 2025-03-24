@@ -17,7 +17,7 @@
 
 import Foundation
 
-final class Network: InfoValue, SpecializedDefaultable {
+final class Network: InfoValue, Defaultable {
     
     static var defaultValue: Network {
         Network(

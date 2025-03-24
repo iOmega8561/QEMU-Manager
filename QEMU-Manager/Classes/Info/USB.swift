@@ -17,7 +17,7 @@
 
 import Foundation
 
-final class USB: InfoValue, SpecializedDefaultable {
+final class USB: InfoValue, Defaultable {
     
     static var defaultValue: USB {
         USB(

@@ -17,7 +17,7 @@
 
 import Foundation
 
-final class Video: InfoValue, SpecializedDefaultable {
+final class Video: InfoValue, Defaultable {
     
     static var defaultValue: Video {
         Video(
