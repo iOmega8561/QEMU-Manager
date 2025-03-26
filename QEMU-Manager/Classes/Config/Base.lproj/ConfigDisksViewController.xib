@@ -92,7 +92,7 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <connections>
-                                                                    <binding destination="khS-Yd-yp2" name="value" keyPath="objectValue.disk.uuid" id="caQ-pw-lhU"/>
+                                                                    <binding destination="khS-Yd-yp2" name="value" keyPath="objectValue.id" id="DPI-OW-Hng"/>
                                                                 </connections>
                                                             </textField>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UTo-vs-RKV">

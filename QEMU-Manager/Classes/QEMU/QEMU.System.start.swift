@@ -135,7 +135,7 @@ extension QEMU.System {
                 "file="   + diskDrive.url.path,
                 "format=" + diskDrive.disk.format.description,
                 "media="  + diskDrive.disk.type.description,
-                "id="     + diskDrive.disk.uuid.uuidString
+                "id="     + diskDrive.id
             ]
             
             if !diskDrive.disk.auto {

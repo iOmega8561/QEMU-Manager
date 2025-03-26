@@ -23,6 +23,7 @@ public class DiskInfo: NSObject
     @objc        private( set ) dynamic var disk:    Config.Disk
     @objc public private( set ) dynamic var url:     URL
     @objc public private( set ) dynamic var size:    UInt64
+    @objc                       dynamic var id:      String { "disk" + disk.uuid.uuidString }
     
     init?( vm: VirtualMachine, disk: Config.Disk )
     {
