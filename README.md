@@ -10,8 +10,9 @@ An adventurous re-imagining of a macOS frontend for [QEMU](https://www.qemu.org)
 ## Why This Rework?
 - **Fresh Codebase:** Old, deprecated, or redundant code has been pruned and replaced with cleaner, modern Swift.
 - **More Features:** Hypervisor Framework integration, UEFI boot, USB, advanced networking, and more.
-- **Wider Architecture Coverage:** From m68k Mac classics to Windows 11 ARM, it supports a broad range of QEMU architectures for retro-computing fans and cutting-edge testers alike.
-- **Enhanced UI:** Though not fully Apple HIG-compliant, the interface is far smoother, more intuitive, and offers direct access to powerful settings.
+- **Wider Architecture Coverage:** From m68k Mac classics to Windows 11 ARM, it supports a broad range of QEMU architectures for retro-computing fans and cutting-edge testers alike. Allows to create virtual machines like a real champ.
+- **Enhanced UI:** Though not fully Apple HIG-compliant, the interface is far smoother, more intuitive, and offers direct access to powerful settings, all while keeping the older-style Cocoa interface framework.
+- **QEMU built-in:** Instead of requiring the user to install qemu on their system, this project already bundles a modern and up-to-date version ready to work out-of-the-box.
 
 ---
 
