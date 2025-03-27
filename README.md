@@ -3,7 +3,7 @@
 
 An adventurous re-imagining of a macOS frontend for [QEMU](https://www.qemu.org), originally created by **Jean-David Gadina (XS-Labs)**. This project is intended for users who know their way around virtualization, emulation, and QEMU’s many moving parts. While its user interface has been modernized, it’s still a power-user tool at heart.
 
-![Screenshot](Assets/Screenshots/Screenshot.png "Screenshot")
+![Screenshot](Assets/Screenshot.png "Screenshot")
 
 ---
 
