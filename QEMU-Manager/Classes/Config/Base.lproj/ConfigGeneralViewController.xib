@@ -20,7 +20,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
                     <rect key="frame" x="0.0" y="0.0" width="500" height="290"/>
                     <subviews>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VaJ-zf-9yA" userLabel="Title">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VaJ-zf-9yA" userLabel="Title">
                             <rect key="frame" x="18" y="234" width="31" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Title" id="3o7-Fo-aRP">
                                 <font key="font" usesAppearanceFont="YES"/>
@@ -28,7 +28,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dVe-Ih-uHp">
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dVe-Ih-uHp">
                             <rect key="frame" x="20" y="205" width="460" height="21"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="16j-Gl-BGC">
                                 <font key="font" metaFont="system"/>
@@ -43,7 +43,7 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Dj-bm-mRG" userLabel="Icon">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Dj-bm-mRG" userLabel="Icon">
                             <rect key="frame" x="18" y="169" width="30" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Icon" id="EtD-Y5-7Fr">
                                 <font key="font" metaFont="system"/>
@@ -62,6 +62,7 @@
                                         <menuItem title="Apple" id="BFD-cb-0Do"/>
                                         <menuItem title="Apple Legacy" id="TeT-Ty-6On"/>
                                         <menuItem title="MacOS" id="ZsS-yK-Vqf" userLabel="MacOS"/>
+                                        <menuItem title="MacOS X" id="Zd1-mt-Jaz" userLabel="MacOS X"/>
                                         <menuItem title="Windows 11" id="Jsb-zy-KfX" userLabel="Windows 11"/>
                                         <menuItem title="Windows" id="q9A-4x-9hV" userLabel="Windows"/>
                                         <menuItem title="Windows Legacy" id="8xt-dt-1iI" userLabel="Windows Legacy"/>
@@ -80,7 +81,7 @@
                         <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="aP2-uG-b6Y">
                             <rect key="frame" x="20" y="118" width="460" height="5"/>
                         </box>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1D4-QU-aRq" userLabel="Path">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1D4-QU-aRq" userLabel="Path">
                             <rect key="frame" x="18" y="84" width="32" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Path" id="Rql-71-RA6">
                                 <font key="font" metaFont="system"/>
@@ -88,7 +89,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="mLq-xf-eKC">
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="mLq-xf-eKC">
                             <rect key="frame" x="18" y="60" width="464" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" title="Label" id="sYW-50-L2b">
                                 <font key="font" metaFont="system"/>

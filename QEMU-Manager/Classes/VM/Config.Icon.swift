@@ -25,6 +25,7 @@ extension Config {
         case appleTemplate
         case appleLegacy
         case macOS
+        case macOSX
         case windows11
         case windowsTemplate
         case windowsLegacy
@@ -40,6 +41,7 @@ extension Config {
             case .appleTemplate:   "AppleTemplate"
             case .appleLegacy:     "AppleLegacy"
             case .macOS:           "MacOS"
+            case .macOSX:          "MacOSX"
             case .windows11:       "Windows11"
             case .windowsTemplate: "WindowsTemplate"
             case .windowsLegacy:   "WindowsLegacy"
