@@ -20,15 +20,16 @@ import Foundation
 
 struct QEMU {
 
-    static var rootDirectoryURL: URL? {
-        Bundle.main.resourceURL?
+    static var rootDirectoryURL: URL {        
+        Bundle.main.bundleURL
+            .appendingPathComponent("Contents")
             .appendingPathComponent("QEMU")
     }
     
     let executableName: String
     
-    private var executableURL:  URL? {
-        QEMU.rootDirectoryURL?
+    private var executableURL:  URL {
+        QEMU.rootDirectoryURL
             .appendingPathComponent("bin")
             .appendingPathComponent(executableName)
     }
@@ -36,8 +37,7 @@ struct QEMU {
     @discardableResult
     func execute(arguments: [String]) throws -> (out: String, err: String)? {
         
-        guard let executableURL,
-             FileManager.default.fileExists(atPath: executableURL.absoluteURL.path) else {
+        guard FileManager.default.fileExists(atPath: executableURL.absoluteURL.path) else {
             
             throw Error.executableNotAvailable(executableName: executableName)
         }

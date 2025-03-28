@@ -37,16 +37,11 @@ import Foundation
     case m68k
     
     var supportsUEFI: Bool {
-    
-        guard let edkFirmwarePath else {
-            return false
-        }
-        
-        return FileManager.default.fileExists(atPath: edkFirmwarePath)
+        FileManager.default.fileExists(atPath: edkFirmwarePath)
     }
         
-    var edkFirmwarePath: String? {
-        QEMU.rootDirectoryURL?
+    var edkFirmwarePath: String {
+        QEMU.rootDirectoryURL
             .appendingPathComponent("share")
             .appendingPathComponent("qemu")
             .appendingPathComponent("edk2-\(self.description)-code.fd")

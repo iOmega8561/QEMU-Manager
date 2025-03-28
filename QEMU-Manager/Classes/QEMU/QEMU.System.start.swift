@@ -116,10 +116,10 @@ extension QEMU.System {
         case .shared: arguments += ["-netdev", "user,id=net0"]
         }
         
-        if vm.config.system.uefi, architecture.supportsUEFI,
-           let firmwarePath = vm.config.architecture.edkFirmwarePath {
+        if vm.config.system.uefi, architecture.supportsUEFI {
             
-            arguments += ["-drive", "if=pflash,format=raw,readonly=on,file=" + firmwarePath]
+            arguments += ["-drive", "if=pflash,format=raw,readonly=on,file="
+                          + architecture.edkFirmwarePath]
         }
         
         arguments += ["-audio",   "driver=coreaudio"]

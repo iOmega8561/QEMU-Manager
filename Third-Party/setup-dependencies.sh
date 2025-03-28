@@ -4,11 +4,6 @@ set -e
 #
 # HOMEBREW
 # brew install cmake meson ninja automake autoconf autoconf-archive libtool wget
-#
-# PYTHON VENV - NEEDED FOR SPICE
-# python3 -m venv pyenv
-# source pyenv/bin/activate
-# pip install six pyparsing
 
 # Absolute path to this script.
 SCRIPT=$(readlink -f $0)
@@ -18,9 +13,9 @@ SCRIPTPATH=`dirname $SCRIPT`
 cd $SCRIPTPATH
 
 # DEPLOYMENT TARGET
-export MACOSX_DEPLOYMENT_TARGET=11.3
-export CFLAGS="-mmacosx-version-min=11.3"
-export LDFLAGS="-mmacosx-version-min=11.3"
+export MACOSX_DEPLOYMENT_TARGET=12.0
+export CFLAGS="-mmacosx-version-min=12.0"
+export LDFLAGS="-mmacosx-version-min=12.0"
 
 # PKG PATHS
 PIXMAN_PKG="$SCRIPTPATH/pixman/lib/pkgconfig"
@@ -160,9 +155,9 @@ if [ ! -d "QEMU" ]; then
         --enable-hvf \
         --enable-coreaudio \
         --enable-cocoa \
-        --enable-vmnet \
         --enable-lto \
         --enable-slirp \
+        --disable-vmnet \
         --disable-sdl \
         --disable-spice \
         --disable-vnc \
