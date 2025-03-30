@@ -18,11 +18,13 @@ export CFLAGS="-mmacosx-version-min=12.0"
 export LDFLAGS="-mmacosx-version-min=12.0"
 
 # PKG PATHS
+PCRE2_PKG="$SCRIPTPATH/pcre2/lib/pkgconfig"
 PIXMAN_PKG="$SCRIPTPATH/pixman/lib/pkgconfig"
 GLIB_PKG="$SCRIPTPATH/glib/lib/pkgconfig"
 LIBSLIRP_PKG="$SCRIPTPATH/libslirp/lib/pkgconfig"
 
-export PKG_CONFIG_PATH="$PIXMAN_PKG:\
+export PKG_CONFIG_PATH="$PCRE2_PKG:\
+$PIXMAN_PKG:\
 $GLIB_PKG:\
 $LIBSLIRP_PKG"
 
@@ -84,10 +86,7 @@ if [ ! -d "glib" ]; then
         --prefix="$SCRIPTPATH/glib" \
         -Dglib_debug=disabled \
         -Dsystemtap=disabled \
-        -Dlibmount=disabled \
-        -Dc_args="-I$SCRIPTPATH/pcre2/include" \
-        -Dcpp_args="-I$SCRIPTPATH/pcre2/include" \
-        -Dcpp_link_args="-L$SCRIPTPATH/pcre2/lib -lpcre2-8"
+        -Dlibmount=disabled
     
     mkdir "$SCRIPTPATH/glib"
     
@@ -157,21 +156,12 @@ if [ ! -d "QEMU" ]; then
         --enable-cocoa \
         --enable-lto \
         --enable-slirp \
+        --enable-vnc \
         --disable-vmnet \
         --disable-sdl \
         --disable-spice \
-        --disable-vnc \
         --disable-debug-info \
-        --disable-strip \
-        --extra-cflags="-I$SCRIPTPATH/pixman/include \
-                        -I$SCRIPTPATH/glib/include \
-                        -I$SCRIPTPATH/libslirp/include" \
-        --extra-ldflags="-L$SCRIPTPATH/pixman/lib \
-                         -L$SCRIPTPATH/glib/lib \
-                         -L$SCRIPTPATH/libslirp/lib \
-                         -Bstatic -lglib-2.0 -lpixman-1 -lslirp \
-                         -lc++ -lc++abi \
-                         -Bdynamic -lc -lSystem"
+        --disable-strip
 
     mkdir "$SCRIPTPATH/QEMU"
 
