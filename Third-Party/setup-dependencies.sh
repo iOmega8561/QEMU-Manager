@@ -14,8 +14,8 @@ cd $SCRIPTPATH
 
 # DEPLOYMENT TARGET
 export MACOSX_DEPLOYMENT_TARGET=12.0
-export CFLAGS="-mmacosx-version-min=12.0"
-export LDFLAGS="-mmacosx-version-min=12.0"
+export CFLAGS="-g -O2 -arch arm64 -mmacosx-version-min=12.0"
+export LDFLAGS="-g -O2 -arch arm64 -mmacosx-version-min=12.0"
 
 # PKG PATHS
 PCRE2_PKG="$SCRIPTPATH/pcre2/lib/pkgconfig"
@@ -29,9 +29,7 @@ $GLIB_PKG:\
 $LIBSLIRP_PKG"
 
 # QEMU SETTINGS
-
 QEMU_UPSTREAM="https://download.qemu.org/qemu-9.2.2.tar.xz"
-
 QEMU_TARGETS="aarch64-softmmu,\
 arm-softmmu,\
 i386-softmmu,\
@@ -59,15 +57,14 @@ if [ ! -d "pcre2" ]; then
     
     cd build && cmake .. \
          -DCMAKE_INSTALL_PREFIX="$SCRIPTPATH/pcre2" \
-         -DCMAKE_BUILD_TYPE=Release \
+         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
          -DBUILD_SHARED_LIBS=OFF \
          -DPCRE2_BUILD_PCRE2_8=ON \
          -DPCRE2_BUILD_PCRE2_16=OFF \
          -DPCRE2_BUILD_PCRE2_32=OFF
     
-    mkdir "$SCRIPTPATH/pcre2"
-    
-    make && make install && make clean && cd ../..
+    make -j$(sysctl -n hw.logicalcpu)
+    mkdir "$SCRIPTPATH/pcre2" && make install && cd ../..
 fi
 
 rm -fr pcre2-src
@@ -82,15 +79,16 @@ if [ ! -d "glib" ]; then
     cd glib-src
     
     meson setup build \
+        --buildtype=release \
         --default-library=static \
         --prefix="$SCRIPTPATH/glib" \
         -Dglib_debug=disabled \
         -Dsystemtap=disabled \
-        -Dlibmount=disabled
+        -Dlibmount=disabled \
+        -Dtests=false
     
-    mkdir "$SCRIPTPATH/glib"
-    
-    ninja -C build && ninja -C build install && cd ..
+    ninja -C build
+    mkdir "$SCRIPTPATH/glib" && ninja -C build install && cd ..
 fi
 
 rm -fr glib-src
@@ -105,12 +103,12 @@ if [ ! -d "pixman" ]; then
     cd pixman-src
     
     meson setup build \
+        --buildtype=release \
         --prefix="$SCRIPTPATH/pixman" \
         --default-library=static
     
-    mkdir "$SCRIPTPATH/pixman"
-    
-    ninja -C build && ninja -C build install && cd ..
+    ninja -C build
+    mkdir "$SCRIPTPATH/pixman" && ninja -C build install && cd ..
 fi
 
 rm -fr pixman-src
@@ -125,12 +123,12 @@ if [ ! -d "libslirp" ]; then
     cd libslirp-src
     
     meson setup build \
+        --buildtype=release \
         --default-library=static \
         --prefix="$SCRIPTPATH/libslirp"
     
-    mkdir "$SCRIPTPATH/libslirp"
-    
-    ninja -C build && ninja -C build install && cd ..
+    ninja -C build
+    mkdir "$SCRIPTPATH/libslirp" && ninja -C build install && cd ..
 fi
 
 rm -fr libslirp-src
@@ -154,18 +152,15 @@ if [ ! -d "QEMU" ]; then
         --enable-hvf \
         --enable-coreaudio \
         --enable-cocoa \
-        --enable-lto \
         --enable-slirp \
         --enable-vnc \
-        --disable-vmnet \
-        --disable-sdl \
-        --disable-spice \
-        --disable-debug-info \
         --disable-strip
 
-    mkdir "$SCRIPTPATH/QEMU"
-
-    make -j$(sysctl -n hw.logicalcpu) && make install && cd ..
+    make -j$(sysctl -n hw.logicalcpu)
+    mkdir "$SCRIPTPATH/QEMU" && make install && cd ..
+    
+    rm -fr QEMU-dSYM && dsymutil QEMU/bin/*
+    mkdir QEMU-dSYM && mv QEMU/bin/*.dSYM QEMU-dSYM/
 fi
 
 rm -fr qemu-src
