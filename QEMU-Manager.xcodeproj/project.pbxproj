@@ -175,6 +175,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Third-Party/QEMU",
+				"${SRCROOT}/Third-Party/QEMU-dSYM",
 			);
 			outputFileListPaths = (
 			);
@@ -183,7 +184,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Copy the folder and maintain structure\ncp -R \"$SCRIPT_INPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_0\"\n\n# Remove existing attributes from QEMU executables\nfind \"$SCRIPT_OUTPUT_FILE_0\" -type f -perm +111 -exec xattr -c {} \\;\n";
+			shellScript = "# Copy the folder and maintain structure\ncp -R \"${SCRIPT_INPUT_FILE_0}\" \"${SCRIPT_OUTPUT_FILE_0}\"\n\n# Find the project's entitlements file\nENTITLEMENTS_FILE=$(find \"${SRCROOT}\" -type f | grep .entitlements)\n\n# Remove attributes and sign with entitlements\nfind \"${SCRIPT_OUTPUT_FILE_0}\" -type f -perm +111 -exec sh -c '\n   xattr -c \"$1\" && \n   codesign --force --strict --options runtime --timestamp \\\n       --entitlements \"'\"${ENTITLEMENTS_FILE}\"'\" --sign - \"$1\"\n' sh {} \\;\n\n# Copy over QEMU's debug symbols\ncp -R ${SCRIPT_INPUT_FILE_1}/*.dSYM \"${BUILT_PRODUCTS_DIR}/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
