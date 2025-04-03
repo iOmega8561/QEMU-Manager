@@ -1,0 +1,23 @@
+[binaries]
+c = 'clang'
+cpp = 'clang++'
+objc = 'clang'
+objcpp = 'clang++'
+ar = 'ar'
+strip = 'strip'
+pkg-config = 'pkg-config'
+ld = 'clang'
+
+[host_machine]
+system = 'darwin'
+cpu_family = 'aarch64'
+cpu = 'aarch64'
+endian = 'little'
+
+[built-in options]
+c_args = ['-g', '-O2', '-arch', 'arm64']
+cpp_args = ['-g', '-O2', '-arch', 'arm64']
+objc_args = ['-g', '-O2', '-arch', 'arm64']
+c_link_args = ['-g', '-O2', '-arch', 'arm64']
+cpp_link_args = ['-g', '-O2', '-arch', 'arm64']
+objc_link_args = ['-g', '-O2', '-arch', 'arm64']
