@@ -29,6 +29,9 @@
 		05DFDD27261F7BFE00BBE4E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05DFDD28261F7BFE00BBE4E3 /* QEMU-Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QEMU-Manager.entitlements"; sourceTree = "<group>"; };
 		05DFDD72261F7E4500BBE4E3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E3064CFF2D9EBCB000AC7EE4 /* setup-functions.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "setup-functions.sh"; sourceTree = "<group>"; };
+		E3064D3D2D9EE4B000AC7EE4 /* arm64-cross.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "arm64-cross.txt"; sourceTree = "<group>"; };
+		E3064D3E2D9EE4B000AC7EE4 /* x86_64-cross.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "x86_64-cross.txt"; sourceTree = "<group>"; };
 		E32E067C2D6FC38000C28A25 /* setup-dependencies.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "setup-dependencies.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +92,9 @@
 		E32E05CC2D6FBB4000C28A25 /* Third-Party */ = {
 			isa = PBXGroup;
 			children = (
+				E3064D3D2D9EE4B000AC7EE4 /* arm64-cross.txt */,
+				E3064D3E2D9EE4B000AC7EE4 /* x86_64-cross.txt */,
+				E3064CFF2D9EBCB000AC7EE4 /* setup-functions.sh */,
 				E32E067C2D6FC38000C28A25 /* setup-dependencies.sh */,
 			);
 			path = "Third-Party";
@@ -128,7 +134,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					05DFDD1C261F7BFD00BBE4E3 = {
 						CreatedOnToolsVersion = 12.4;
@@ -223,6 +229,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = T8HX5554JX;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -262,6 +269,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = T8HX5554JX;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -279,7 +287,6 @@
 		05DFDD2C261F7BFE00BBE4E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "QEMU-Manager/QEMU-Manager.entitlements";
@@ -288,7 +295,6 @@
 				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = T8HX5554JX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "QEMU-Manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "QEMU Manager";
@@ -298,7 +304,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.giusepperocco.QEMU-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -313,7 +319,6 @@
 		05DFDD2D261F7BFE00BBE4E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = arm64;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = "QEMU-Manager/QEMU-Manager.entitlements";
@@ -322,7 +327,6 @@
 				CURRENT_PROJECT_VERSION = 79;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = T8HX5554JX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "QEMU-Manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "QEMU Manager";
@@ -332,7 +336,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.giusepperocco.QEMU-Manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
