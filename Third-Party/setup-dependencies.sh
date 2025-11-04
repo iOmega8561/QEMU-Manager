@@ -30,7 +30,7 @@ $GLIB_PKG:\
 $LIBSLIRP_PKG"
 
 # QEMU SETTINGS
-QEMU_UPSTREAM="https://download.qemu.org/qemu-9.2.2.tar.xz"
+QEMU_UPSTREAM="https://download.qemu.org/qemu-10.1.2.tar.xz"
 QEMU_TARGETS="aarch64-softmmu,\
 arm-softmmu,\
 i386-softmmu,\
@@ -145,6 +145,7 @@ if [ ! -d "QEMU" ]; then
         --enable-cocoa \
         --enable-slirp \
         --enable-vnc \
+        --disable-zstd \
         --disable-strip
     
     merge_lipo_universal "QEMU"
