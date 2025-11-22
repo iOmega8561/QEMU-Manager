@@ -82,10 +82,10 @@
                                                                 </connections>
                                                             </textField>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kN5-uA-62T">
-                                                                <rect key="frame" x="307" y="1" width="90" height="24"/>
-                                                                <buttonCell key="cell" type="roundRect" title="Round Rect" bezelStyle="roundedRect" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="v8C-WG-h8d">
+                                                                <rect key="frame" x="312" y="1" width="86" height="23"/>
+                                                                <buttonCell key="cell" type="roundTextured" title="Round Rect" bezelStyle="texturedRounded" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="v8C-WG-h8d">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="cellTitle"/>
+                                                                    <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
                                                                     <binding destination="8eW-qs-IoC" name="title" keyPath="objectValue.kind" id="bRO-fB-89y">
