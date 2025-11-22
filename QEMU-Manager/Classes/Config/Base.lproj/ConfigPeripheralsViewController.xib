@@ -42,6 +42,9 @@
                         </popUpButton>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uIH-2t-gGA">
                             <rect key="frame" x="18" y="233" width="129" height="16"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="Y1s-gq-LjV"/>
+                            </constraints>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Network Card Model" id="ZCW-LD-H0N">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -249,6 +252,7 @@
                         <constraint firstAttribute="width" constant="500" id="4eM-TA-nUc"/>
                         <constraint firstItem="K5m-4h-ecJ" firstAttribute="leading" secondItem="SqZ-jm-cQu" secondAttribute="leading" id="8Sl-Fh-UPY"/>
                         <constraint firstItem="9q1-iN-hB7" firstAttribute="top" secondItem="8q8-lj-jQL" secondAttribute="bottom" constant="10" symbolic="YES" id="8wn-Ll-QeE"/>
+                        <constraint firstItem="axW-jW-O7c" firstAttribute="leading" secondItem="uIH-2t-gGA" secondAttribute="trailing" constant="8" symbolic="YES" id="9U4-oc-O6o"/>
                         <constraint firstItem="aAU-J5-1ZS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="9Vo-ga-Uss"/>
                         <constraint firstItem="axW-jW-O7c" firstAttribute="top" secondItem="K5m-4h-ecJ" secondAttribute="bottom" constant="10" symbolic="YES" id="AYb-Dh-0Mi"/>
                         <constraint firstItem="K5m-4h-ecJ" firstAttribute="centerY" secondItem="gAz-ia-pld" secondAttribute="centerY" id="FMF-gg-Slx"/>
