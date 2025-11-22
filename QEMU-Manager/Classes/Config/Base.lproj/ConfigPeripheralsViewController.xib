@@ -18,14 +18,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="MVG-o1-Qus">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="345"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="355"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
-                    <rect key="frame" x="0.0" y="0.0" width="500" height="345"/>
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="355"/>
                     <subviews>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K5m-4h-ecJ">
-                            <rect key="frame" x="153" y="263" width="327" height="24"/>
+                            <rect key="frame" x="153" y="273" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Host Only" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="KCN-sD-2fD" id="ICn-Mj-4na">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -41,7 +41,7 @@
                             </connections>
                         </popUpButton>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uIH-2t-gGA">
-                            <rect key="frame" x="18" y="233" width="129" height="16"/>
+                            <rect key="frame" x="18" y="243" width="129" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="Y1s-gq-LjV"/>
                             </constraints>
@@ -52,7 +52,7 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26i-oi-h6R">
-                            <rect key="frame" x="61" y="205" width="86" height="16"/>
+                            <rect key="frame" x="61" y="215" width="86" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="MAC Address" id="dwX-Nd-Dvp">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -60,7 +60,7 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gAz-ia-pld">
-                            <rect key="frame" x="59" y="267" width="88" height="16"/>
+                            <rect key="frame" x="59" y="277" width="88" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Network Type" id="hQD-aj-yzd">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -68,7 +68,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="axW-jW-O7c">
-                            <rect key="frame" x="153" y="229" width="327" height="24"/>
+                            <rect key="frame" x="153" y="239" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="aJs-9l-7ts" id="ksg-1l-iuK">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -89,7 +89,7 @@
                             </connections>
                         </popUpButton>
                         <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNl-Ms-ZlE">
-                            <rect key="frame" x="153" y="201" width="245" height="24"/>
+                            <rect key="frame" x="153" y="211" width="245" height="24"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="4IS-nq-muj">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -105,7 +105,7 @@
                             </connections>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N73-J1-L0v">
-                            <rect key="frame" x="406" y="201" width="74" height="24"/>
+                            <rect key="frame" x="406" y="211" width="74" height="24"/>
                             <buttonCell key="cell" type="push" title="Random" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2jQ-NN-bJ9">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -120,7 +120,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cQq-3e-FvX">
-                            <rect key="frame" x="151" y="76" width="41" height="16"/>
+                            <rect key="frame" x="151" y="86" width="41" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Media" id="Vek-2e-eQo">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -128,7 +128,7 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aAU-J5-1ZS">
-                            <rect key="frame" x="34" y="48" width="113" height="16"/>
+                            <rect key="frame" x="34" y="58" width="113" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Video Card Model" id="W2F-qy-p2m">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -136,7 +136,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8q8-lj-jQL">
-                            <rect key="frame" x="153" y="44" width="327" height="24"/>
+                            <rect key="frame" x="153" y="54" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4wB-Rz-WOS" id="BhR-F9-kzY">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -157,7 +157,7 @@
                             </connections>
                         </popUpButton>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iNv-1k-Vh3">
-                            <rect key="frame" x="30" y="14" width="117" height="16"/>
+                            <rect key="frame" x="30" y="24" width="117" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Sound Card Model" id="ljB-18-Lak">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -165,7 +165,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9q1-iN-hB7">
-                            <rect key="frame" x="153" y="10" width="327" height="24"/>
+                            <rect key="frame" x="153" y="20" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="coR-tb-oEi" id="NsV-Xs-UKC">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -186,7 +186,7 @@
                             </connections>
                         </popUpButton>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mUy-dz-bek">
-                            <rect key="frame" x="151" y="168" width="31" height="16"/>
+                            <rect key="frame" x="151" y="178" width="31" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="USB" id="3nd-VI-IAz">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -194,7 +194,7 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9VN-tI-6fN">
-                            <rect key="frame" x="42" y="140" width="105" height="16"/>
+                            <rect key="frame" x="42" y="150" width="105" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Controller Model" id="MNj-Cl-s80">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -202,7 +202,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ufe-Vi-C92">
-                            <rect key="frame" x="153" y="136" width="327" height="24"/>
+                            <rect key="frame" x="153" y="146" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="rx6-zL-Kdu" id="Cgc-Tw-CPT">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -223,7 +223,7 @@
                             </connections>
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y80-OT-cSQ">
-                            <rect key="frame" x="153" y="114" width="180" height="16"/>
+                            <rect key="frame" x="153" y="124" width="180" height="16"/>
                             <buttonCell key="cell" type="check" title="USB Keyboard and Mouse" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jLw-sP-rkG">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -233,7 +233,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SqZ-jm-cQu">
-                            <rect key="frame" x="151" y="291" width="55" height="16"/>
+                            <rect key="frame" x="151" y="301" width="55" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Network" id="QqW-FP-H7m">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -286,6 +286,7 @@
                         <constraint firstItem="uIH-2t-gGA" firstAttribute="centerY" secondItem="axW-jW-O7c" secondAttribute="centerY" id="m1p-AR-OHb"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SqZ-jm-cQu" secondAttribute="trailing" constant="20" symbolic="YES" id="mHv-Q2-MWN"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Y80-OT-cSQ" secondAttribute="trailing" constant="20" symbolic="YES" id="mM7-2f-oGc"/>
+                        <constraint firstAttribute="bottom" secondItem="9q1-iN-hB7" secondAttribute="bottom" constant="20" symbolic="YES" id="mvI-nL-muV"/>
                         <constraint firstItem="26i-oi-h6R" firstAttribute="trailing" secondItem="uIH-2t-gGA" secondAttribute="trailing" id="myU-9n-k4h"/>
                         <constraint firstItem="Ufe-Vi-C92" firstAttribute="leading" secondItem="9VN-tI-6fN" secondAttribute="trailing" constant="8" symbolic="YES" id="nWT-ep-vMd"/>
                         <constraint firstItem="iNv-1k-Vh3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="nlp-Rc-lbt"/>
@@ -303,7 +304,7 @@
                 <constraint firstAttribute="bottom" secondItem="c22-O7-iKe" secondAttribute="bottom" id="eNe-Zw-r96"/>
                 <constraint firstItem="c22-O7-iKe" firstAttribute="top" secondItem="MVG-o1-Qus" secondAttribute="top" id="vMd-ga-XFN"/>
             </constraints>
-            <point key="canvasLocation" x="-316" y="516.5"/>
+            <point key="canvasLocation" x="-316" y="521.5"/>
         </customView>
         <arrayController id="vmv-NP-yVS" userLabel="Networks"/>
         <arrayController id="HEs-ae-rv8" userLabel="Sounds"/>
