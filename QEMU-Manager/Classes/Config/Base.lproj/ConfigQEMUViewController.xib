@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -32,13 +32,13 @@
                             </textFieldCell>
                         </textField>
                         <scrollView autoresizesSubviews="NO" borderType="line" autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gva-kx-yBJ">
-                            <rect key="frame" x="20" y="176" width="460" height="200"/>
+                            <rect key="frame" x="20" y="180" width="460" height="196"/>
                             <clipView key="contentView" autoresizesSubviews="NO" id="3Dq-ZO-1ME">
-                                <rect key="frame" x="1" y="1" width="458" height="198"/>
+                                <rect key="frame" x="1" y="1" width="458" height="194"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="26" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="Lii-mE-9se">
-                                        <rect key="frame" x="0.0" y="0.0" width="458" height="198"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="458" height="194"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -100,7 +100,7 @@
                             </scroller>
                         </scrollView>
                         <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qev-vS-FJ5">
-                            <rect key="frame" x="17" y="146" width="71" height="24"/>
+                            <rect key="frame" x="20" y="148" width="65" height="24"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="DoG-sm-4dO">
                                 <font key="font" metaFont="system"/>
                                 <segments>
@@ -113,7 +113,7 @@
                             </connections>
                         </segmentedControl>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DSR-Sn-UKe">
-                            <rect key="frame" x="18" y="112" width="80" height="16"/>
+                            <rect key="frame" x="18" y="114" width="80" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Acceleration" id="KdG-Jf-0OF">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -121,7 +121,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eeJ-Tf-BVp">
-                            <rect key="frame" x="101" y="106" width="383" height="25"/>
+                            <rect key="frame" x="104" y="110" width="376" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="DDU-oy-gcj" id="MH2-pk-ljs">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -139,7 +139,7 @@
                             </connections>
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yRc-EB-ace">
-                            <rect key="frame" x="102" y="85" width="122" height="18"/>
+                            <rect key="frame" x="104" y="86" width="118" height="16"/>
                             <buttonCell key="cell" type="check" title="QEMU Defaullts" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="au3-eF-0GZ">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -149,7 +149,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yyL-xL-FGm">
-                            <rect key="frame" x="102" y="63" width="99" height="18"/>
+                            <rect key="frame" x="104" y="64" width="95" height="16"/>
                             <buttonCell key="cell" type="check" title="RNG Device" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Biz-nH-tgf">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -159,7 +159,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WYb-Tb-RHL">
-                            <rect key="frame" x="102" y="41" width="116" height="18"/>
+                            <rect key="frame" x="104" y="42" width="112" height="16"/>
                             <buttonCell key="cell" type="check" title="Balloon Device" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="f5S-n3-esh">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -169,7 +169,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DfB-ZK-Yaj">
-                            <rect key="frame" x="102" y="19" width="211" height="18"/>
+                            <rect key="frame" x="104" y="20" width="207" height="16"/>
                             <buttonCell key="cell" type="check" title="Use localtime for system clock" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ysH-Ea-qSK">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -222,7 +222,7 @@
         <arrayController id="MiS-uy-VTt" userLabel="Accel"/>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="17"/>
-        <image name="NSRemoveTemplate" width="18" height="5"/>
+        <image name="NSAddTemplate" width="18" height="16"/>
+        <image name="NSRemoveTemplate" width="18" height="4"/>
     </resources>
 </document>

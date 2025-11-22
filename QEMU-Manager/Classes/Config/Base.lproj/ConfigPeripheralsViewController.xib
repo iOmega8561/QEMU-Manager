@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,7 +25,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="500" height="345"/>
                     <subviews>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K5m-4h-ecJ">
-                            <rect key="frame" x="150" y="257" width="334" height="25"/>
+                            <rect key="frame" x="153" y="263" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Host Only" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="KCN-sD-2fD" id="ICn-Mj-4na">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -57,7 +57,7 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gAz-ia-pld">
-                            <rect key="frame" x="59" y="263" width="88" height="16"/>
+                            <rect key="frame" x="59" y="267" width="88" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Network Type" id="hQD-aj-yzd">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +65,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="axW-jW-O7c">
-                            <rect key="frame" x="150" y="227" width="334" height="25"/>
+                            <rect key="frame" x="153" y="229" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="aJs-9l-7ts" id="ksg-1l-iuK">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -77,13 +77,16 @@
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="GRZ-g5-Upu"/>
+                            </constraints>
                             <connections>
                                 <binding destination="vmv-NP-yVS" name="content" keyPath="arrangedObjects" id="Oeg-zt-dHz"/>
                                 <binding destination="-2" name="selectedObject" keyPath="self.network" previousBinding="Oeg-zt-dHz" id="ulg-x7-wsL"/>
                             </connections>
                         </popUpButton>
                         <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zNl-Ms-ZlE">
-                            <rect key="frame" x="153" y="202" width="249" height="21"/>
+                            <rect key="frame" x="153" y="201" width="245" height="24"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="4IS-nq-muj">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -99,7 +102,7 @@
                             </connections>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N73-J1-L0v">
-                            <rect key="frame" x="403" y="196" width="84" height="32"/>
+                            <rect key="frame" x="406" y="201" width="74" height="24"/>
                             <buttonCell key="cell" type="push" title="Random" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2jQ-NN-bJ9">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -114,7 +117,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cQq-3e-FvX">
-                            <rect key="frame" x="151" y="78" width="41" height="16"/>
+                            <rect key="frame" x="151" y="76" width="41" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Media" id="Vek-2e-eQo">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -122,7 +125,7 @@
                             </textFieldCell>
                         </textField>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aAU-J5-1ZS">
-                            <rect key="frame" x="34" y="52" width="113" height="16"/>
+                            <rect key="frame" x="34" y="48" width="113" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Video Card Model" id="W2F-qy-p2m">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -130,7 +133,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8q8-lj-jQL">
-                            <rect key="frame" x="150" y="46" width="334" height="25"/>
+                            <rect key="frame" x="153" y="44" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4wB-Rz-WOS" id="BhR-F9-kzY">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -142,13 +145,16 @@
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="C6J-mg-8sf"/>
+                            </constraints>
                             <connections>
                                 <binding destination="NES-Rm-jaH" name="content" keyPath="arrangedObjects" id="MNr-lC-qNm"/>
                                 <binding destination="-2" name="selectedObject" keyPath="self.video" previousBinding="MNr-lC-qNm" id="xx1-gw-7WR"/>
                             </connections>
                         </popUpButton>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iNv-1k-Vh3">
-                            <rect key="frame" x="30" y="22" width="117" height="16"/>
+                            <rect key="frame" x="30" y="14" width="117" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Sound Card Model" id="ljB-18-Lak">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -156,7 +162,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9q1-iN-hB7">
-                            <rect key="frame" x="150" y="16" width="334" height="25"/>
+                            <rect key="frame" x="153" y="10" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="coR-tb-oEi" id="NsV-Xs-UKC">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -168,13 +174,16 @@
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="wjN-cw-XLK"/>
+                            </constraints>
                             <connections>
                                 <binding destination="HEs-ae-rv8" name="content" keyPath="arrangedObjects" id="xb3-e0-slY"/>
                                 <binding destination="-2" name="selectedObject" keyPath="self.sound" previousBinding="xb3-e0-slY" id="oDh-fK-czA"/>
                             </connections>
                         </popUpButton>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mUy-dz-bek">
-                            <rect key="frame" x="151" y="166" width="31" height="16"/>
+                            <rect key="frame" x="151" y="168" width="31" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="USB" id="3nd-VI-IAz">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -190,7 +199,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ufe-Vi-C92">
-                            <rect key="frame" x="150" y="134" width="334" height="25"/>
+                            <rect key="frame" x="153" y="136" width="327" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="rx6-zL-Kdu" id="Cgc-Tw-CPT">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -202,13 +211,16 @@
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="9XI-49-H58"/>
+                            </constraints>
                             <connections>
                                 <binding destination="Wu1-YQ-xth" name="content" keyPath="arrangedObjects" id="XuU-CJ-axL"/>
                                 <binding destination="-2" name="selectedObject" keyPath="self.usbctrl" previousBinding="XuU-CJ-axL" id="yLa-ta-mc7"/>
                             </connections>
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y80-OT-cSQ">
-                            <rect key="frame" x="151" y="115" width="184" height="18"/>
+                            <rect key="frame" x="153" y="114" width="180" height="16"/>
                             <buttonCell key="cell" type="check" title="USB Keyboard and Mouse" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jLw-sP-rkG">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -218,7 +230,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SqZ-jm-cQu">
-                            <rect key="frame" x="151" y="289" width="55" height="16"/>
+                            <rect key="frame" x="151" y="291" width="55" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Network" id="QqW-FP-H7m">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -234,6 +246,7 @@
                         <constraint firstItem="mUy-dz-bek" firstAttribute="leading" secondItem="Ufe-Vi-C92" secondAttribute="leading" id="444-Gr-Ft1"/>
                         <constraint firstItem="cQq-3e-FvX" firstAttribute="leading" secondItem="8q8-lj-jQL" secondAttribute="leading" id="4F5-Qh-CZB"/>
                         <constraint firstItem="gAz-ia-pld" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="4HM-MB-jdk"/>
+                        <constraint firstAttribute="width" constant="500" id="4eM-TA-nUc"/>
                         <constraint firstItem="K5m-4h-ecJ" firstAttribute="leading" secondItem="SqZ-jm-cQu" secondAttribute="leading" id="8Sl-Fh-UPY"/>
                         <constraint firstItem="9q1-iN-hB7" firstAttribute="top" secondItem="8q8-lj-jQL" secondAttribute="bottom" constant="10" symbolic="YES" id="8wn-Ll-QeE"/>
                         <constraint firstItem="aAU-J5-1ZS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="9Vo-ga-Uss"/>

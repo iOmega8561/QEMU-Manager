@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -96,7 +96,7 @@
                                                                 </connections>
                                                             </textField>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UTo-vs-RKV">
-                                                                <rect key="frame" x="317" y="4" width="80" height="19"/>
+                                                                <rect key="frame" x="307" y="5" width="90" height="24"/>
                                                                 <buttonCell key="cell" type="roundRect" title="Round Rect" bezelStyle="roundedRect" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="M65-fW-BRZ">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="cellTitle"/>
@@ -188,7 +188,7 @@
                             </scroller>
                         </scrollView>
                         <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WsS-dK-tem">
-                            <rect key="frame" x="17" y="159" width="71" height="24"/>
+                            <rect key="frame" x="20" y="157" width="65" height="24"/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="5cl-I6-v44">
                                 <font key="font" metaFont="system"/>
                                 <segments>
@@ -201,7 +201,7 @@
                             </connections>
                         </segmentedControl>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nIx-4E-XDy" userLabel="Import Disk">
-                            <rect key="frame" x="366" y="154" width="121" height="32"/>
+                            <rect key="frame" x="369" y="157" width="111" height="24"/>
                             <buttonCell key="cell" type="push" title="Import Disk" bezelStyle="rounded" image="plus.circle.fill" catalog="system" imagePosition="trailing" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pmr-CR-eCI" userLabel="Import Disk">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -211,7 +211,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Eu9-bk-wnH">
-                            <rect key="frame" x="18" y="125" width="80" height="16"/>
+                            <rect key="frame" x="18" y="127" width="80" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Boot Priority" id="MnZ-oD-ZKS">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -219,7 +219,7 @@
                             </textFieldCell>
                         </textField>
                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3X0-TJ-ElP">
-                            <rect key="frame" x="101" y="119" width="383" height="25"/>
+                            <rect key="frame" x="104" y="123" width="376" height="24"/>
                             <popUpButtonCell key="cell" type="push" title="Disk" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ULV-bt-JMU" id="QMV-rw-2HU">
                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="message"/>
@@ -236,7 +236,7 @@
                             </connections>
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zwv-9e-YT4">
-                            <rect key="frame" x="102" y="98" width="133" height="18"/>
+                            <rect key="frame" x="104" y="99" width="129" height="16"/>
                             <buttonCell key="cell" type="check" title="Boot Linux Kernel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kMb-0q-0cV">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -269,7 +269,7 @@
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="GmK-y8-36d">
-                            <rect key="frame" x="394" y="72" width="16" height="22"/>
+                            <rect key="frame" x="384" y="72" width="16" height="22"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSStopProgressFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="dTN-Bz-3GQ">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -287,7 +287,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cZR-q9-Fbw">
-                            <rect key="frame" x="418" y="73" width="57" height="19"/>
+                            <rect key="frame" x="408" y="71" width="67" height="24"/>
                             <buttonCell key="cell" type="roundRect" title="Choose" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gSj-tO-jRh">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="cellTitle"/>
@@ -298,7 +298,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hle-0d-fQC">
-                            <rect key="frame" x="102" y="20" width="373" height="21"/>
+                            <rect key="frame" x="102" y="17" width="373" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="373" id="tf4-lQ-KCp"/>
                             </constraints>
@@ -317,7 +317,7 @@
                             </connections>
                         </textField>
                         <button tag="1" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lHn-9d-IYH">
-                            <rect key="frame" x="418" y="48" width="57" height="19"/>
+                            <rect key="frame" x="408" y="43" width="67" height="24"/>
                             <buttonCell key="cell" type="roundRect" title="Choose" bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yg0-d6-hbp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="cellTitle"/>
@@ -328,7 +328,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="M4w-oa-pVF">
-                            <rect key="frame" x="102" y="51" width="37" height="16"/>
+                            <rect key="frame" x="102" y="48" width="37" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingMiddle" title="Label" id="Y98-yI-Uxz">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -343,7 +343,7 @@
                             </connections>
                         </textField>
                         <button tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="Srr-Qj-fNB">
-                            <rect key="frame" x="394" y="47" width="16" height="22"/>
+                            <rect key="frame" x="384" y="44" width="16" height="22"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSStopProgressFreestandingTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jv0-Z4-92i">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -361,7 +361,7 @@
                             </connections>
                         </button>
                         <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vb2-JZ-yUy">
-                            <rect key="frame" x="39" y="51" width="59" height="16"/>
+                            <rect key="frame" x="39" y="48" width="59" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="RAMDisk" id="BCa-eI-6X7">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -429,10 +429,10 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="17"/>
-        <image name="NSRemoveTemplate" width="18" height="5"/>
-        <image name="NSRevealFreestandingTemplate" width="20" height="20"/>
-        <image name="NSStopProgressFreestandingTemplate" width="20" height="20"/>
+        <image name="NSAddTemplate" width="18" height="16"/>
+        <image name="NSRemoveTemplate" width="18" height="4"/>
+        <image name="NSRevealFreestandingTemplate" width="19" height="19"/>
+        <image name="NSStopProgressFreestandingTemplate" width="19" height="19"/>
         <image name="plus.circle.fill" catalog="system" width="15" height="15"/>
     </resources>
 </document>
