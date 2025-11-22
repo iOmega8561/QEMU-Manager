@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,13 +17,13 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="500" height="348"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="950"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1049"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="500" height="266"/>
+                <rect key="frame" x="0.0" y="0.0" width="500" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F27-QZ-yJf">
-                        <rect key="frame" x="20" y="126" width="100" height="100"/>
+                        <rect key="frame" x="20" y="130" width="100" height="100"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="Ili-Uj-aTf"/>
                             <constraint firstAttribute="height" constant="100" id="ZlF-lG-J13"/>
@@ -30,7 +31,7 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Alert" id="KQm-Ak-Vn2"/>
                     </imageView>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jU8-O7-6pY">
-                        <rect key="frame" x="138" y="181" width="66" height="31"/>
+                        <rect key="frame" x="138" y="185" width="66" height="31"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="03C-RM-Rwn">
                             <font key="font" textStyle="largeTitle" name=".SFNS-Regular"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -41,7 +42,7 @@
                         </connections>
                     </textField>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TS9-Zq-7e5">
-                        <rect key="frame" x="138" y="157" width="37" height="16"/>
+                        <rect key="frame" x="138" y="161" width="37" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="dF5-ZM-LjT">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -52,10 +53,10 @@
                         </connections>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="PpM-OR-BRl">
-                        <rect key="frame" x="12" y="115" width="476" height="5"/>
+                        <rect key="frame" x="12" y="119" width="476" height="5"/>
                     </box>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vHg-md-YdS">
-                        <rect key="frame" x="18" y="93" width="50" height="16"/>
+                        <rect key="frame" x="18" y="97" width="50" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Details:" id="G9k-1H-48i">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -63,7 +64,7 @@
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Hpw-Lu-2Ff">
-                        <rect key="frame" x="18" y="69" width="464" height="16"/>
+                        <rect key="frame" x="18" y="73" width="464" height="16"/>
                         <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="O7L-h4-l0p">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -75,10 +76,10 @@
                         </connections>
                     </textField>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="sWy-EF-5Q5">
-                        <rect key="frame" x="12" y="58" width="476" height="5"/>
+                        <rect key="frame" x="12" y="62" width="476" height="5"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FRW-Uw-TkY">
-                        <rect key="frame" x="398" y="13" width="89" height="32"/>
+                        <rect key="frame" x="405" y="20" width="75" height="24"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x4A-5g-H6n">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>

@@ -24,13 +24,18 @@ extension NSOpenPanel {
         guard let window = sender.view.window else {
             return NSSound.beep()
         }
+
+        filePicker(window, onCompletion)
+    }
+    
+    static func filePicker(_ sender: NSWindow, _ onCompletion: @escaping (URL) throws -> Void) {
         
         let panel                     = NSOpenPanel()
         panel.canChooseFiles          = true
         panel.canChooseDirectories    = true
         panel.allowsMultipleSelection = false
         
-        panel.beginSheetModal(for: window) { result in
+        panel.beginSheetModal(for: sender) { result in
             
             guard result == .OK, let url = panel.url else {
                 return
@@ -39,7 +44,7 @@ extension NSOpenPanel {
             do {
                 try onCompletion(url)
                 
-            } catch { NSAlert(error: error).beginSheetModal(for: window) }
+            } catch { NSAlert(error: error).beginSheetModal(for: sender) }
         }
     }
     

@@ -209,6 +209,17 @@ public class LibraryWindowController: NSWindowController, NSTableViewDelegate, N
         self.newVirtualMachine( sender )
     }
     
+    @IBAction private func openDocument( _ sender: Any?  )
+    {
+        guard let nsWindow = self.window else {
+            NSSound.beep(); return
+        }
+        
+        NSOpenPanel.filePicker(nsWindow) { url in
+            self.addVirtualMachines(from: [url])
+        }        
+    }
+    
     @IBAction private func configure( _ sender: Any?  )
     {
         guard let vm = self.getVM( for: sender ) else

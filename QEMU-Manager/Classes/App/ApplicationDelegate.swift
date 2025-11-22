@@ -86,4 +86,11 @@ final class ApplicationDelegate: NSObject, NSApplicationDelegate {
         
         window.makeKeyAndOrderFront(nil)
     }
+    
+    @IBAction private func newDocument(_ sender: Any?) {
+        
+        self.showLibraryWindow(sender)
+        
+        NSSound.beep()
+    }
 }
