@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,7 +20,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="400" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="950"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1049"/>
             <value key="minSize" type="size" width="400" height="400"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ" customClass="DropView" customModule="QEMU_Manager" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
@@ -83,7 +83,7 @@
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="Generic" id="OYf-DK-xlp"/>
                                     </imageView>
                                     <button wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bKT-k8-ry3">
-                                        <rect key="frame" x="101" y="49" width="199" height="32"/>
+                                        <rect key="frame" x="105" y="52" width="190" height="24"/>
                                         <buttonCell key="cell" type="push" title="Create a Virtual Machine" bezelStyle="rounded" image="NSAddTemplate" imagePosition="trailing" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="I30-xK-I8s">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -128,13 +128,13 @@ DQ
                                         <rect key="frame" x="20" y="348" width="360" height="5"/>
                                     </box>
                                     <scrollView autoresizesSubviews="NO" borderType="none" autohidesScrollers="YES" horizontalLineScroll="74" horizontalPageScroll="10" verticalLineScroll="74" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b45-aF-nWL">
-                                        <rect key="frame" x="0.0" y="51" width="400" height="299"/>
+                                        <rect key="frame" x="0.0" y="53" width="400" height="297"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Sp6-D7-yLO">
-                                            <rect key="frame" x="0.0" y="0.0" width="400" height="299"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="400" height="297"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="74" rowSizeStyle="automatic" usesAutomaticRowHeights="YES" viewBased="YES" id="VCi-qF-fl3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="299"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="297"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -179,10 +179,10 @@ DQ
                                                                             </connections>
                                                                         </textField>
                                                                         <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="IZz-cn-RfI">
-                                                                            <rect key="frame" x="73" y="11" width="80" height="19"/>
-                                                                            <buttonCell key="cell" type="roundRect" title="Round Rect" bezelStyle="roundedRect" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4b0-hA-LjT">
+                                                                            <rect key="frame" x="72" y="10" width="86" height="23"/>
+                                                                            <buttonCell key="cell" type="roundTextured" title="Round Rect" bezelStyle="texturedRounded" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4b0-hA-LjT">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                                <font key="font" metaFont="cellTitle"/>
+                                                                                <font key="font" metaFont="system"/>
                                                                             </buttonCell>
                                                                             <connections>
                                                                                 <binding destination="hvX-zT-ATA" name="title" keyPath="objectValue.config.architecture" id="Smd-FK-XJK">
@@ -251,10 +251,10 @@ DQ
                                         </scroller>
                                     </scrollView>
                                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Jh1-ob-542">
-                                        <rect key="frame" x="20" y="48" width="360" height="5"/>
+                                        <rect key="frame" x="20" y="50" width="360" height="5"/>
                                     </box>
                                     <searchField wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chS-7t-aCY">
-                                        <rect key="frame" x="20" y="20" width="360" height="22"/>
+                                        <rect key="frame" x="20" y="20" width="360" height="24"/>
                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="E6w-nY-LJa">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -365,7 +365,7 @@ DQ
     </objects>
     <resources>
         <image name="Generic" width="512" height="512"/>
-        <image name="NSAddTemplate" width="18" height="17"/>
+        <image name="NSAddTemplate" width="18" height="16"/>
         <image name="NSStatusAvailable" width="16" height="16"/>
     </resources>
 </document>
