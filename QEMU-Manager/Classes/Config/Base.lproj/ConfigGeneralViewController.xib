@@ -164,6 +164,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSRevealFreestandingTemplate" width="19" height="19"/>
+        <image name="NSRevealFreestandingTemplate" width="20" height="20"/>
     </resources>
 </document>
