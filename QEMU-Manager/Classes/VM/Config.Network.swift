@@ -36,6 +36,7 @@ extension Config {
         }
         
         @objc dynamic var kind:       Kind    = .host
+        @objc dynamic var params:     String? = nil
         @objc dynamic var controller: String? = nil
         @objc dynamic var macAddress: String  = VZMACAddress.randomLocallyAdministered().string
     }

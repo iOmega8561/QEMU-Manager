@@ -111,10 +111,18 @@ extension QEMU.System {
                                      ",netdev=net0"]
         }
         
+        var netdevArgs: String
+        
         switch vm.config.network.kind {
-        case .host:   arguments += ["-netdev", "user,restrict=yes,id=net0"]
-        case .shared: arguments += ["-netdev", "user,id=net0"]
+        case .host:   netdevArgs = "user,restrict=yes,id=net0"
+        case .shared: netdevArgs = "user,id=net0"
         }
+        
+        if let netdevParams = vm.config.network.params {
+            netdevArgs = [netdevArgs, netdevParams].joined(separator: ",")
+        }
+        
+        arguments += ["-netdev", netdevArgs]
         
         if vm.config.system.uefi, architecture.supportsUEFI {
             
