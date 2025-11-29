@@ -101,7 +101,11 @@
                                         <string key="NSValueTransformerName">NSIsNotNil</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.network.macAddress" id="xeS-uy-fac"/>
+                                <binding destination="-2" name="value" keyPath="self.vm.config.network.macAddress" id="bmY-VI-dK0">
+                                    <dictionary key="options">
+                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N73-J1-L0v">
@@ -248,8 +252,9 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.vm.config.network.params" id="5yq-vG-8kh">
+                                <binding destination="-2" name="value" keyPath="self.vm.config.network.params" id="Loi-z5-1eG">
                                     <dictionary key="options">
+                                        <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                                         <string key="NSNullPlaceholder">Additional QEMU netdev properties</string>
                                     </dictionary>
                                 </binding>

@@ -20,9 +20,11 @@ import Cocoa
 
 final class ConfigGeneralViewController: ConfigViewController {
         
-    @objc private dynamic var vm:   VirtualMachine
-    @objc private dynamic var path: String
-    
+    @objc private dynamic var vm:         VirtualMachine
+    @objc private dynamic var path:       String
+    @objc private dynamic var minPortVNC: Int
+    @objc private dynamic var maxPortVNC: Int
+        
     @objc private dynamic var selectedIconIndex: Int {
         didSet { vm.config.icon = .init(rawValue: selectedIconIndex) ?? .generic }
     }
@@ -43,6 +45,8 @@ final class ConfigGeneralViewController: ConfigViewController {
     init(vm: VirtualMachine, sorting: Int) {
         self.vm                = vm
         self.path              = vm.url?.path ?? "--"
+        self.maxPortVNC        = 65535
+        self.minPortVNC        = 5900
         self.selectedIconIndex = vm.config.icon.rawValue
         super.init(title: "General", icon: NSImage(named: "InfoTemplate"), sorting: sorting)
     }

@@ -24,6 +24,7 @@ final class Config: NSObject, Codable {
     @objc private(set) dynamic var uuid:         UUID         = .init()
     @objc              dynamic var title:        String       = "Untitled"
     @objc              dynamic var icon:         Icon         = .generic
+    @objc private(set) dynamic var remote:       Remote       = .init()
     @objc private(set) dynamic var architecture: Architecture = .aarch64
     @objc private(set) dynamic var system:       System       = .init()
     @objc private(set) dynamic var network:      Network      = .init()

@@ -135,6 +135,11 @@ extension QEMU.System {
         arguments += ["-name",    vm.config.title]
         arguments += ["-boot",    vm.config.boot.priority.description]
         
+        if vm.config.remote.vnc {
+            arguments += ["-vnc", "\(vm.config.remote.vncAddress):"
+                                  + "\(vm.config.remote.vncPort - 5900),websocket=on"]
+        }
+        
         arguments += vm.config.arguments
                 
         vm.disks.forEach { diskDrive in
